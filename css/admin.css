@@ -8,6 +8,7 @@
 body {
   width: 100%;
   position: relative;
+  background-color: #e2e8f6;
 }
 
 ul {
@@ -20,6 +21,7 @@ a {
 
 .display-none {
   display: none;
+  color: white;
 }
 
 header {
@@ -422,6 +424,12 @@ main {
   .section-order {
     width: 85%;
     text-align: center;
+
+    .orderFilter {
+      margin-bottom: -20px;
+      margin-top: 70px;
+
+    }
 
     h2 {
       margin: 50px 0;

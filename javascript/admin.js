@@ -54,13 +54,20 @@ let controlBlockSectionRevenue = document.querySelector("#section-revenue");
 let controlBlockSectionUser = document.querySelector("#section-user");
 let controlBlockSectionOrder = document.querySelector("#section-order");
 let listControlBlocks = [
+  "huongcaoha",
   controlBlockContent1,
   controlBlockSectionProduct,
   controlBlockSectionRevenue,
   controlBlockSectionUser,
   controlBlockSectionOrder,
 ];
+for (let i = 1; i < listControlBlocks.length; i++) {
+  if (i == Number.parseInt(getDataLocalstorage("currentDisplayContent"))) {
+    listControlBlocks[i].style.color = "#2196f7";
 
+    break;
+  }
+}
 //
 
 let listOrders = [];
@@ -1288,7 +1295,7 @@ if (getDataLocalstorage("userCurrentPage")) {
 let userItemPerPage = 10;
 let userTotalPage = Math.ceil(listUsers.length / userItemPerPage);
 
-if (userCurrentPage > totalPage) {
+if (userCurrentPage > userTotalPage) {
   userCurrentPage = 1;
   updateDataLocalStorage("userCurrentPage", 1);
   window.location.reload();
