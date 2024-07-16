@@ -376,6 +376,24 @@ main {
       border-bottom: 5px solid #2196f7;
     }
 
+    .userFilter {
+      margin-top: 70px;
+      margin-bottom: -20px;
+
+      .userInputSearch {
+        width: 30%;
+        height: 3vh;
+        border-radius: 10px;
+        margin-right: 10px;
+      }
+
+      .userButtonSearch {
+        width: 80px;
+        height: 3vh;
+        border-radius: 10px;
+      }
+    }
+
     table,
     tr,
     th,
@@ -396,6 +414,7 @@ main {
 
       button {
         padding: 5px 10px;
+        margin: 0 5px;
       }
     }
   }

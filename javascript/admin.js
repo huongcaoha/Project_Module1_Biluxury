@@ -177,7 +177,7 @@ const countOrder = Object.values(getDataLocalstorage("listOrders")).filter(
 ).length;
 const countUser = Object.values(getDataLocalstorage("listUsers")).length;
 const htmlContent1 = ` <div class="dashboard">
-          <h1>Dashboard</h1>
+          <h1>Statistical</h1>
         </div>
 
         <div class="statistical">
@@ -318,7 +318,7 @@ for (let month of arrMonths) {
 // ---------------------------------------------------------------------------------section products---------------------------------------------------------------------------
 
 //in ra công cụ tìm kiếm trong filter product
-let search = getDataLocalstorage("productFilterSearch");
+let search = getDataLocalstorage("productFilterSearch").trim();
 let price = getDataLocalstorage("productFilterPrice");
 let category = getDataLocalstorage("productFilterCategory");
 let color = getDataLocalstorage("productFilterColor");
@@ -483,30 +483,44 @@ if (!search && !price && !category && !color) {
   currentProducts = totalProducts.slice(skipProduct, skipProduct + itemPerPage);
 } else {
   currentProducts = getDataLocalstorage("products");
+
   if (search) {
     currentProducts = totalProducts.filter((product) =>
-      product.name.includes(productFilterSearch.value)
+      new RegExp(search, "i").test(product.name.toLowerCase())
     );
+    // console.log(currentProducts);
   }
-  console.log(currentProducts);
+
   if (price) {
     currentProducts = currentProducts.filter(
       (product) => product.price < price
     );
   }
+
   if (category) {
     currentProducts = currentProducts.filter(
       (product) => product.category == category
     );
   }
-  console.log(currentProducts);
+
   if (color) {
     currentProducts = currentProducts.filter(
       (product) => product.color == color
     );
   }
+  // updateDataLocalStorage("adminProductCurrentPage", 1);
+  adminProductCurrentPage = getDataLocalstorage("adminProductCurrentPage");
+  totalPage = Math.ceil(currentProducts.length / itemPerPage);
+  if (adminProductCurrentPage > totalPage) {
+    updateDataLocalStorage("adminProductCurrentPage", 1);
+    adminProductCurrentPage = getDataLocalstorage("adminProductCurrentPage");
+  }
+  let skip = (adminProductCurrentPage - 1) * itemPerPage;
+  if (currentProducts.length > 5) {
+    currentProducts = currentProducts.slice(skip, skip + 5);
+  }
 }
-
+console.log(currentProducts);
 function getProduct(currentProducts) {
   let contentHtmlTable = ` <tr>
             <th>Id</th>
@@ -547,7 +561,9 @@ function getProduct(currentProducts) {
   }
   return contentHtmlTable;
 }
+// phân trang admin product
 let curentPagination = Math.ceil(adminProductCurrentPage / 10) * 10;
+
 function getCurrentPagination(adminProductCurrentPage) {
   let rs = `<button id="lt-pagination">&lt;</button>`;
 
@@ -562,6 +578,7 @@ function getCurrentPagination(adminProductCurrentPage) {
     }
   }
   rs += `<button id="gt-pagination">&gt;</button>`;
+
   return rs;
 }
 
@@ -1191,6 +1208,35 @@ for (let btn of orderButtonDeletes) {
 }
 
 //-------------------------------------------------------------------------- Section User
+// filter user
+let userContentSearch = "";
+if (getDataLocalstorage("userContentSearch")) {
+  userContentSearch = getDataLocalstorage("userContentSearch");
+} else {
+  updateDataLocalStorage("userContentSearch", "");
+}
+let userFilter = document.querySelector(".userFilter");
+userFilter.innerHTML = ` <input
+            type="text"
+            id="userInputSearch"
+            class="userInputSearch"
+            placeholder="    ${
+              userContentSearch == null
+                ? "Search username & phone number"
+                : userContentSearch
+            }"
+          />
+          <button id="userButtonSearch" class="userButtonSearch">Search</button>`;
+const userInputSearch = document.getElementById("userInputSearch");
+const userButtonSearch = document.getElementById("userButtonSearch");
+
+userButtonSearch.addEventListener("click", function () {
+  let contentSearch = userInputSearch.value.trim().toLowerCase();
+  updateDataLocalStorage("userContentSearch", contentSearch);
+  window.location.reload();
+});
+
+//---------------------
 class User {
   constructor(id, username, password, email, phoneNumber, birthday) {
     (this.id = id),
@@ -1209,6 +1255,14 @@ if (getDataLocalstorage("listUsers")) {
   listUsers = Object.values(getDataLocalstorage("listUsers"));
 } else {
   updateDataLocalStorage("listUsers", listUsers);
+}
+
+if (getDataLocalstorage("userContentSearch") != null) {
+  listUsers = listUsers.filter(
+    (user) =>
+      new RegExp(userContentSearch, "i").test(user.username.toLowerCase()) ||
+      new RegExp(userContentSearch, "i").test(user.phoneNumber)
+  );
 }
 
 // tạo dữ liệu giả để phục vụ cho tạo trang Users
@@ -1233,6 +1287,12 @@ if (getDataLocalstorage("userCurrentPage")) {
 }
 let userItemPerPage = 10;
 let userTotalPage = Math.ceil(listUsers.length / userItemPerPage);
+
+if (userCurrentPage > totalPage) {
+  userCurrentPage = 1;
+  updateDataLocalStorage("userCurrentPage", 1);
+  window.location.reload();
+}
 let userEnd = userCurrentPage * userItemPerPage;
 let userStart = userEnd - userItemPerPage;
 let listCurrentUsers = listUsers.splice(userStart, userEnd);
@@ -1263,6 +1323,7 @@ for (let user of listCurrentUsers) {
 tableSectionUsers.innerHTML = contentTableSectionUsers;
 
 // User pagination
+userCurrentPage = getDataLocalstorage("userCurrentPage");
 let userPagination = document.querySelector(".userPagination");
 let userTotalCurrentPagination = Math.ceil(userCurrentPage / 10) * 10;
 let contentUserPagination = `<button class="ltUserPagination">&lt;</button>`;
