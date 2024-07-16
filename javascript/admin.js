@@ -1,3 +1,15 @@
+// hiển thị tên admin
+let navAdmin = document.querySelector(".nav-admin");
+let admin = "huongcaoha1994";
+if (getDataLocalstorage("admin")) {
+  admin = getDataLocalstorage("admin");
+} else {
+  updateDataLocalStorage("admin", admin);
+}
+
+navAdmin.innerHTML += `<li><i class="fa-solid fa-user-tie"></i><b>${admin}</b></li>`;
+
+//------------------
 const formatter = new Intl.NumberFormat("vi-VN", {
   style: "currency",
   currency: "VND",
@@ -543,7 +555,7 @@ function getProduct(currentProducts) {
     contentHtmlTable += `
             <tr>
             <td>${product.id}</td>
-            <td><img src="../image/products/${product.image1}" alt="${
+            <td><img src="${product.rootPath + product.image1}" alt="${
       product.name
     }" /></td>
             <td>${product.name}</td>
@@ -650,6 +662,11 @@ let buttonDisplayFormCreate = document.querySelector(
 buttonDisplayFormCreate.addEventListener("click", function () {
   productFormCreate.style.display = "block";
 });
+window.onclick = function (e) {
+  if (e.target == productFormCreate) {
+    productFormCreate.style.display = "none";
+  }
+};
 
 if (productButtonCreate) {
   productButtonCreate.addEventListener("click", function () {
@@ -674,31 +691,31 @@ function createNewProduct() {
   let productInputInventory = document.getElementById("productInputInventory");
   let productInputImage1 = document.getElementById("productInputImage1");
   let productInputImage2 = document.getElementById("productInputImage2");
-
+  console.log(productInputImage1);
   //còn thiếu đoạn code lưu ảnh
-  let imageName1 = productInputImage1?.files?.[0]?.name ?? "";
+  let imageName1 = "";
 
-  let imageName2 = productInputImage2?.files?.[0]?.name ?? "";
-  productInputImage1.addEventListener("change", function () {
-    if (productInputImage1.files && productInputImage1.files[0]) {
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        imageName1 = e.target.result;
-        console.log(e.target.result);
-      };
-      reader.readAsDataURL(productInputImage1.files[0]);
-    }
+  let imageName2 = "";
+  productInputImage1.addEventListener("change", function (e) {
+    const file = e.target.files[0];
+
+    // Chuyển đổi file ảnh thành base64
+    const reader = new FileReader();
+    reader.onload = function () {
+      imageName1 = reader.result.split(",")[1];
+    };
+    reader.readAsDataURL(file);
   });
 
-  productInputImage2.addEventListener("change", function () {
-    if (productInputImage2.files && productInputImage2.files[0]) {
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        imageName2 = e.target.result;
-        console.log(e.target.result);
-      };
-      reader.readAsDataURL(productInputImage2.files[0]);
-    }
+  productInputImage2.addEventListener("change", function (e) {
+    const file = e.target.files[0];
+
+    // Chuyển đổi file ảnh thành base64
+    const reader = new FileReader();
+    reader.onload = function () {
+      imageName2 = reader.result.split(",")[1];
+    };
+    reader.readAsDataURL(file);
   });
 
   let totalProducts = [];
@@ -714,6 +731,7 @@ function createNewProduct() {
   let image1 = imageName1;
   let image2 = imageName2;
   let id = 1;
+  const rootPath = "data:image/png;base64,";
   if (totalProducts.length > 1 && totalProducts != null) {
     id = totalProducts[totalProducts.length - 1].id + 1;
   }
@@ -723,6 +741,7 @@ function createNewProduct() {
     category: category,
     name: productName,
     price: price,
+    rootPath: rootPath,
     image1: image1,
     image2: image2,
     color: color,
@@ -877,7 +896,11 @@ for (let btnUpdate of listButtonUpdate) {
     productButtonCancel2.addEventListener("click", function () {
       productFormUpdate.style.display = "none";
     });
-
+    window.onclick = function (e) {
+      if (e.target == productFormUpdate) {
+        productFormUpdate.style.display = "none";
+      }
+    };
     function updateProduct() {
       let productInputName2 = document.getElementById("productInputName2");
       let productInputPrice2 = document.getElementById("productInputPrice2");
@@ -1060,6 +1083,103 @@ for (let pagination of subRevenuePagination) {
 }
 
 //----------------------------------------------------------------------------------------- section order
+let orderFilterDate = 0;
+let orderFilterMonth = 0;
+let orderFilterYear = 0;
+
+if (getDataLocalstorage("orderFilterDate")) {
+  orderFilterDate = getDataLocalstorage("orderFilterDate");
+} else {
+  updateDataLocalStorage("orderFilterDate", orderFilterDate);
+}
+
+if (getDataLocalstorage("orderFilterMonth")) {
+  orderFilterMonth = getDataLocalstorage("orderFilterMonth");
+} else {
+  updateDataLocalStorage("orderFilterMonth", orderFilterMonth);
+}
+
+if (getDataLocalstorage("orderFilterYear")) {
+  orderFilterYear = getDataLocalstorage("orderFilterYear");
+} else {
+  updateDataLocalStorage("orderFilterYear", orderFilterYear);
+}
+
+let optionsDate = "";
+for (let i = 1; i <= 31; i++) {
+  if (orderFilterDate == i) {
+    optionsDate += `<option value="${i}" selected>${i}</option>`;
+  } else {
+    optionsDate += `<option value="${i}">${i}</option>`;
+  }
+}
+optionsDate += `<option value="" ${
+  orderFilterDate == "" ? "selected" : ""
+}>Tất cả</option>`;
+
+let optionsMonth = "";
+for (let i = 1; i <= 12; i++) {
+  if (orderFilterMonth == i) {
+    optionsMonth += `<option value="${i}" selected>${i}</option>`;
+  } else {
+    optionsMonth += `<option value="${i}">${i}</option>`;
+  }
+}
+optionsMonth += `<option value="" ${
+  orderFilterMonth == "" ? "selected" : ""
+}>Tất cả</option>`;
+
+let currentYear = new Date().getFullYear();
+let optionsYear = "";
+for (let i = 2019; i <= currentYear; i++) {
+  if (orderFilterYear == i) {
+    optionsYear += `<option value="${i}" selected>${i}</option>`;
+  } else {
+    optionsYear += `<option value="${i}">${i}</option>`;
+  }
+}
+optionsYear += `<option value="" ${
+  orderFilterYear == "" ? "selected" : ""
+}>Tất cả</option>`;
+
+let orderFilter = document.querySelector(".orderFilter");
+orderFilter.innerHTML = ` <b>Filter :</b>
+          <label for="orderFilterDate">Ngày</label>
+          <select name="orderFilterDate" id="orderFilterDate">
+            <option value="">Select</option>
+            ${optionsDate}
+          </select>
+
+          <label for="orderFilterMonth">Tháng</label>
+          <select name="orderFilterMonth" id="orderFilterMonth">
+            <option value="">Select</option>
+            ${optionsMonth}
+          </select>
+
+          <label for="orderFilterYear">Năm</label>
+          <select name="orderFilterYear" id="orderFilterYear">
+            <option value="">Select</option>
+            ${optionsYear}
+          </select>`;
+
+let orderSelectFilterDate = document.getElementById("orderFilterDate");
+let orderSelectFilterMonth = document.getElementById("orderFilterMonth");
+let orderSelectFilterYear = document.getElementById("orderFilterYear");
+
+orderSelectFilterDate.addEventListener("change", function () {
+  updateDataLocalStorage("orderFilterDate", orderSelectFilterDate.value);
+  window.location.reload();
+});
+
+orderSelectFilterMonth.addEventListener("change", function () {
+  updateDataLocalStorage("orderFilterMonth", orderSelectFilterMonth.value);
+  window.location.reload();
+});
+
+orderSelectFilterYear.addEventListener("change", function () {
+  updateDataLocalStorage("orderFilterYear", orderSelectFilterYear.value);
+  window.location.reload();
+});
 
 if (!getDataLocalstorage("listOrders")) {
   let listOrders = [];
@@ -1102,7 +1222,19 @@ class Product {
 // updateDataLocalStorage("listOrders", listOrdersDemo);
 
 // get dữ liệu in ra bảng trong section orders
+if (orderFilterDate || orderFilterMonth || orderFilterYear) {
+  if (orderFilterDate) {
+    listOrders = listOrders.filter((order) => order.day == orderFilterDate);
+  }
 
+  if (orderFilterMonth) {
+    listOrders = listOrders.filter((order) => order.month == orderFilterMonth);
+  }
+
+  if (orderFilterYear) {
+    listOrders = listOrders.filter((order) => order.year == orderFilterYear);
+  }
+}
 let orderCurrentPage = 1;
 if (getDataLocalstorage("orderCurrentPage")) {
   orderCurrentPage = getDataLocalstorage("orderCurrentPage");
@@ -1141,11 +1273,13 @@ for (let order of orderCurrentList) {
             <td>${order.day}/${order.month}/${order.year}</td>
             <td>${status[order.status]}</td>
              <td>${order.idUser}</td>
-            <td>
-              <button class="orderButtonDelete" title="${
-                order.id
-              }">Delete</button>
-            </td>
+            ${
+              order.status == 1
+                ? `<td>
+              <button class="orderButtonDelete" title="${order.id}">Delete</button>
+            </td>`
+                : ""
+            }
           </tr>`;
 }
 tableSectionOrders.innerHTML = contentTable;

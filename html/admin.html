@@ -29,13 +29,24 @@
           </h2>
         </div>
         <div>
-          <div class="navX-1 humberger">
-            <i class="fa-solid fa-bars"></i>
+          <div class="navX-1">
+            <i class="fa-solid fa-bars humberger">
+              <ul class="nav-humberger">
+                <li>Statistical</li>
+                <li>Product</li>
+                <li>Revenue</li>
+                <li>User</li>
+                <li>Order</li>
+              </ul>
+            </i>
           </div>
 
           <div class="navX-2">
-            <ul>
-              <li>
+            <ul class="nav-admin">
+              <li class="welcome">
+                <p>Chào mừng bạn đã quay trở lại</p>
+              </li>
+              <!-- <li>
                 <i class="fa-solid fa-envelope"></i>
                 <sup><i class="fa-solid fa-caret-down"></i></sup>
               </li>
@@ -46,8 +57,7 @@
               <li>
                 <i class="fa-solid fa-bell"></i
                 ><sup><i class="fa-solid fa-caret-down"></i></sup>
-              </li>
-              <li><i class="fa-solid fa-user-tie"></i> Admin</li>
+              </li> -->
             </ul>
           </div>
         </div>
@@ -150,23 +160,7 @@
 
       <div class="section-order">
         <h2>Table List Orders</h2>
-        <div class="orderFilter">
-          <b>Filter :</b>
-          <label for="orderFilterDate">Ngày</label>
-          <select name="orderFilterDate" id="orderFilterDate">
-            <option value="">Select</option>
-          </select>
-
-          <label for="orderFilterMonth">Tháng</label>
-          <select name="orderFilterMonth" id="orderFilterMonth">
-            <option value="">Select</option>
-          </select>
-
-          <label for="orderFilterYear">Năm</label>
-          <select name="orderFilterYear" id="orderFilterYear">
-            <option value="">Select</option>
-          </select>
-        </div>
+        <div class="orderFilter"></div>
         <table id="tableSectionOrders"></table>
         <div class="orderPagination"></div>
       </div>
