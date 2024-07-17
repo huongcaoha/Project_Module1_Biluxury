@@ -15,6 +15,7 @@ const formatter = new Intl.NumberFormat("vi-VN", {
   currency: "VND",
   minimumFractionDigits: 0,
 });
+getDataLocalstorage;
 // -------------------------------------------------------------------Controls dashbroad
 const humbergerNavBar = document.querySelectorAll(".humberger-navBar");
 for (let nav of humbergerNavBar) {
@@ -621,7 +622,7 @@ if (!search && !price && !category && !color) {
   }
 }
 if (currentProducts.length == 0) {
-  Swal.fire("Không tìm thấy sản phẩm nào !");
+  alert("Không tìm thấy sản phẩm nào !");
   updateDataLocalStorage("productFilterSearch", "");
   updateDataLocalStorage("productFilterCategory", "");
   updateDataLocalStorage("productFilterColor", "");
@@ -642,9 +643,7 @@ function getProduct(currentProducts) {
     contentHtmlTable += `
             <tr>
             <td>${product.id}</td>
-            <td><img src="${product.rootPath + product.image1}" alt="${
-      product.name
-    }" /></td>
+            <td><img src="${product.image1}" alt="${product.name}" /></td>
             <td>${product.name}</td>
             <td>${product.price.toLocaleString("vi-VN", {
               style: "currency",
@@ -770,41 +769,40 @@ if (productButtonCancel) {
     productFormCreate.style.display = "none";
   });
 }
+let productInputName = document.getElementById("productInputName");
+let productInputPrice = document.getElementById("productInputPrice");
+let productInputColor = document.getElementById("productInputColor");
+let productInputCategory = document.getElementById("productInputCategory");
+let productInputInventory = document.getElementById("productInputInventory");
+let productInputImage1 = document.getElementById("productInputImage1");
+let productInputImage2 = document.getElementById("productInputImage2");
+let imageName1 = "";
+let imageName2 = "";
+productInputImage2.addEventListener("change", function (e) {
+  const file = e.target.files[0];
+
+  // Chuyển đổi file ảnh thành base64
+  const reader = new FileReader();
+  reader.onload = function () {
+    imageName2 = reader.result;
+  };
+  reader.readAsDataURL(file);
+});
+
+productInputImage1.addEventListener("change", function (e) {
+  const file = e.target.files[0];
+
+  // Chuyển đổi file ảnh thành base64
+  const reader = new FileReader();
+  reader.onload = function () {
+    imageName1 = reader.result;
+  };
+  reader.readAsDataURL(file);
+});
 
 function createNewProduct() {
-  let productInputName = document.getElementById("productInputName");
-  let productInputPrice = document.getElementById("productInputPrice");
-  let productInputColor = document.getElementById("productInputColor");
-  let productInputCategory = document.getElementById("productInputCategory");
-  let productInputInventory = document.getElementById("productInputInventory");
-  let productInputImage1 = document.getElementById("productInputImage1");
-  let productInputImage2 = document.getElementById("productInputImage2");
   console.log(productInputImage1);
   //còn thiếu đoạn code lưu ảnh
-  let imageName1 = "";
-
-  let imageName2 = "";
-  productInputImage1.addEventListener("change", function (e) {
-    const file = e.target.files[0];
-
-    // Chuyển đổi file ảnh thành base64
-    const reader = new FileReader();
-    reader.onload = function () {
-      imageName1 = reader.result.split(",")[1];
-    };
-    reader.readAsDataURL(file);
-  });
-
-  productInputImage2.addEventListener("change", function (e) {
-    const file = e.target.files[0];
-
-    // Chuyển đổi file ảnh thành base64
-    const reader = new FileReader();
-    reader.onload = function () {
-      imageName2 = reader.result.split(",")[1];
-    };
-    reader.readAsDataURL(file);
-  });
 
   let totalProducts = [];
   const productsData = getDataLocalstorage("products");
@@ -989,43 +987,41 @@ for (let btnUpdate of listButtonUpdate) {
         productFormUpdate.style.display = "none";
       }
     };
+
+    let productInputName2 = document.getElementById("productInputName2");
+    let productInputPrice2 = document.getElementById("productInputPrice2");
+    let productInputColor2 = document.getElementById("productInputColor2");
+    let productInputCategory2 = document.getElementById(
+      "productInputCategory2"
+    );
+    let productInputInventory2 = document.getElementById(
+      "productInputInventory2"
+    );
+    let productInputImage12 = document.getElementById("productInputImage12");
+    let productInputImage22 = document.getElementById("productInputImage22");
+    let imageName1 = product.image1;
+    let imageName2 = product.image2;
+    productInputImage12.addEventListener("change", function () {
+      if (productInputImage12.files && productInputImage12.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          imageName1 = e.target.result;
+        };
+        reader.readAsDataURL(productInputImage12.files[0]);
+      }
+    });
+
+    productInputImage22.addEventListener("change", function () {
+      if (productInputImage22.files && productInputImage22.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+          imageName2 = e.target.result;
+        };
+        reader.readAsDataURL(productInputImage22.files[0]);
+      }
+    });
     function updateProduct() {
-      let productInputName2 = document.getElementById("productInputName2");
-      let productInputPrice2 = document.getElementById("productInputPrice2");
-      let productInputColor2 = document.getElementById("productInputColor2");
-      let productInputCategory2 = document.getElementById(
-        "productInputCategory2"
-      );
-      let productInputInventory2 = document.getElementById(
-        "productInputInventory2"
-      );
-      let productInputImage12 = document.getElementById("productInputImage12");
-      let productInputImage22 = document.getElementById("productInputImage22");
-
       // đoạn code lưu ảnh
-      let imageName1 = product.image1;
-      let imageName2 = product.image2;
-      productInputImage12.addEventListener("change", function () {
-        if (productInputImage12.files && productInputImage12.files[0]) {
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            imageName1 = e.target.result;
-            console.log(e.target.result);
-          };
-          reader.readAsDataURL(productInputImage12.files[0]);
-        }
-      });
-
-      productInputImage22.addEventListener("change", function () {
-        if (productInputImage22.files && productInputImage22.files[0]) {
-          var reader = new FileReader();
-          reader.onload = function (e) {
-            imageName2 = e.target.result;
-            console.log(e.target.result);
-          };
-          reader.readAsDataURL(productInputImage22.files[0]);
-        }
-      });
 
       let totalProducts = getDataLocalstorage("products");
       let productName = productInputName2.value;
@@ -1289,7 +1285,7 @@ if (orderFilterDate || orderFilterMonth || orderFilterYear) {
   }
 }
 if (listOrders.length == 0) {
-  Swal.fire("Không tìm thấy đơn đặt hàng nào !");
+  alert("Không tìm thấy đơn đặt hàng nào !");
   updateDataLocalStorage("orderFilterDate", 0);
   updateDataLocalStorage("orderFilterMonth", 0);
   updateDataLocalStorage("orderFilterYear", 0);
@@ -1478,6 +1474,7 @@ let contentTableSectionUsers = ` <tr>
             <th>Email</th>
             <th>Phone Number</th>
             <th>Birthday</th>
+            <th>Gender</th>
             <th>Status</th>
             <th></th>
           </tr>`;
@@ -1490,6 +1487,7 @@ for (let user of listCurrentUsers) {
             <td>${user.email}</td>
             <td>${user.phoneNumber}</td>
             <td>${user.birthday}</td>
+            <td>${user.gender}</td>
             <td>${status}</td>
             <td>
             <button class="userUpdateStatus" title="${user.id}">Ban/Open</button>
@@ -1498,7 +1496,7 @@ for (let user of listCurrentUsers) {
 }
 tableSectionUsers.innerHTML = contentTableSectionUsers;
 if (listUsers.length == 0) {
-  Swal.fire("Không tìm thấy người dùng nào !");
+  alert("Không tìm thấy user nào !");
   updateDataLocalStorage("userContentSearch", "");
 }
 // User pagination
