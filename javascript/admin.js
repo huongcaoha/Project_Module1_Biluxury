@@ -16,6 +16,14 @@ const formatter = new Intl.NumberFormat("vi-VN", {
   minimumFractionDigits: 0,
 });
 // -------------------------------------------------------------------Controls dashbroad
+const humbergerNavBar = document.querySelectorAll(".humberger-navBar");
+for (let nav of humbergerNavBar) {
+  let value = nav.getAttribute("title");
+  nav.addEventListener("click", function () {
+    updateDataLocalStorage("currentDisplayContent", value);
+    window.location.reload();
+  });
+}
 const controlContent1 = document.getElementById("content1");
 controlContent1.addEventListener("click", function () {
   updateDataLocalStorage("currentDisplayContent", 1);
@@ -112,7 +120,42 @@ for (let i = 1; i < listControls.length; i++) {
     listControls[i].classList.add("display-none");
   }
 }
-
+//data demo list orders
+class Product {
+  constructor(idProduct, productName, price, quantity) {
+    (this.idProduct = idProduct),
+      (this.productName = productName),
+      (this.price = price),
+      (this.quantity = quantity),
+      (this.totalMoney = this.price * this.quantity);
+  }
+}
+let listOrdersDemo = [];
+for (let i = 1; i <= 20; i++) {
+  let order = {
+    id: i,
+    listProduct: [
+      new Product(1, `Product1`, 5000, i),
+      new Product(2, `Product2`, 6000, i),
+      new Product(3, `Product3`, 7000, i),
+      new Product(4, `Product4`, 8000, i),
+      new Product(5, `Product5`, 9000, i),
+      new Product(6, `Product6`, 10000, i),
+      new Product(7, `Product7`, 11000, i),
+      new Product(8, `Product8`, 12000, i),
+    ],
+    totalMoney: 1234567,
+    day: new Date().getDate(),
+    month: new Date().getMonth() + 1,
+    year: new Date().getFullYear(),
+    status: 3,
+    idUser: 1,
+  };
+  listOrdersDemo.push(order);
+}
+if (!getDataLocalstorage("listOrders")) {
+  updateDataLocalStorage("listOrders", listOrdersDemo);
+}
 // section Content1
 let revenueMonth1 = Object.values(getDataLocalstorage("listOrders"))
   .filter((order) => order.month == 1 && order.year == new Date().getFullYear())
@@ -181,6 +224,35 @@ let revenueMonth12 = Object.values(getDataLocalstorage("listOrders"))
 revenueMonth12 = Math.ceil((revenueMonth12 / 30000000) * 100);
 
 const countProduct = getDataLocalstorage("products").length;
+
+// tạo dữ liệu giả để phục vụ cho tạo trang Users
+class User {
+  constructor(id, username, password, email, phoneNumber, birthday) {
+    (this.id = id),
+      (this.username = username),
+      (this.password = password),
+      (this.email = email),
+      (this.phoneNumber = phoneNumber),
+      (this.birthday = birthday),
+      (this.status = 1),
+      (this.createdDate = new Date());
+  }
+}
+let listUsersDemo = [];
+for (let i = 1; i <= 20; i++) {
+  let newUser = new User(
+    i,
+    `user${i}`,
+    "123456789",
+    `user${i}@gmail.com`,
+    "0123456789",
+    "23/08/1994"
+  );
+  listUsersDemo.push(newUser);
+}
+if (!getDataLocalstorage("listUsers")) {
+  updateDataLocalStorage("listUsers", listUsersDemo);
+}
 
 const revenue = Object.values(getDataLocalstorage("listOrders"))
   .filter(
@@ -337,10 +409,18 @@ for (let month of arrMonths) {
 // ---------------------------------------------------------------------------------section products---------------------------------------------------------------------------
 
 //in ra công cụ tìm kiếm trong filter product
-let search = getDataLocalstorage("productFilterSearch").trim();
-let price = getDataLocalstorage("productFilterPrice");
-let category = getDataLocalstorage("productFilterCategory");
-let color = getDataLocalstorage("productFilterColor");
+let search = getDataLocalstorage("productFilterSearch")
+  ? getDataLocalstorage("productFilterSearch").trim()
+  : "";
+let price = getDataLocalstorage("productFilterPrice")
+  ? getDataLocalstorage("productFilterPrice")
+  : 0;
+let category = getDataLocalstorage("productFilterCategory")
+  ? getDataLocalstorage("productFilterCategory")
+  : "";
+let color = getDataLocalstorage("productFilterColor")
+  ? getDataLocalstorage("productFilterColor")
+  : "";
 let productFilterNav = document.querySelector(".productFilterNav");
 productFilterNav.innerHTML = ` <input type="text" name="productSearch" id="productSearch" placeholder="${search}"/>
             <button class="productButtonSearch">Search</button>
@@ -507,12 +587,13 @@ if (!search && !price && !category && !color) {
     currentProducts = totalProducts.filter((product) =>
       new RegExp(search, "i").test(product.name.toLowerCase())
     );
-    // console.log(currentProducts);
   }
 
   if (price) {
-    currentProducts = currentProducts.filter(
-      (product) => product.price < price
+    currentProducts = currentProducts.filter((product) =>
+      price == 3000000
+        ? product.price < price && product.price >= 2000000
+        : product.price < price
     );
   }
 
@@ -527,7 +608,7 @@ if (!search && !price && !category && !color) {
       (product) => product.color == color
     );
   }
-  // updateDataLocalStorage("adminProductCurrentPage", 1);
+
   adminProductCurrentPage = getDataLocalstorage("adminProductCurrentPage");
   totalPage = Math.ceil(currentProducts.length / itemPerPage);
   if (adminProductCurrentPage > totalPage) {
@@ -539,7 +620,13 @@ if (!search && !price && !category && !color) {
     currentProducts = currentProducts.slice(skip, skip + 5);
   }
 }
-console.log(currentProducts);
+if (currentProducts.length == 0) {
+  Swal.fire("Không tìm thấy sản phẩm nào !");
+  updateDataLocalStorage("productFilterSearch", "");
+  updateDataLocalStorage("productFilterCategory", "");
+  updateDataLocalStorage("productFilterColor", "");
+  updateDataLocalStorage("productFilterPrice", "");
+}
 function getProduct(currentProducts) {
   let contentHtmlTable = ` <tr>
             <th>Id</th>
@@ -580,7 +667,7 @@ function getProduct(currentProducts) {
   }
   return contentHtmlTable;
 }
-// phân trang admin product
+
 let curentPagination = Math.ceil(adminProductCurrentPage / 10) * 10;
 
 function getCurrentPagination(adminProductCurrentPage) {
@@ -617,6 +704,7 @@ updateProducts(
   currentProducts
 );
 
+// phân trang admin product
 let subPagination = document.querySelectorAll(".sub-pagination");
 let ltPagination = document.getElementById("lt-pagination");
 let gtPagination = document.getElementById("gt-pagination");
@@ -1186,41 +1274,6 @@ if (!getDataLocalstorage("listOrders")) {
   updateDataLocalStorage("listOrders", listOrders);
 }
 
-//data demo list orders
-class Product {
-  constructor(idProduct, productName, price, quantity) {
-    (this.idProduct = idProduct),
-      (this.productName = productName),
-      (this.price = price),
-      (this.quantity = quantity),
-      (this.totalMoney = this.price * this.quantity);
-  }
-}
-// let listOrdersDemo = [];
-// for (let i = 1; i <= 20; i++) {
-//   let order = {
-//     id: i,
-//     listProduct: [
-//       new Product(1, `Product1`, 5000, i),
-//       new Product(2, `Product2`, 6000, i),
-//       new Product(3, `Product3`, 7000, i),
-//       new Product(4, `Product4`, 8000, i),
-//       new Product(5, `Product5`, 9000, i),
-//       new Product(6, `Product6`, 10000, i),
-//       new Product(7, `Product7`, 11000, i),
-//       new Product(8, `Product8`, 12000, i),
-//     ],
-//     totalMoney: 1234567,
-//     day: new Date().getDate(),
-//     month: new Date().getMonth() + 1,
-//     year: new Date().getFullYear(),
-//     status: 3,
-//     idUser: 1,
-//   };
-//   listOrdersDemo.push(order);
-// }
-// updateDataLocalStorage("listOrders", listOrdersDemo);
-
 // get dữ liệu in ra bảng trong section orders
 if (orderFilterDate || orderFilterMonth || orderFilterYear) {
   if (orderFilterDate) {
@@ -1234,6 +1287,12 @@ if (orderFilterDate || orderFilterMonth || orderFilterYear) {
   if (orderFilterYear) {
     listOrders = listOrders.filter((order) => order.year == orderFilterYear);
   }
+}
+if (listOrders.length == 0) {
+  Swal.fire("Không tìm thấy đơn đặt hàng nào !");
+  updateDataLocalStorage("orderFilterDate", 0);
+  updateDataLocalStorage("orderFilterMonth", 0);
+  updateDataLocalStorage("orderFilterYear", 0);
 }
 let orderCurrentPage = 1;
 if (getDataLocalstorage("orderCurrentPage")) {
@@ -1261,6 +1320,7 @@ let tableSectionOrders = document.getElementById("tableSectionOrders");
 if (getDataLocalstorage("listOrders")) {
   listOrders = getDataLocalstorage("listOrders");
 }
+
 for (let order of orderCurrentList) {
   let listProduct = order.listProduct
     .map((element) => element.productName)
@@ -1378,18 +1438,6 @@ userButtonSearch.addEventListener("click", function () {
 });
 
 //---------------------
-class User {
-  constructor(id, username, password, email, phoneNumber, birthday) {
-    (this.id = id),
-      (this.username = username),
-      (this.password = password),
-      (this.email = email),
-      (this.phoneNumber = phoneNumber),
-      (this.birthday = birthday),
-      (this.status = 1),
-      (this.createdDate = new Date());
-  }
-}
 
 let listUsers = [];
 if (getDataLocalstorage("listUsers")) {
@@ -1406,20 +1454,6 @@ if (getDataLocalstorage("userContentSearch") != null) {
   );
 }
 
-// tạo dữ liệu giả để phục vụ cho tạo trang Users
-// let listUsersDemo = [];
-// for (let i = 1; i <= 20; i++) {
-//   let newUser = new User(
-//     i,
-//     `user${i}`,
-//     "123456789",
-//     `user${i}@gmail.com`,
-//     "0123456789",
-//     "23/08/1994"
-//   );
-//   listUsersDemo.push(newUser);
-// }
-// updateDataLocalStorage("listUsers", listUsersDemo);
 let userCurrentPage = 1;
 if (getDataLocalstorage("userCurrentPage")) {
   userCurrentPage = getDataLocalstorage("userCurrentPage");
@@ -1447,6 +1481,7 @@ let contentTableSectionUsers = ` <tr>
             <th>Status</th>
             <th></th>
           </tr>`;
+
 for (let user of listCurrentUsers) {
   let status = user.status == 1 ? "on" : "off";
   contentTableSectionUsers += `<tr>
@@ -1462,7 +1497,10 @@ for (let user of listCurrentUsers) {
           </tr>`;
 }
 tableSectionUsers.innerHTML = contentTableSectionUsers;
-
+if (listUsers.length == 0) {
+  Swal.fire("Không tìm thấy người dùng nào !");
+  updateDataLocalStorage("userContentSearch", "");
+}
 // User pagination
 userCurrentPage = getDataLocalstorage("userCurrentPage");
 let userPagination = document.querySelector(".userPagination");
