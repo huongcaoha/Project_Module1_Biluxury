@@ -1,10 +1,17 @@
+// kiểm tra xem đã đăng nhập tài khoản chưa ?
+if (!getDataLocalstorage("statusLogin")) {
+  window.location.href = "../html/login.html";
+}
+if (getDataLocalstorage("statusLogin") != 2) {
+  window.location.href = "../html/login.html";
+}
 // hiển thị tên admin
 let navAdmin = document.querySelector(".nav-admin");
-let admin = "huongcaoha1994";
+let admin = "";
 if (getDataLocalstorage("admin")) {
   admin = getDataLocalstorage("admin");
 } else {
-  updateDataLocalStorage("admin", admin);
+  window.location.href = "../html/login.html";
 }
 
 navAdmin.innerHTML += `<li><i class="fa-solid fa-user-tie"></i><b>${admin}</b></li>`;
@@ -224,7 +231,9 @@ let revenueMonth12 = Object.values(getDataLocalstorage("listOrders"))
   .reduce((pre, curent) => pre + curent.totalMoney, 0);
 revenueMonth12 = Math.ceil((revenueMonth12 / 30000000) * 100);
 
-const countProduct = getDataLocalstorage("products").length;
+const countProduct = getDataLocalstorage("products")
+  ? getDataLocalstorage("products").length
+  : 0;
 
 // tạo dữ liệu giả để phục vụ cho tạo trang Users
 class User {
@@ -1495,7 +1504,11 @@ for (let user of listCurrentUsers) {
           </tr>`;
 }
 tableSectionUsers.innerHTML = contentTableSectionUsers;
-if (listUsers.length == 0) {
+if (getDataLocalstorage("listUsers")) {
+  listUsers = getDataLocalstorage("listUsers");
+}
+
+if (listUsers.length <= 0) {
   alert("Không tìm thấy user nào !");
   updateDataLocalStorage("userContentSearch", "");
 }

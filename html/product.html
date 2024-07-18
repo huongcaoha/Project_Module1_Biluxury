@@ -21,7 +21,7 @@
             <img src="../image/logo.svg" alt="logo" class="logo"
           /></a>
         </li>
-        <li><a href="#">Trang chủ</a></li>
+        <li><a href="main.html">Trang chủ</a></li>
         <li class="navbar-category">
           <a href="#">Danh mục</a>
           <div id="category">
@@ -127,7 +127,14 @@
             </ul>
           </div>
         </li>
-        <li><a href="#">Về chúng tôi</a></li>
+        <li>
+          <a href="#">Về chúng tôi</a>
+          <div class="filterProduct">
+            <div class="productFilter"></div>
+          </div>
+        </li>
+        <li id="user"></li>
+
         <li>
           <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
         </li>
@@ -137,136 +144,8 @@
     <div>
       <img class="slide" src="../image/slide/slidePatternedShirt.jpg" alt="" />
     </div>
-
+    <h1 style="text-align: center; margin: 50px">Danh sách sản phẩm</h1>
     <main>
-      <div class="filter">
-        <div class="search">
-          <form action="" method="GET">
-            <input
-              type="text"
-              name="search"
-              id="search"
-              placeholder="  Tìm kiếm sản phẩm"
-            />
-            <a href="product.html" id="button-search">Tìm kiếm</a>
-          </form>
-        </div>
-
-        <h3 class="title-filter">Bộ lọc</h3>
-        <div class="nav-filter">
-          <div class="filter-category">
-            <label for="categories">Category</label>
-            <select name="categories" id="categories">
-              <option value="">Chọn</option>
-              <option value="1">Áo Vest Name</option>
-              <option value="2">Áo Ba Lỗ</option>
-              <option value="3">Áo Sơ Mi Dài Tay</option>
-              <option value="4">Áo Sơ Mi Họa Tiết</option>
-              <option value="5">Áo Polo Nam</option>
-              <option value="6">Áo Polo Dài Tay</option>
-              <option value="7">Áo Sơ Mi Hàn Quốc</option>
-              <option value="8">Áo Khoác</option>
-              <option value="9">Bộ Nỉ</option>
-              <option value="all">Tất Cả</option>
-            </select>
-          </div>
-
-          <div class="filter-color">
-            <div>
-              <input type="radio" name="color" id="white" value="white" />
-              <label for="white">Màu Trắng</label>
-            </div>
-
-            <div>
-              <input type="radio" name="color" id="black" value="black" />
-              <label for="black">Màu Đen</label>
-            </div>
-
-            <div>
-              <input type="radio" name="color" id="blue" value="blue" />
-              <label for="blue">Màu Xanh</label>
-            </div>
-
-            <div>
-              <input type="radio" name="color" id="grey" value="grey" />
-              <label for="grey">Màu Xám</label>
-            </div>
-
-            <div>
-              <input type="radio" name="color" id="caro" value="caro" />
-              <label for="caro">Màu Caro</label>
-            </div>
-
-            <div>
-              <input type="radio" name="color" id="purple" value="purple" />
-              <label for="purple">Màu Tím</label>
-            </div>
-
-            <div>
-              <input type="radio" name="color" id="pink" value="pink" />
-              <label for="pink">Màu Hồng</label>
-            </div>
-
-            <div>
-              <input type="radio" name="color" id="brown" value="brown" />
-              <label for="brown">Màu Nâu</label>
-            </div>
-
-            <div>
-              <input type="radio" name="color" id="gray" value="gray" />
-              <label for="gray">Màu Ghi</label>
-            </div>
-          </div>
-
-          <div class="filter-price">
-            <div>
-              <input type="radio" name="price" id="0-300k" value="300000" />
-              <label for="0-300k">Dưới 300K</label>
-            </div>
-
-            <div>
-              <input type="radio" name="price" id="300k-500k" value="500000" />
-              <label for="300k-500k">300K - 500K</label>
-            </div>
-
-            <div>
-              <input type="radio" name="price" id="500k-900k" value="900000" />
-              <label for="500k-900k">500K - 900K</label>
-            </div>
-
-            <div>
-              <input
-                type="radio"
-                name="price"
-                id="900k-1400k"
-                value="1400000"
-              />
-              <label for="900k-1500k">900K - 1400K</label>
-            </div>
-
-            <div>
-              <input
-                type="radio"
-                name="price"
-                id="1400k-2000k"
-                value="2000000"
-              />
-              <label for="1400k-2000k">1400K - 2000K</label>
-            </div>
-
-            <div>
-              <input
-                type="radio"
-                name="price"
-                id="2000k-3000k"
-                value="3000000"
-              />
-              <label for="2000k-3000k">2000K - 3000K</label>
-            </div>
-          </div>
-        </div>
-      </div>
-
       <div class="resultProduct"></div>
     </main>
 
