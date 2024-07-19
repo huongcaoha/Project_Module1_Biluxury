@@ -14,7 +14,20 @@ if (getDataLocalstorage("admin")) {
   window.location.href = "../html/login.html";
 }
 
-navAdmin.innerHTML += `<li><i class="fa-solid fa-user-tie"></i><b>${admin}</b></li>`;
+navAdmin.innerHTML += `<li><i class="fa-solid fa-user-tie"></i><b>${admin}</b></li>
+ <li><a href="./login.html"><i class="fa-solid fa-right-from-bracket" id="buttonLogout"></i></a></li>`;
+
+//------------------
+
+// xử lý button login
+if (document.getElementById("buttonLogout")) {
+  let buttonLogout = document.getElementById("buttonLogout");
+  buttonLogout.addEventListener("click", function () {
+    updateDataLocalStorage("nameUser", "");
+    updateDataLocalStorage("statusLogin", 0);
+    window.location.href = "../html/login.html";
+  });
+}
 
 //------------------
 const formatter = new Intl.NumberFormat("vi-VN", {

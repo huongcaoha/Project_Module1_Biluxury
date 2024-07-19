@@ -4,13 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
-
-    <script
-      src="https://kit.fontawesome.com/277e9b3392.js"
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
       crossorigin="anonymous"
-    ></script>
-    <link rel="stylesheet" href="../css/login.css" />
+      referrerpolicy="no-referrer"
+    />
+    <link rel="stylesheet" href="../css/productDetail.css" />
   </head>
   <body>
     <div class="header">
@@ -105,9 +110,9 @@
               <li>
                 <a href="product.html" class="categorySlide" title="8">
                   <img
+                    title="8"
                     src="../image/category/jacket.webp"
                     alt="category"
-                    title="8"
                   />
                   Áo Khoác
                 </a>
@@ -116,9 +121,9 @@
               <li>
                 <a href="product.html" class="categorySlide" title="9">
                   <img
+                    title="9"
                     src="../image/category/feltset.webp"
                     alt="category"
-                    title="9"
                   />
                   Bộ Nỉ
                 </a>
@@ -126,35 +131,78 @@
             </ul>
           </div>
         </li>
-        <li><a href="#">Về chúng tôi</a></li>
+        <li>
+          <a href="#">Về chúng tôi</a>
+          <div class="filterProduct">
+            <div class="productFilter"></div>
+          </div>
+        </li>
+        <li id="user"></li>
+        <li id="buttonLogout">
+          <i class="fa-solid fa-right-from-bracket" style="cursor: pointer"></i>
+        </li>
+
         <li>
           <a href="#"><i class="fa-solid fa-cart-shopping"></i></a>
         </li>
       </ul>
     </div>
-    <div class="container">
-      <div class="form">
-        <h2>Login</h2>
-        <label for="username"><i class="fa-solid fa-user"></i></label>
-        <input
-          type="text"
-          name="username"
-          id="username"
-          placeholder="  Username"
-        />
-        <br />
-        <label for="password"><i class="fa-solid fa-lock"></i></label>
-        <input
-          type="password"
-          name="password"
-          id="password"
-          placeholder="  Password"
-        />
-        <br />
-        <button id="buttonLogin">Login</button>
-        <a href="./register.html" id="buttonRegister">Register</a>
+
+    <div class="productDetail">
+      <div class="image1">
+        <img src="../image/products/koreanMen_image1.webp" alt="image" />
+      </div>
+
+      <div class="image2">
+        <img src="../image/products/koreanMen_image1_1.webp" alt="image" />
+      </div>
+      <div class="inforProduct">
+        <h2>
+          [Mua 1 Tặng 1] Bộ Vest Xanh Nhạt Biluxury 6AVBH202XNH + Quần Âu
+          6QAVH202XNH
+        </h2>
+        <h3>5.0 ★★★★★ | Đã bán: 7355</h3>
+        <p>Tình trạng: Còn hàng</p>
+        <h2>2,348,000₫</h2>
+        <p>Size ✄ Giúp bạn chọn size Bảng size</p>
+        <div class="size">
+          <button>39</button> <button>40</button> <button>41</button>
+          <button>42</button> <button>43</button><br />
+        </div>
+        <div class="quantity">
+          <label for="quantity">Số Lượng :</label>
+          <button id="down">-</button>
+          <input type="number" name="quantity" id="quantity" />
+          <button id="up">+</button>
+        </div>
+        <button id="add">Thêm vào giỏ hàng</button>
+        <p><b>Dự kiến giao hàng trước:</b> Thứ Ba, 23 tháng 7</p>
       </div>
     </div>
-    <script src="../javascript/login.js"></script>
+    <footer>
+      <img src="../image/logo-footer.svg" alt="logo-footer" />
+      <br />
+      <br />
+      <h3>CÔNG TY CỔ PHẦN TẬP ĐOÀN THỜI TRANG VIỆT NAM</h3>
+      <br />
+      <p>
+        Địa chỉ: 505 Nguyễn Trãi, Phường Thanh Xuân Nam, Quận Thanh Xuân, Thành
+        phố Hà Nội, Việt Nam
+      </p>
+      <br />
+      <p>
+        Mã số doanh nghiệp: 0108610681 do Sở Kế hoạch và Đầu tư Tp Hà Nội cấp
+        lần đầu ngày 01/02/2019
+      </p>
+      <br />
+      <a href="#"><strong>Hotline: 094.432.8989</strong></a
+      ><br />
+      <br />
+      <p>
+        Copyright © 2024 BILUXURY. Powered by BILUXURY - reflect content:
+        heroseo
+      </p>
+    </footer>
+    <script src="../javascript/productDetail.js"></script>
   </body>
 </html>

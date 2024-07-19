@@ -130,9 +130,9 @@ body {
                 width: 70px;
                 height: 3vh;
                 border-radius: 5px;
-                background-color: rgb(78, 41, 113);
-                color: white;
-                margin-left: 20px;
+                color: rgb(43, 33, 132);
+                margin-left: 100px;
+                font-size: 22px;
             }
         }
     }

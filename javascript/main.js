@@ -19,6 +19,7 @@ let category = [
   "feltset",
 ];
 
+//xử lý click chọn category
 let categoryProduct = 1;
 let slide = 1;
 
@@ -625,16 +626,27 @@ let listProduct = [
 let tagUser = document.getElementById("user");
 if (getDataLocalstorage("nameUser")) {
   const nameUser = getDataLocalstorage("nameUser");
-  tagUser.innerHTML = `<a href="#"><i class="fa-solid fa-user"></i>${nameUser}<i class="fa-solid fa-right-from-bracket" id="buttonLogout"></i></a>`;
+  tagUser.innerHTML = `<a href="#"><i class="fa-solid fa-user"></i>${nameUser}</a>`;
 } else {
   tagUser.innerHTML = `<a href="../html/login.html"><button id="buttonLogin">Login</button></a>`;
 }
 
-// xử lý button login
+// xử lý button logout
 if (document.getElementById("buttonLogout")) {
   let buttonLogout = document.getElementById("buttonLogout");
   buttonLogout.addEventListener("click", function () {
     updateDataLocalStorage("nameUser", "");
+    updateDataLocalStorage("statusLogin", 0);
+    window.location.href = "../html/login.html";
+  });
+}
+
+// xử lý button login
+if (document.getElementById("buttonLogin")) {
+  let buttonLogin = document.getElementById("buttonLogin");
+  buttonLogin.addEventListener("click", function () {
+    updateDataLocalStorage("nameUser", "");
+    updateDataLocalStorage("statusLogin", 0);
     window.location.href = "../html/login.html";
   });
 }
@@ -659,12 +671,13 @@ for (let product of listVest) {
             <div class="item">
               <img
               id="${product.id}"
-              
+              class="itemVest"
+              image2="${product.image2}"
               src="${product.image1}"
               alt="${product.name}"
             </div>
 
-    <a href="#" class="buy-now">Mua ngay</a>
+    <a href="../html/productDetail.html" class="buy-now" id="${product.id}">Mua ngay</a>
   </div>
     `);
 }
@@ -679,10 +692,39 @@ function displayPolo() {
   for (let i = 0; i < 4; i++) {
     tagVestProduct.innerHTML += productVest[i];
   }
+  // xử lý sự kiện hover vào product vest item
+  const listItemVests = document.querySelectorAll(".itemVest");
+  for (let item of listItemVests) {
+    item.addEventListener("mouseover", function () {
+      let image2 = item.getAttribute("image2");
+      setTimeout(function () {
+        item.src = image2;
+      }, 200);
+    });
+
+    item.addEventListener("mouseout", function () {
+      let id = item.getAttribute("id");
+      let index = listVest.findIndex((vest) => vest.id == id);
+      let image1 = listVest[index].image1;
+      setTimeout(function () {
+        item.src = image1;
+      }, 200);
+    });
+  }
+
+  // xử lý sự kiện click vào buy-now
+  const buyNowVest = document.querySelectorAll(".buy-now");
+  for (let buy of buyNowVest) {
+    buy.addEventListener("click", function (e) {
+      console.log("huongcaoha");
+      let id = e.target.getAttribute("id");
+      updateDataLocalStorage("productDetail", id);
+    });
+  }
 }
 let setIntervalPolo;
 function runCategoryPolo() {
-  setIntervalPolo = setInterval(displayPolo, 2000);
+  setIntervalPolo = setInterval(displayPolo, 3000);
 }
 
 function stopCategoryPolo() {
@@ -736,7 +778,9 @@ for (let product of newListProducts) {
                 src="${product.image1}"
                 alt="${product.name}"
                 />
-                <a href="#" class="buy-now">Mua ngay</a>
+                <a href="../html/productDetail.html" class="buy-now" id="${
+                  product.id
+                }">Mua ngay</a>
             </div>
               <p>${product.name}</p>
                <p>${new Intl.NumberFormat("vi-VN", { style: "decimal" }).format(
@@ -746,6 +790,17 @@ for (let product of newListProducts) {
           </div>
     `;
 }
+
+// xử lý sự kiện click vào buy-now
+const buyNows = document.querySelectorAll(".buy-now");
+for (let buy of buyNows) {
+  buy.addEventListener("click", function () {
+    let id = buy.getAttribute("id");
+    updateDataLocalStorage("productDetail", id);
+  });
+}
+
+//------------------------------------
 
 let listItems = tagListTotalProduct.querySelectorAll(".item-product");
 for (let item of listItems) {
@@ -879,7 +934,7 @@ filterProductPrice.addEventListener("change", function () {
   updateDataLocalStorage("filterProductPrice", filterProductPrice.value);
   window.location.href = "../html/product.html";
 });
-console.log(filterProductPrice);
+
 const buttonFilterSearch = document.querySelector(".filterButtonSearch");
 const filterProductSearch = document.getElementById("filterSearch");
 buttonFilterSearch.addEventListener("click", function () {
