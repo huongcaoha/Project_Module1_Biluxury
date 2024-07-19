@@ -36,7 +36,6 @@ function reload() {
     let buttonLogout = document.getElementById("buttonLogout");
     buttonLogout.addEventListener("click", function () {
       updateDataLocalStorage("nameUser", "");
-      reload();
     });
   }
   //------------------

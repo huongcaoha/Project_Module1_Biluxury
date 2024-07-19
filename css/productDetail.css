@@ -29,6 +29,7 @@ ul {
     #navFilter:hover {
         .productFilter {
             display: flex;
+
         }
     }
 
@@ -80,7 +81,9 @@ ul {
                             width: 50px;
                             margin-bottom: -25px;
                         }
+
                     }
+
 
 
                 }
@@ -120,11 +123,15 @@ ul {
                 position: absolute;
                 top: 0;
                 left: 0;
-                background-color: #f6f6f6;
+                background-color: #ece7e7;
                 border: 1px solid rgb(213, 210, 210);
                 padding: 0 10px;
             }
+
         }
+
+        /* css number carts */
+
 
         #user {
 
@@ -208,6 +215,7 @@ ul {
             color: white;
             border-radius: 5px;
             border: none;
+            font-size: 20px;
         }
 
     }
