@@ -39,6 +39,19 @@ ul {
     justify-content: space-around;
     list-style-type: none;
 
+    /* css number carts */
+    span#numberCarts {
+        background-color: blanchedalmond;
+        position: absolute;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+        border-radius: 50%;
+        line-height: 30px;
+
+
+    }
+
     #buttonLogin {
         width: 80px;
         height: 3vh;

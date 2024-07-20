@@ -9,6 +9,16 @@ function reload() {
     localStorage.setItem(nameData, JSON.stringify(newData));
   }
 
+  // hiển thị icon giỏ hàng và số lượng sản phẩm trong giỏ hàng
+  const nameUserCart = getDataLocalstorage("nameUser") + "Carts";
+  let carts = getDataLocalstorage(nameUserCart) || [];
+  let totalProductCarts = carts.reduce(
+    (pre, current) => (pre += current.quantity),
+    0
+  );
+  let iconCart = document.getElementById("carts");
+  iconCart.innerHTML = ` <a href="#"><i class="fa-solid fa-cart-shopping" style="color : black"></i><span id="numberCarts">${totalProductCarts}</span></a>`;
+
   // khai báo biến
   let slide = document.querySelector(".slide");
   const slideVest = "../image/slide/sildeVest.webp";

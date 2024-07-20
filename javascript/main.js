@@ -622,6 +622,16 @@ let listProduct = [
   },
 ];
 
+// hiển thị icon giỏ hàng và số lượng sản phẩm trong giỏ hàng
+const nameUserCart = getDataLocalstorage("nameUser") + "Carts";
+let carts = getDataLocalstorage(nameUserCart) || [];
+let totalProductCarts = carts.reduce(
+  (pre, current) => (pre += current.quantity),
+  0
+);
+let iconCart = document.getElementById("carts");
+iconCart.innerHTML = ` <a href="#"><i class="fa-solid fa-cart-shopping" style="color : black"></i><span id="numberCarts">${totalProductCarts}</span></a>`;
+
 // in ra tên user
 let tagUser = document.getElementById("user");
 if (getDataLocalstorage("nameUser")) {

@@ -56,7 +56,7 @@ let listUsers = getDataLocalstorage("listUsers")
   : [];
 
 buttonRegister.addEventListener("click", function () {
-  let check = true;
+  let check = 1;
   id = listUsers.length == 0 ? 1 : listUsers[listUsers.length - 1].id + 1;
   for (let radio of listRadio) {
     if (radio.checked) {
@@ -73,24 +73,21 @@ buttonRegister.addEventListener("click", function () {
     !phoneNumber.value ||
     !email.value
   ) {
-    alert("Please do not leave any fields blank !");
+    check = 2;
   } else {
     if (password.value != rePassword.value) {
-      check = false;
+      check = 3;
     } else {
       for (let user of listUsers) {
-        if (
-          user.username == username.value &&
-          user.password == password.value
-        ) {
-          check = true;
+        if (user.username == username.value) {
+          check = 4;
           break;
         }
       }
     }
   }
 
-  if (check) {
+  if (check == 1) {
     let user = new User(
       id,
       username.value,
@@ -105,5 +102,11 @@ buttonRegister.addEventListener("click", function () {
     updateDataLocalStorage("listUsers", listUsers);
     alert("Register successfully");
     window.location.href = "../html/login.html";
+  } else if (check == 2) {
+    alert("Please do not leave any fields blank !");
+  } else if (check == 3) {
+    alert("password and rePassword not match !");
+  } else {
+    alert("Account already exists");
   }
 });
