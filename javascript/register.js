@@ -79,7 +79,7 @@ buttonRegister.addEventListener("click", function () {
       check = 3;
     } else {
       for (let user of listUsers) {
-        if (user.username == username.value) {
+        if (user.username == username.value && user.email == email.value) {
           check = 4;
           break;
         }

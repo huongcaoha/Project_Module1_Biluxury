@@ -17,7 +17,7 @@ function reload() {
     0
   );
   let iconCart = document.getElementById("carts");
-  iconCart.innerHTML = ` <a href="#"><i class="fa-solid fa-cart-shopping" style="color : black"></i><span id="numberCarts">${totalProductCarts}</span></a>`;
+  iconCart.innerHTML = ` <a href="../html/carts.html"><i class="fa-solid fa-cart-shopping" style="color : black"></i><span id="numberCarts">${totalProductCarts}</span></a>`;
 
   // khai báo biến
   let slide = document.querySelector(".slide");
@@ -46,6 +46,7 @@ function reload() {
     let buttonLogout = document.getElementById("buttonLogout");
     buttonLogout.addEventListener("click", function () {
       updateDataLocalStorage("nameUser", "");
+      updateDataLocalStorage("statusLogin", 0);
     });
   }
   //------------------

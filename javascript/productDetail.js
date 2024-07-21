@@ -16,7 +16,7 @@ function loadProduct(css) {
     0
   );
   let iconCart = document.getElementById("carts");
-  iconCart.innerHTML = ` <a href="#"><i class="fa-solid fa-cart-shopping" style="color : black"></i><span id="numberCarts">${totalProductCarts}</span></a>`;
+  iconCart.innerHTML = ` <a href="../html/carts.html"><i class="fa-solid fa-cart-shopping" style="color : black"></i><span id="numberCarts">${totalProductCarts}</span></a>`;
 
   // in ra tên user
   let tagUser = document.getElementById("user");
@@ -32,6 +32,7 @@ function loadProduct(css) {
     let buttonLogout = document.getElementById("buttonLogout");
     buttonLogout.addEventListener("click", function () {
       updateDataLocalStorage("nameUser", "");
+      updateDataLocalStorage("statusLogin", 0);
       window.location.href = "../html/login.html";
     });
   }
@@ -134,7 +135,11 @@ function loadProduct(css) {
           <input type="number" name="quantity" id="quantity" value="1"/>
           <button id="up">+</button>
         </div>
-        <button id="add" idProduct=${product.id}>Thêm vào giỏ hàng</button>
+        <button id="add" idProduct=${product.id}>Thêm vào giỏ hàng
+              <div class="sub-image">
+      <img src="${product.image1}" alt="sub-image">
+    </div>
+        </button>
         <p><b>Dự kiến giao hàng trước:</b> ${day}, Ngày ${date} tháng ${month}</p>
       </div>`;
 
@@ -167,12 +172,12 @@ function loadProduct(css) {
   // ------------------------------xử lý sự kiện add to cart
 
   //thêm class xử lý hình ảnh addtocart
-  let image2 = document.querySelector(".image2");
-  image2.classList.add(css);
+  let subImage = document.querySelector(".sub-image");
+  subImage.classList.add(css);
 
   // xóa class xử lý hình ảnh addtocart
   setTimeout(function () {
-    image2.classList.remove(css);
+    subImage.classList.remove(css);
   }, 1500);
 
   const buttonAdd = document.getElementById("add");
@@ -197,8 +202,8 @@ function loadProduct(css) {
           carts[indexCart].quantity = carts[indexCart].quantity =
             Number.parseInt(carts[indexCart].quantity) +
             Number.parseInt(buttonQuantity.value);
-          listProducts[indexProduct].inventor -= buttonQuantity.value;
-          updateDataLocalStorage("products", listProducts);
+          // listProducts[indexProduct].inventory -= buttonQuantity.value;
+          // updateDataLocalStorage("products", listProducts);
           updateDataLocalStorage(nameUserCart, carts);
           alert("Đã thêm sản phẩm vào giỏ hàng !");
           loadProduct("addToCarts");
@@ -214,8 +219,8 @@ function loadProduct(css) {
             size: productSize,
           };
           carts.push(newProduct);
-          listProducts[indexProduct].inventor -= buttonQuantity.value;
-          updateDataLocalStorage("products", listProducts);
+          // listProducts[indexProduct].inventory -= buttonQuantity.value;
+          // updateDataLocalStorage("products", listProducts);
           updateDataLocalStorage(nameUserCart, carts);
           alert("Đã thêm sản phẩm vào giỏ hàng !");
           loadProduct("addToCarts");

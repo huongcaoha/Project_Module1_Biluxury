@@ -630,7 +630,7 @@ let totalProductCarts = carts.reduce(
   0
 );
 let iconCart = document.getElementById("carts");
-iconCart.innerHTML = ` <a href="#"><i class="fa-solid fa-cart-shopping" style="color : black"></i><span id="numberCarts">${totalProductCarts}</span></a>`;
+iconCart.innerHTML = ` <a href="../html/carts.html"><i class="fa-solid fa-cart-shopping" style="color : black"></i><span id="numberCarts">${totalProductCarts}</span></a>`;
 
 // in ra tên user
 let tagUser = document.getElementById("user");

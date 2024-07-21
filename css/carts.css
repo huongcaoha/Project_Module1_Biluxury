@@ -178,80 +178,73 @@ span#numberCarts {
 
 }
 
-.productDetail {
+main {
+    padding-top: 100px;
     width: 100%;
-    display: flex;
-    gap: 20px;
-    padding: 130px 50px 60px 50px;
+    text-align: center;
 
-    div {
-        width: 30%;
+    #table-carts {
+        margin: 0 auto;
+        margin: 50px auto;
+        text-align: center;
+        width: 100%;
+        padding: 0 10%;
 
-        img {
-            width: 100%;
+        tr {
 
+            th {
+                padding: 15px;
+                background-color: cadetblue;
+            }
+
+            td {
+                padding: 15px;
+                background-color: #f6e2db;
+
+                img {
+                    width: 100px;
+                    height: 100px;
+                }
+
+                .buttonDelete {
+                    background-color: coral;
+                    border: none;
+                    padding: 5px;
+                    color: white;
+                    cursor: pointer;
+                    border-radius: 5px;
+                }
+
+                .up,
+                .down {
+                    padding: 5px;
+                    margin: 0 10px;
+                }
+            }
         }
     }
 
-    .inforProduct {
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-
-        /* gap: 15px 0; */
-        .size {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 0 10px;
-            margin-left: 30px;
-
-            button {
-                width: 70px;
-                height: 35px;
-                padding: 5px;
-            }
+    #totalMoney {
+        h2 {
+            margin-left: 40%;
+            margin-bottom: 20px;
         }
 
-        .quantity {
-            display: flex;
-            width: 100%;
-
-            gap: 0 15px;
-
-            button {
-                width: 20px;
-                height: 20px;
-            }
-        }
-
-        #add {
+        #order {
+            margin-bottom: 20px;
+            width: 200px;
             height: 4vh;
-            background-color: cadetblue;
-            color: white;
             border-radius: 5px;
+            background-color: #db4e1b;
             border: none;
+            color: white;
             font-size: 20px;
-            position: relative;
+            margin-left: 30%;
         }
-
-    }
-
-    .sub-image {
-        width: 100px;
-        height: 100px;
-        position: absolute;
-        bottom: 15%;
-        right: 20%;
-        opacity: 0;
     }
 }
 
-.addToCarts {
-    /* display: block; */
-    position: absolute;
-    animation: scaleImageSmall 0.5s linear 1;
-}
+
 
 /* css footer */
 footer {
@@ -265,41 +258,4 @@ footer {
     }
 }
 
-@media (max-width : 768px) {
-    .productDetail {
-        display: flex;
-        flex-direction: column;
-
-        div {
-            width: 80%;
-        }
-    }
-}
-
-@media (max-width : 1200px) {
-    #user {
-        display: none;
-    }
-}
-
-@keyframes scaleImageSmall {
-    from {
-        transform: scale(1);
-        top: 0;
-        right: 0;
-        opacity: 1;
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(0.1);
-        top: -800px;
-        right: -150px;
-    }
-}
-
-@keyframes moveImage {
-    from {}
-
-    to {}
-}
+@media (max-width : 1200px) {}

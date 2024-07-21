@@ -15,7 +15,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="../css/productDetail.css" />
+    <link rel="stylesheet" href="../css/payment.css" />
   </head>
   <body>
     <div class="header">
@@ -142,16 +142,77 @@
           <i class="fa-solid fa-right-from-bracket" style="cursor: pointer"></i>
         </li>
 
-        <li id="carts">
-         
-        </li>
+        <li id="carts"></li>
       </ul>
     </div>
-   
-    <div class="productDetail">
-      
+
+    <main>
+      <h1>Payment</h1>
+
+      <div class="container">
+        <div class="formPay">
+          <h2>Thông tin giao hàng</h2>
+
+          <input
+            type="text"
+            name="name"
+            id="name"
+            placeholder="Họ và Tên"
+          /><br />
+          <input
+            type="number"
+            name="phone"
+            id="phone"
+            placeholder="Số điện thoại"
+          /><br />
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="Email"
+          /><br />
+          <input
+            type="text"
+            name="address"
+            id="address"
+            placeholder="Địa chỉ"
+          /><br />
+          <input
+            type="text"
+            name="district"
+            id="district"
+            placeholder="Quận/Huyện"
+          /><br />
+          <input
+            type="text"
+            name="city"
+            name="city"
+            placeholder="Tỉnh/Thành phố"
+          />
+          <br />
+
+          <label for="payMethod">Phương thức thanh toán</label><br />
+          <input type="radio" name="payMethod" id="cash" value="Tiền mặt" />
+          <label for="cash">Tiền mặt</label><br />
+
+          <input
+            type="radio"
+            name="payMethod"
+            id="banking"
+            value="Chuyển khoản"
+          />
+          <label for="banking">Chuyển khoản</label>
+        </div>
+
+        <div class="inforOrder">
+          <h2>Thông tin đơn hàng</h2>
+          <table class="listProduct"></table>
+        </div>
       </div>
-    </div>
+
+      <button id="order">Đặt Đơn</button>
+    </main>
+
     <footer>
       <img src="../image/logo-footer.svg" alt="logo-footer" />
       <br />
@@ -176,6 +237,7 @@
         heroseo
       </p>
     </footer>
-    <script src="../javascript/productDetail.js"></script>
+
+    <script src="../javascript/payment.js"></script>
   </body>
 </html>
