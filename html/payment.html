@@ -186,27 +186,27 @@
           <input
             type="text"
             name="city"
-            name="city"
+            id="city"
             placeholder="Tỉnh/Thành phố"
           />
           <br />
+          <textarea name="note" id="note">Ghi chú :</textarea>
+          <br />
 
-          <label for="payMethod">Phương thức thanh toán</label><br />
-          <input type="radio" name="payMethod" id="cash" value="Tiền mặt" />
-          <label for="cash">Tiền mặt</label><br />
+          <label for="payMethod">Phương thức thanh toán :</label><br />
+          <input type="radio" name="payMethod" id="cash" value="cash" />
+          <label for="cash">Tiền mặt</label>
 
-          <input
-            type="radio"
-            name="payMethod"
-            id="banking"
-            value="Chuyển khoản"
-          />
+          <input type="radio" name="payMethod" id="banking" value="banking" />
           <label for="banking">Chuyển khoản</label>
+
+          <div class="qr"></div>
         </div>
 
         <div class="inforOrder">
           <h2>Thông tin đơn hàng</h2>
-          <table class="listProduct"></table>
+          <table id="table-carts"></table>
+          <div class="totalMoney"></div>
         </div>
       </div>
 

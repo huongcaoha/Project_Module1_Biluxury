@@ -198,20 +198,74 @@ main {
             border: 1px solid #db4e1b;
             padding: 30px;
             border-radius: 10px;
+
+            input {
+                width: 60%;
+                height: 4vh;
+                margin: 15px 0;
+                border-radius: 10px;
+            }
+
+            #cash,
+            #banking {
+                width: 20px;
+                margin: 10px 15px;
+
+            }
+
+            textarea {
+                width: 60%;
+                height: 10vh;
+                margin: 15px 0;
+                border-radius: 10px;
+            }
+
+            .qr {
+                display: none;
+            }
         }
 
         .inforOrder {
-            width: 40%;
+            width: 50%;
             border: 1px solid #db4e1b;
             padding: 30px;
             border-radius: 10px;
 
-            .listProduct {
-                img {
-                    width: 100px;
-                    height: 100px;
+            #table-carts {
+
+
+                tr {
+
+                    th {
+                        padding: 15px;
+                        background-color: cadetblue;
+                    }
+
+                    td {
+                        padding: 15px;
+                        background-color: #f6e2db;
+
+                        img {
+                            width: 100px;
+                            height: 100px;
+                        }
+
+                        .buttonDelete {
+                            background-color: coral;
+                            border: none;
+                            padding: 5px;
+                            color: white;
+                            cursor: pointer;
+                            border-radius: 5px;
+                        }
+                    }
                 }
             }
+
+        }
+
+        .totalMoney {
+            margin-top: 20px;
         }
 
     }
@@ -239,5 +293,20 @@ footer {
 
     a {
         color: rgb(227, 219, 219);
+    }
+}
+
+@media (max-width : 1200px) {
+    .container {
+        display: flex;
+        flex-direction: column;
+        gap: 20px 0;
+        justify-content: center;
+        align-items: center;
+
+        div.formPay,
+        div.inforOrder {
+            width: 100%;
+        }
     }
 }

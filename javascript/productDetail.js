@@ -228,6 +228,7 @@ function loadProduct(css) {
       }
     } else {
       alert("Bạn hãy đăng nhập trước nhé !");
+      updateDataLocalStorage("history", "../html/productDetail.html");
       window.location.href = "../html/login.html";
     }
   });

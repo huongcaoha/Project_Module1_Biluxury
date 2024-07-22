@@ -67,7 +67,8 @@ buttonLogin.addEventListener("click", function () {
     } else if (check == 2) {
       updateDataLocalStorage("statusLogin", 1);
       updateDataLocalStorage("nameUser", username.value);
-      window.location.href = "../html/main.html";
+      let history = getDataLocalstorage("history") || "../html/main.html";
+      window.location.href = history;
     } else {
       alert("username and password not found !");
     }

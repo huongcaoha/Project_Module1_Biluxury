@@ -81,7 +81,9 @@ function loadCarts() {
           <td><button class="down" idProduct=${product.id}>-</button> ${
       product.quantity
     } <button class="up" idProduct=${product.id}>+</button></td>
-          <td>${product.size}</td>
+          <td><button class="downSize" idProduct=${product.id}>-</button> ${
+      product.size
+    } <button class="upSize" idProduct=${product.id}>+</button></td>
           <td>${new Intl.NumberFormat("vi-VN", {
             style: "decimal",
           }).format(product.price * product.quantity)}</td>
@@ -102,6 +104,42 @@ function loadCarts() {
   }).format(total)} VNĐ</h2>
    <a href="../html/payment.html"> <button id="order">Đặt hàng</button></a>`;
 
+  let buttonOrder = document.getElementById("order");
+  buttonOrder.addEventListener("click", function () {
+    if (listCarts.length == 0) {
+      alert("Bạn hãy thêm sản phẩm vào giỏ hàng trước nhé !");
+    }
+  });
+  // xử lý upSize & downSize
+  let upSizes = document.querySelectorAll(".upSize");
+  let downSizes = document.querySelectorAll(".downSize");
+  for (let upSize of upSizes) {
+    upSize.addEventListener("click", function () {
+      const idProduct = upSize.getAttribute("idproduct");
+      let indexCarts = listCarts.findIndex(
+        (product) => product.id == idProduct
+      );
+      if (listCarts[indexCarts].size < 43) {
+        listCarts[indexCarts].size++;
+        updateDataLocalStorage(nameCart, listCarts);
+        loadCarts();
+      }
+    });
+  }
+
+  for (let downSize of downSizes) {
+    downSize.addEventListener("click", function () {
+      const idProduct = downSize.getAttribute("idproduct");
+      let indexCarts = listCarts.findIndex(
+        (product) => product.id == idProduct
+      );
+      if (listCarts[indexCarts].size > 39) {
+        listCarts[indexCarts].size--;
+        updateDataLocalStorage(nameCart, listCarts);
+        loadCarts();
+      }
+    });
+  }
   // xử lý button + -  sản phẩm
   let buttonDeletes = document.querySelectorAll(".buttonDelete");
   const buttonUps = document.querySelectorAll(".up");

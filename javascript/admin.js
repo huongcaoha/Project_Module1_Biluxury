@@ -142,107 +142,107 @@ for (let i = 1; i < listControls.length; i++) {
   }
 }
 //data demo list orders
-class Product {
-  constructor(idProduct, productName, price, quantity) {
-    (this.idProduct = idProduct),
-      (this.productName = productName),
-      (this.price = price),
-      (this.quantity = quantity),
-      (this.totalMoney = this.price * this.quantity);
-  }
-}
-let listOrdersDemo = [];
-for (let i = 1; i <= 20; i++) {
-  let order = {
-    id: i,
-    listProduct: [
-      new Product(1, `Product1`, 5000, i),
-      new Product(2, `Product2`, 6000, i),
-      new Product(3, `Product3`, 7000, i),
-      new Product(4, `Product4`, 8000, i),
-      new Product(5, `Product5`, 9000, i),
-      new Product(6, `Product6`, 10000, i),
-      new Product(7, `Product7`, 11000, i),
-      new Product(8, `Product8`, 12000, i),
-    ],
-    totalMoney: 1234567,
-    day: new Date().getDate(),
-    month: new Date().getMonth() + 1,
-    year: new Date().getFullYear(),
-    status: 3,
-    idUser: 1,
-  };
-  listOrdersDemo.push(order);
-}
+// class Product {
+//   constructor(idProduct, productName, price, quantity) {
+//     (this.idProduct = idProduct),
+//       (this.productName = productName),
+//       (this.price = price),
+//       (this.quantity = quantity),
+//       (this.totalMoney = this.price * this.quantity);
+//   }
+// }
+// let listOrdersDemo = [];
+// for (let i = 1; i <= 20; i++) {
+//   let order = {
+//     id: i,
+//     listProduct: [
+//       new Product(1, `Product1`, 5000, i),
+//       new Product(2, `Product2`, 6000, i),
+//       new Product(3, `Product3`, 7000, i),
+//       new Product(4, `Product4`, 8000, i),
+//       new Product(5, `Product5`, 9000, i),
+//       new Product(6, `Product6`, 10000, i),
+//       new Product(7, `Product7`, 11000, i),
+//       new Product(8, `Product8`, 12000, i),
+//     ],
+//     totalMoney: 1234567,
+//     day: new Date().getDate(),
+//     month: new Date().getMonth() + 1,
+//     year: new Date().getFullYear(),
+//     status: 3,
+//     idUser: 1,
+//   };
+//   listOrdersDemo.push(order);
+// }
 if (!getDataLocalstorage("listOrders")) {
-  updateDataLocalStorage("listOrders", listOrdersDemo);
+  updateDataLocalStorage("listOrders", []);
 }
 // section Content1
 let revenueMonth1 = Object.values(getDataLocalstorage("listOrders"))
   .filter((order) => order.month == 1 && order.year == new Date().getFullYear())
   .reduce((pre, curent) => pre + curent.totalMoney, 0);
-revenueMonth1 = Math.ceil((revenueMonth1 / 30000000) * 100);
+revenueMonth1 = Math.ceil((revenueMonth1 / 100000000) * 100);
 
 let revenueMonth2 = Object.values(getDataLocalstorage("listOrders"))
   .filter((order) => order.month == 2 && order.year == new Date().getFullYear())
   .reduce((pre, curent) => pre + curent.totalMoney, 0);
-revenueMonth2 = Math.ceil((revenueMonth2 / 30000000) * 100);
+revenueMonth2 = Math.ceil((revenueMonth2 / 100000000) * 100);
 
 let revenueMonth3 = Object.values(getDataLocalstorage("listOrders"))
   .filter((order) => order.month == 3 && order.year == new Date().getFullYear())
   .reduce((pre, curent) => pre + curent.totalMoney, 0);
-revenueMonth3 = Math.ceil((revenueMonth3 / 30000000) * 100);
+revenueMonth3 = Math.ceil((revenueMonth3 / 100000000) * 100);
 
 let revenueMonth4 = Object.values(getDataLocalstorage("listOrders"))
   .filter((order) => order.month == 4 && order.year == new Date().getFullYear())
   .reduce((pre, curent) => pre + curent.totalMoney, 0);
-revenueMonth4 = Math.ceil((revenueMonth4 / 30000000) * 100);
+revenueMonth4 = Math.ceil((revenueMonth4 / 100000000) * 100);
 
 let revenueMonth5 = Object.values(getDataLocalstorage("listOrders"))
   .filter((order) => order.month == 5 && order.year == new Date().getFullYear())
   .reduce((pre, curent) => pre + curent.totalMoney, 0);
-revenueMonth5 = Math.ceil((revenueMonth5 / 30000000) * 100);
+revenueMonth5 = Math.ceil((revenueMonth5 / 100000000) * 100);
 
 let revenueMonth6 = Object.values(getDataLocalstorage("listOrders"))
   .filter((order) => order.month == 6 && order.year == new Date().getFullYear())
   .reduce((pre, curent) => pre + curent.totalMoney, 0);
-revenueMonth6 = Math.ceil((revenueMonth6 / 30000000) * 100);
+revenueMonth6 = Math.ceil((revenueMonth6 / 100000000) * 100);
 
 let revenueMonth7 = Object.values(getDataLocalstorage("listOrders"))
   .filter((order) => order.month == 7 && order.year == new Date().getFullYear())
   .reduce((pre, curent) => pre + curent.totalMoney, 0);
-revenueMonth7 = Math.ceil((revenueMonth7 / 30000000) * 100);
+revenueMonth7 = Math.ceil((revenueMonth7 / 100000000) * 100);
 
 let revenueMonth8 = Object.values(getDataLocalstorage("listOrders"))
   .filter((order) => order.month == 8 && order.year == new Date().getFullYear())
   .reduce((pre, curent) => pre + curent.totalMoney, 0);
-revenueMonth8 = Math.ceil((revenueMonth8 / 30000000) * 100);
+revenueMonth8 = Math.ceil((revenueMonth8 / 100000000) * 100);
 
 let revenueMonth9 = Object.values(getDataLocalstorage("listOrders"))
   .filter((order) => order.month == 9 && order.year == new Date().getFullYear())
   .reduce((pre, curent) => pre + curent.totalMoney, 0);
-revenueMonth9 = Math.ceil((revenueMonth9 / 30000000) * 100);
+revenueMonth9 = Math.ceil((revenueMonth9 / 100000000) * 100);
 
 let revenueMonth10 = Object.values(getDataLocalstorage("listOrders"))
   .filter(
     (order) => order.month == 10 && order.year == new Date().getFullYear()
   )
   .reduce((pre, curent) => pre + curent.totalMoney, 0);
-revenueMonth10 = Math.ceil((revenueMonth10 / 30000000) * 100);
+revenueMonth10 = Math.ceil((revenueMonth10 / 100000000) * 100);
 
 let revenueMonth11 = Object.values(getDataLocalstorage("listOrders"))
   .filter(
     (order) => order.month == 11 && order.year == new Date().getFullYear()
   )
   .reduce((pre, curent) => pre + curent.totalMoney, 0);
-revenueMonth11 = Math.ceil((revenueMonth11 / 30000000) * 100);
+revenueMonth11 = Math.ceil((revenueMonth11 / 100000000) * 100);
 
 let revenueMonth12 = Object.values(getDataLocalstorage("listOrders"))
   .filter(
     (order) => order.month == 12 && order.year == new Date().getFullYear()
   )
   .reduce((pre, curent) => pre + curent.totalMoney, 0);
-revenueMonth12 = Math.ceil((revenueMonth12 / 30000000) * 100);
+revenueMonth12 = Math.ceil((revenueMonth12 / 100000000) * 100);
 
 const countProduct = getDataLocalstorage("products")
   ? getDataLocalstorage("products").length
@@ -1110,7 +1110,7 @@ let contentTableRevenue = ` <tr>
             <th>Complete</th>
           </tr>`;
 
-let target = 30000000;
+let target = 100000000;
 let year = getDataLocalstorage("revenueYear");
 // if (revenue == 0) {
 //   tableSectionRevenue.innerHTML = ` <h2>Không có dữ liệu năm ${revenueYear}</h2>`;
@@ -1327,11 +1327,14 @@ let orderStart = orderEnd - orderItemPerPage;
 let orderCurrentList = listOrders.slice(orderStart, orderEnd);
 let contentTable = ` <tr>
             <th>ID</th>
-            <th>List Products</th>
-            <th>Total Money</th>
+            <th>Username</th>
             <th>Date Time</th>
+            <th>Address</th>
+            <th>Phone</th>
+            <th>Email</th>
+            <th>PayMethod</th>
+            <th>Total Money</th>
             <th>Status</th>
-            <th>Id User</th>
             <th></th>
           </tr>`;
 let tableSectionOrders = document.getElementById("tableSectionOrders");
@@ -1340,27 +1343,78 @@ if (getDataLocalstorage("listOrders")) {
 }
 
 for (let order of orderCurrentList) {
-  let listProduct = order.listProduct
-    .map((element) => element.productName)
-    .join(",");
+  let listProduct = order.products.map((element) => element.name).join(",");
   let status = ["", "ordered", "delivering", "success"];
   contentTable += ` <tr>
             <td>${order.id}</td>
-            <td>${listProduct}</td>
-            <td>${order.totalMoney}</td>
-            <td>${order.day}/${order.month}/${order.year}</td>
-            <td>${status[order.status]}</td>
-             <td>${order.idUser}</td>
+            <td>${order.name}</td>
+            <td>${order.createdTime}</td>
+             <td>${
+               order.address + " , " + order.district + " , " + order.city
+             }</td>
+             <td>${order.phone}</td>
+             <td>${order.email}</td>
+             <td>${order.payMethod}</td>
+             <td>${order.totalMoney}</td>
+             <td>${order.status}</td>
             ${
               order.status == 1
                 ? `<td>
               <button class="orderButtonDelete" title="${order.id}">Delete</button>
+              <button class="orderButtonDetail" title="${order.id}">Detail</button>
             </td>`
-                : ""
+                : ` <button class="orderButtonDetail" title="${order.id}">Detail</button>`
             }
           </tr>`;
 }
 tableSectionOrders.innerHTML = contentTable;
+
+// xử lý nút bấm xem chi tiết order
+let tagOrderDetail = document.querySelector(".orderDetail");
+let tableOrderDetail = document.getElementById("tableOrderDetail");
+let orderButtonDetails = document.querySelectorAll(".orderButtonDetail");
+for (let btn of orderButtonDetails) {
+  btn.addEventListener("click", function () {
+    tagOrderDetail.style.display = "block";
+    let id = btn.getAttribute("title");
+    let indexOrder = listOrders.findIndex((order) => order.id == id);
+    let listCarts = listOrders[indexOrder].products;
+    let count = 1;
+    tableOrderDetail.innerHTML = `<tr>
+          <th>STT</th>
+          <th>Image</th>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Size</th>
+          <th>To Money</th>
+          <th></th>
+        </tr>`;
+    for (let product of listCarts) {
+      tableOrderDetail.innerHTML += ` <tr>
+          <td>${count}</td>
+          <td><img src="${product.image1}" alt="image Product"></td>
+          <td>${product.name}</td>
+          <td>${product.price}</td>
+          <td> ${product.quantity} </td>
+          <td>${product.size} </td>
+          <td>${new Intl.NumberFormat("vi-VN", {
+            style: "decimal",
+          }).format(product.price * product.quantity)}</td>
+          <td>
+          </td>
+        </tr>`;
+      count++;
+    }
+  });
+}
+
+// xử lý bấm ra ngoài thì ẩn đi bảng order detail
+window.addEventListener("click", function (e) {
+  if (e.target == tagOrderDetail) {
+    e.target.style.display = "none";
+  }
+});
 
 // pagination Orders
 let orderTotalCurrentPagination = Math.ceil(orderCurrentPage / 10) * 10;

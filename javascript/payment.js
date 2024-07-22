@@ -48,6 +48,9 @@ listTagCategorySlide.forEach((tag) =>
 // hiển thị icon giỏ hàng và số lượng sản phẩm trong giỏ hàng
 const nameUserCart = getDataLocalstorage("nameUser") + "Carts";
 let carts = getDataLocalstorage(nameUserCart) || [];
+if (carts.length == 0) {
+  window.location.href = "../html/main.html";
+}
 let totalProductCarts = carts.reduce(
   (pre, current) => (pre += current.quantity),
   0
@@ -57,32 +60,225 @@ iconCart.innerHTML = ` <a href="../html/carts.html"><i class="fa-solid fa-cart-s
 
 // in ra list product in carts
 
-let nameCarts = getDataLocalstorage("nameUser") + "Carts" || "";
-let listCarts = getDataLocalstorage(nameCarts) || [];
-let table = document.querySelector(".listProduct");
-let count = 1;
-console.log(listCarts);
-for (let product of listCarts) {
-  table.innerHTML += `<tr>
-                <td>${count}</td>
-                <td> <img src="${product.image1}" alt="product"></td>
-                <td>${new Intl.NumberFormat("vi-VN", {
-                  style: "decimal",
-                }).format(product.price)}</td>
-                <td>${product.name}</td>
-                <td>${product.quantity}</td>
-                <td>${new Intl.NumberFormat("vi-VN", {
-                  style: "decimal",
-                }).format(product.price * product.quantity)}</td>
-            </tr>`;
-  count++;
+// get data and print out client
+
+function loadCarts() {
+  let count = 1;
+  // hiển thị icon giỏ hàng và số lượng sản phẩm trong giỏ hàng
+  const nameUserCart = getDataLocalstorage("nameUser") + "Carts";
+  let carts = getDataLocalstorage(nameUserCart) || [];
+  let totalProductCarts = carts.reduce(
+    (pre, current) => (pre += current.quantity),
+    0
+  );
+  let iconCart = document.getElementById("carts");
+  iconCart.innerHTML = ` <a href="../html/carts.html"><i class="fa-solid fa-cart-shopping" style="color : black"></i><span id="numberCarts">${totalProductCarts}</span></a>`;
+
+  let tableCarts = document.getElementById("table-carts");
+  let nameCart = getDataLocalstorage("nameUser") + "Carts" || "";
+  let listCarts = getDataLocalstorage(nameCart) || [];
+  let totalMoney = document.getElementById("totalMoney");
+  tableCarts.innerHTML = `<tr>
+          <th>STT</th>
+          <th>Image</th>
+          <th>Product Name</th>
+          <th>Price</th>
+          <th>Quantity</th>
+          <th>Size</th>
+          <th>To Money</th>
+          <th></th>
+        </tr>`;
+  for (let product of listCarts) {
+    tableCarts.innerHTML += ` <tr>
+          <td>${count}</td>
+          <td><img src="${product.image1}" alt="image Product"></td>
+          <td>${product.name}</td>
+          <td>${product.price}</td>
+          <td><button class="down" idProduct=${product.id}>-</button> ${
+      product.quantity
+    } <button class="up" idProduct=${product.id}>+</button></td>
+            <td><button class="downSize" idProduct=${product.id}>-</button> ${
+      product.size
+    } <button class="upSize" idProduct=${product.id}>+</button></td>
+          <td>${new Intl.NumberFormat("vi-VN", {
+            style: "decimal",
+          }).format(product.price * product.quantity)}</td>
+          <td>
+          <button class="buttonDelete" idProduct=${product.id}>Delete</button>
+          </td>
+        </tr>`;
+    count++;
+  }
+
+  // in ra tổng giá trị đơn hàng và button đặt hàng
+  let totalMoneyOrders = document.querySelector(".totalMoney");
+  let total = listCarts.reduce(
+    (pre, current) => (pre += current.quantity * current.price),
+    0
+  );
+  totalMoneyOrders.innerHTML = ` <h2>Tổng tiền : ${new Intl.NumberFormat(
+    "vi-VN",
+    {
+      style: "decimal",
+    }
+  ).format(total)} VNĐ</h2>`;
+
+  // xử lý button đặt hàng
+  let order = document.getElementById("order");
+  let name = document.getElementById("name");
+  let phone = document.getElementById("phone");
+  let email = document.getElementById("email");
+  let address = document.getElementById("address");
+  let district = document.getElementById("district");
+  let city = document.getElementById("city");
+  let payMethod = "";
+  let radios = document.getElementsByName("payMethod");
+
+  for (let radio of radios) {
+    radio.addEventListener("click", function () {
+      if (radio.checked) {
+        payMethod = radio.value;
+      }
+    });
+  }
+
+  order.addEventListener("click", function () {
+    console.log("paymethod", payMethod);
+    if (
+      !name.value ||
+      !phone.value ||
+      !email.value ||
+      !address.value ||
+      !district.value ||
+      !city.value ||
+      !payMethod
+    ) {
+      alert("Do not leave information boxes blank");
+    } else {
+      let listOrders = getDataLocalstorage("listOrders") || [];
+      let id = 1;
+      if (listOrders.length > 0) {
+        id = listOrders[listOrders.length - 1].id + 1;
+      }
+      let newOrder = {
+        id: id,
+        products: listCarts,
+        name: name.value,
+        phone: phone.value,
+        email: email.value,
+        address: address.value,
+        district: district.value,
+        city: city.value,
+        totalMoney: total,
+        payMethod: payMethod,
+        status: 1,
+        date: new Date().getDate(),
+        month: new Date().getMonth() + 1,
+        year: new Date().getFullYear(),
+        createdTime:
+          new Date().getDate().toString() +
+          "/" +
+          (new Date().getMonth() + 1).toString() +
+          "/" +
+          new Date().getFullYear().toString(),
+      };
+      console.log(payMethod);
+      listOrders.push(newOrder);
+      updateDataLocalStorage(nameCart, []);
+      updateDataLocalStorage("listOrders", listOrders);
+      alert("Đặt hàng thành công !");
+      window.location.href = "../html/main.html";
+    }
+  });
+
+  // tạo mã QR thanh toán
+  let qr = document.querySelector(".qr");
+  qr.innerHTML = ` <img src="https://api.vietqr.io/image/970415-113366668888-AZ9OO6e.jpg?amount=${total}&addInfo=1233456789" alt="QR">`;
+
+  // xử lý chọn phương thức thanh toán
+  let tagQr = document.querySelector(".qr");
+  let cash = document.getElementById("cash");
+  let banking = document.getElementById("banking");
+  cash.addEventListener("click", function () {
+    tagQr.style.display = "none";
+  });
+
+  banking.addEventListener("click", function () {
+    tagQr.style.display = "block";
+  });
+  // xử lý upSize & downSize
+  let upSizes = document.querySelectorAll(".upSize");
+  let downSizes = document.querySelectorAll(".downSize");
+  for (let upSize of upSizes) {
+    upSize.addEventListener("click", function () {
+      const idProduct = upSize.getAttribute("idproduct");
+      let indexCarts = listCarts.findIndex(
+        (product) => product.id == idProduct
+      );
+      if (listCarts[indexCarts].size < 43) {
+        listCarts[indexCarts].size++;
+        updateDataLocalStorage(nameCart, listCarts);
+        loadCarts();
+      }
+    });
+  }
+
+  for (let downSize of downSizes) {
+    downSize.addEventListener("click", function () {
+      const idProduct = downSize.getAttribute("idproduct");
+      let indexCarts = listCarts.findIndex(
+        (product) => product.id == idProduct
+      );
+      if (listCarts[indexCarts].size > 39) {
+        listCarts[indexCarts].size--;
+        updateDataLocalStorage(nameCart, listCarts);
+        loadCarts();
+      }
+    });
+  }
+  // xử lý button + -  sản phẩm
+  let buttonDeletes = document.querySelectorAll(".buttonDelete");
+  const buttonUps = document.querySelectorAll(".up");
+  const buttonDowns = document.querySelectorAll(".down");
+
+  for (let up of buttonUps) {
+    up.addEventListener("click", function () {
+      const idProduct = up.getAttribute("idproduct");
+      let indexCarts = listCarts.findIndex(
+        (product) => product.id == idProduct
+      );
+      if (listCarts[indexCarts].quantity < 1000) {
+        listCarts[indexCarts].quantity++;
+        updateDataLocalStorage(nameCart, listCarts);
+        loadCarts();
+      }
+    });
+  }
+
+  for (let down of buttonDowns) {
+    down.addEventListener("click", function () {
+      const idProduct = down.getAttribute("idproduct");
+      let indexCarts = listCarts.findIndex(
+        (product) => product.id == idProduct
+      );
+      if (listCarts[indexCarts].quantity > 1) {
+        listCarts[indexCarts].quantity--;
+        updateDataLocalStorage(nameCart, listCarts);
+        loadCarts();
+      }
+    });
+  }
+
+  for (let del of buttonDeletes) {
+    del.addEventListener("click", function () {
+      const idProduct = del.getAttribute("idproduct");
+      let indexCarts = listCarts.findIndex(
+        (product) => product.id == idProduct
+      );
+      listCarts.splice(indexCarts, 1);
+      updateDataLocalStorage(nameCart, listCarts);
+      loadCarts();
+    });
+  }
 }
-let totalMoney = listCarts.reduce(
-  (pre, current) => (pre += current.price * current.quantity),
-  0
-);
-table.innerHTML += `<tr>
-                        <td>Tổng tiền : </td>
-                        <td>${totalMoney}</td>
-                        
-                    </tr>`;
+loadCarts();

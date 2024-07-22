@@ -28,7 +28,16 @@ listTagCategorySlide.forEach((tag) =>
   tag.addEventListener("click", function (e) {
     categoryProduct = e.target.getAttribute("title");
     slide = e.target.getAttribute("title");
-    console.log(slide);
+    updateDataLocalStorage("filterProductCategory", categoryProduct);
+    updateDataLocalStorage("slide", slide);
+    updateDataLocalStorage(
+      "filterProductCategory",
+      category[Number.parseInt(slide)]
+    );
+    updateDataLocalStorage("filterProductColor", "");
+    updateDataLocalStorage("filterProductPrice", "");
+    updateDataLocalStorage("filterProductSearch", "");
+    updateDataLocalStorage("currentPageProduct", 1);
     updateDataLocalStorage("categoryProduct", categoryProduct);
     updateDataLocalStorage("slide", slide);
   })
