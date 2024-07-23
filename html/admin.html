@@ -38,6 +38,7 @@
                 <li title="3" class="humberger-navBar">Revenue</li>
                 <li title="4" class="humberger-navBar">User</li>
                 <li title="5" class="humberger-navBar">Order</li>
+                <li title="6" class="humberger-navBar">Category</li>
               </ul>
             </i>
           </div>
@@ -102,6 +103,16 @@
               >Order</label
             >
           </li>
+          <li>
+            <i class="fa-solid fa-icons"></i>
+            <label
+              for="section-category"
+              class="dashboard"
+              id="section-category"
+              title="6"
+              >Category</label
+            >
+          </li>
         </ul>
       </div>
 
@@ -144,6 +155,37 @@
         <div class="orderFilter"></div>
         <table id="tableSectionOrders"></table>
         <div class="orderPagination"></div>
+      </div>
+
+      <div class="section-category">
+        <h1>Table List Category</h1>
+        <div class="categoryFilter"></div>
+
+        <div class="formCreateCategory">
+          <h2>Create new category</h2>
+          <br />
+          <label for="inputCategoryName">Category Name</label>
+          <input type="text" name="inputCategoryName" id="inputCategoryName" />
+          <br />
+          <br />
+          <button id="buttonCreateCategory">Create new</button>
+        </div>
+
+        <div class="contentSectionCategory">
+          <table id="tableSectionCategory">
+            <tr>
+              <th>STT</th>
+              <th>Category Name</th>
+              <th>Chức năng</th>
+            </tr>
+            <tbody id="tbodyCategory"></tbody>
+          </table>
+        </div>
+
+        <div class="containerUpdate">
+          <div class="formUpdateCategory"></div>
+        </div>
+        <div class="categoryPagination"></div>
       </div>
     </main>
 

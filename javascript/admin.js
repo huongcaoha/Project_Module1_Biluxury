@@ -75,18 +75,26 @@ controlOrder.addEventListener("click", function () {
   window.location.reload();
 });
 
+const controlCategory = document.getElementById("section-category");
+controlCategory.addEventListener("click", function () {
+  updateDataLocalStorage("currentDisplayContent", 6);
+  window.location.reload();
+});
+
 // Điều khiển các khối trong trang admin
 let blockContent1 = document.querySelector(".content1");
 let blockSectionProduct = document.querySelector(".section-product");
 let blockSectionRevenue = document.querySelector(".section-revenue");
 let blockSectionUser = document.querySelector(".section-user");
 let blockSectionOrder = document.querySelector(".section-order");
+let blockSectionCategory = document.querySelector(".section-category");
 let listBlockSections = [
   blockContent1,
   blockSectionProduct,
   blockSectionRevenue,
   blockSectionUser,
   blockSectionOrder,
+  blockSectionCategory,
 ];
 
 let controlBlockContent1 = document.querySelector("#content1");
@@ -94,6 +102,7 @@ let controlBlockSectionProduct = document.querySelector("#section-product");
 let controlBlockSectionRevenue = document.querySelector("#section-revenue");
 let controlBlockSectionUser = document.querySelector("#section-user");
 let controlBlockSectionOrder = document.querySelector("#section-order");
+let controlBlockSectionCategory = document.querySelector("#section-category");
 let listControlBlocks = [
   "huongcaoha",
   controlBlockContent1,
@@ -105,7 +114,6 @@ let listControlBlocks = [
 for (let i = 1; i < listControlBlocks.length; i++) {
   if (i == Number.parseInt(getDataLocalstorage("currentDisplayContent"))) {
     listControlBlocks[i].style.color = "#2196f7";
-
     break;
   }
 }
@@ -126,6 +134,8 @@ let sectionUser = document.querySelector(".section-user");
 
 let sectionOrder = document.querySelector(".section-order");
 
+let sectionCategory = document.querySelector(".section-category");
+
 let listControls = [
   "123",
   content1,
@@ -133,6 +143,7 @@ let listControls = [
   sectionRevenue,
   sectionUser,
   sectionOrder,
+  sectionCategory,
 ];
 
 let currentDisplayContent = getDataLocalstorage("currentDisplayContent");
@@ -1641,3 +1652,174 @@ for (let ban of userUpdateStatus) {
     window.location.reload();
   });
 }
+
+//-----------------------------------------------------------------------section category--------------------------------------------------------
+function renderCategory() {
+  let listCategory = getDataLocalstorage("category") || [];
+  let currentPageCategory = 1;
+  if (getDataLocalstorage("currentPageCategory")) {
+    currentPageCategory = getDataLocalstorage("currentPageCategory");
+  } else {
+    updateDataLocalStorage("currentPageCategory", currentPageCategory);
+  }
+  let itemPerPage = 5;
+  let totalPage = Math.ceil(listCategory.length / itemPerPage);
+  let skip = (currentPageCategory - 1) * itemPerPage;
+  let newListCategory = listCategory.slice(skip, skip + itemPerPage);
+  let tbodyCategory = document.getElementById("tbodyCategory");
+  tbodyCategory.innerHTML = "";
+  let count = currentPageCategory * itemPerPage - 4;
+  for (let category of newListCategory) {
+    tbodyCategory.innerHTML += `<tr>
+                <td>${count}</td>
+                <td>${category}</td>
+                <td>
+                  <button class="updateCategory" category="${category}">update</button>
+                  <button class="deleteCategory" category="${category}">delete</button>
+                </td>
+              </tr>`;
+    count++;
+  }
+  // tạo phân trang cho category
+  let categoryPagination = document.querySelector(".categoryPagination");
+  categoryPagination.innerHTML = ` <button class="ltPagination">&lt;</button>`;
+  for (let i = 1; i <= 10; i++) {
+    if (i == currentPageCategory) {
+      categoryPagination.innerHTML += `<button class="subPagination" style="background-color: cornflowerblue;">${i}</button>`;
+    } else {
+      categoryPagination.innerHTML += `<button class="subPagination" id="${i}">${i}</button>`;
+    }
+    if (i >= totalPage) {
+      break;
+    }
+  }
+  categoryPagination.innerHTML += `<button class="gtPagination">&gt;</button>`;
+
+  // xử lý sự kiện nhấn vào các trang category
+  let subPaginations = document.querySelectorAll(".subPagination");
+  for (let sub of subPaginations) {
+    sub.addEventListener("click", function () {
+      let value = sub.getAttribute("id");
+      currentPageCategory = value;
+      updateDataLocalStorage(
+        "currentPageCategory",
+        Number.parseInt(currentPageCategory)
+      );
+      renderCategory();
+    });
+  }
+
+  let ltPagination = document.querySelector(".ltPagination");
+  ltPagination.addEventListener("click", function () {
+    if (currentPageCategory - 10 >= 1) {
+      currentPageCategory -= 10;
+      updateDataLocalStorage("currentPageCategory", currentPageCategory);
+      window.location.reload();
+    }
+  });
+
+  let gtPagination = document.querySelector(".gtPagination");
+  gtPagination.addEventListener("click", function () {
+    if (currentPageCategory + 10 <= totalPage) {
+      currentPageCategory += 10;
+      updateDataLocalStorage("currentPageCategory", currentPageCategory);
+      window.location.reload();
+    }
+  });
+
+  // xử lý nút bấm add category
+  let buttonCreateCategory = document.getElementById("buttonCreateCategory");
+  let inputCategoryName = document.getElementById("inputCategoryName");
+  buttonCreateCategory.addEventListener("click", function () {
+    let index = listCategory.findIndex(
+      (category) => category == inputCategoryName.value
+    );
+    if (!inputCategoryName.value) {
+      alert("vui lòng không để trống tên category !");
+    } else {
+      if (index != -1) {
+        alert("Category đã tồn tại !");
+      } else {
+        listCategory.push(inputCategoryName.value);
+        updateDataLocalStorage("category", listCategory);
+        alert("Thêm category thành công !");
+        window.location.reload();
+      }
+    }
+  });
+
+  // xử lý xóa category
+  let deleteCategorys = document.querySelectorAll(".deleteCategory");
+  for (let del of deleteCategorys) {
+    del.addEventListener("click", function () {
+      let check = confirm("Bạn chắc là muốn xóa category này chứ ?");
+      if (check) {
+        let category = del.getAttribute("category");
+        let index = listCategory.findIndex((cate) => cate == category);
+        listCategory.splice(index, 1);
+        updateDataLocalStorage("category", listCategory);
+        window.location.reload();
+      }
+    });
+  }
+
+  // xử lý đóng mở form update category
+  let updateCategories = document.querySelectorAll(".updateCategory");
+  let formUpdateCategory = document.querySelector(".formUpdateCategory");
+  let containerUpdate = document.querySelector(".containerUpdate");
+  for (let cate of updateCategories) {
+    cate.addEventListener("click", function () {
+      let categoryOdd = cate.getAttribute("category");
+      containerUpdate.style.display = "block";
+      formUpdateCategory.innerHTML = ` <h2>Update category</h2>
+            <br />
+            <label for="inputCategoryNameUpdate">Category Name</label>
+            <input
+              type="text"
+              name="inputCategoryNameUpdate"
+              id="inputCategoryNameUpdate"
+              value="${categoryOdd}"
+            />
+            <br />
+            <br />
+            <button id="buttonUpdateCategory" category="${categoryOdd}">Update</button>
+            <button id="buttonCancelUpdateCategory">Cancel</button>`;
+      let buttonCancelUpdateCategory = document.getElementById(
+        "buttonCancelUpdateCategory"
+      );
+      buttonCancelUpdateCategory.addEventListener("click", function () {
+        containerUpdate.style.display = "none";
+      });
+
+      // xử lý update category
+      let buttonUpdateCategory = document.getElementById(
+        "buttonUpdateCategory"
+      );
+      let inputCategoryNameUpdate = document.getElementById(
+        "inputCategoryNameUpdate"
+      );
+      buttonUpdateCategory.addEventListener("click", function () {
+        let category = buttonUpdateCategory.getAttribute("category");
+        let newArr = listCategory.filter((cate) => cate != category);
+        let indexOdd = listCategory.findIndex((cate) => cate == category);
+        let newIndex = newArr.findIndex(
+          (cate) => cate == inputCategoryNameUpdate.value
+        );
+        console.log(newArr, category);
+        if (!inputCategoryNameUpdate.value) {
+          alert("vui lòng nhập tên category !");
+        } else {
+          if (newIndex != -1) {
+            alert("Category đã tồn tại !");
+          } else {
+            listCategory.splice(indexOdd, 1, inputCategoryNameUpdate.value);
+            updateDataLocalStorage("category", listCategory);
+            alert("Update category thành công !");
+            window.location.reload();
+          }
+        }
+      });
+    });
+  }
+}
+renderCategory();
