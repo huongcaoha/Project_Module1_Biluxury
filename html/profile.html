@@ -15,7 +15,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="../css/carts.css" />
+    <link rel="stylesheet" href="../css/profile.css" />
   </head>
   <body>
     <div class="header">
@@ -147,9 +147,111 @@
     </div>
 
     <main>
-      <h1>Your Carts</h1>
-      <table id="table-carts"></table>
-      <div id="totalMoney"></div>
+      <!-- <h1>Profile</h1> -->
+        <div class="inforProfile">
+           
+            <label for="username"><i class="fa-solid fa-user"></i></label>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              placeholder="  Username"
+              required
+              class="input"
+            />
+            <br />
+            <label for="password"><i class="fa-solid fa-lock"></i></label>
+            <input
+              type="password"
+              name="password"
+              id="password"
+              placeholder="  Password"
+              required
+              class="input"
+            />
+            <br />
+    
+            <label for="repassword"><i class="fa-solid fa-lock"></i></label>
+            <input
+              type="password"
+              name="rePassword"
+              id="rePassword"
+              placeholder="  Repassword"
+              required
+              class="input"
+            />
+            <br />
+            <label for="gender"><i class="fa-solid fa-venus-mars"></i></label>
+    
+            <input
+              type="radio"
+              name="gender"
+              value="male"
+              id="male"
+              class="radio"
+            />
+            <label for="male">Male</label>
+            <input
+              type="radio"
+              name="gender"
+              value="female"
+              id="female"
+              class="radio"
+            />
+            <label for="female">Female</label>
+            <input
+              type="radio"
+              name="gender"
+              value="other"
+              id="other"
+              class="radio"
+            />
+            <label for="other">Other</label>
+            <br />
+            <label for="birthday"><i class="fa-solid fa-cake-candles"></i></label>
+            <input type="date" name="birthday" id="birthday" class="input" />
+            <br />
+            <label for="phonenumber"><i class="fa-solid fa-phone"></i></label>
+            <input
+              type="tel"
+              name="phoneNumber"
+              id="phoneNumber"
+              required
+              class="input"
+            />
+            <br />
+            <label for="email"><i class="fa-solid fa-envelope"></i></label>
+            <input type="email" name="email" id="email" required class="input" />
+            <br />
+            <button id="buttonRegister">Sửa</button>
+            
+          </div>
+      </div>
+        <h2 style="margin: 30px 0;">Lịch sử đặt đơn</h2>
+      <div class="history">
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Username</th>
+                <th>Date Time</th>
+                <th>Address</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>PayMethod</th>
+                <th>Total Money</th>
+                <th>Status</th>
+                <th></th>
+            </tr>
+
+            <tbody id="tbodyOrders">
+
+            </tbody>
+        </table>
+      </div>
+
+      <div class="orderDetail">
+        <table id="tableOrderDetail"></table>
+      </div>
     </main>
 
     <footer>
@@ -176,7 +278,6 @@
         heroseo
       </p>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../javascript/carts.js"></script>
+    <script src="../javascript/profile.js"></script>
   </body>
 </html>

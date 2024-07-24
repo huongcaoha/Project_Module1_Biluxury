@@ -4,14 +4,6 @@
     box-sizing: border-box;
 }
 
-body {
-    width: 100%;
-    background-image: url(../image/slide/slidePatternedShirt.jpg);
-    background-repeat: no-repeat;
-    background-size: cover;
-    font-family: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", Helvetica, Arial, sans-serif;
-}
-
 a {
     text-decoration: none;
 }
@@ -181,111 +173,113 @@ span#numberCarts {
 
 }
 
-
 main {
+    padding-top: 100px;
     text-align: center;
-    padding: 100px;
+    /* display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0 50px; */
 
-    h1 {
-        margin-bottom: 30px;
+    .inforProfile {
+        margin: 0 auto;
+        padding: 30px;
+        width: 30%;
+        border: 1px solid black;
+
+        .input {
+            margin: 10px 0;
+            width: 40%;
+            height: 3vh;
+        }
     }
 
-    .container {
-        display: flex;
-        justify-content: center;
-        gap: 0 30px;
-        width: 100%;
+    .history {
+        margin-top: 30px;
+        margin-bottom: 30px;
 
-        .formPay {
-            width: 40%;
-            border: 1px solid #db4e1b;
-            padding: 30px;
-            border-radius: 10px;
-            background-color: white;
+        table {
+            width: 80%;
+            margin: 0 auto;
+            margin-top: 50px;
 
-            input {
-                width: 60%;
-                height: 4vh;
-                margin: 15px 0;
-                border-radius: 10px;
+            th {
+                background-color: #2196f7;
+                padding: 10px;
             }
 
-            #cash,
-            #banking {
-                width: 20px;
-                margin: 10px 15px;
+            td {
+                background-color: #ff9900;
+                padding: 10px;
 
-            }
+                .orderButtonDelete {
+                    background-color: #f84232;
+                    border: none;
+                    padding: 5px;
+                    border-radius: 5px;
+                    color: white;
+                    margin-bottom: 5px;
+                }
 
-            textarea {
-                width: 60%;
-                height: 10vh;
-                margin: 15px 0;
-                border-radius: 10px;
-            }
-
-            .qr {
-                display: none;
-            }
-        }
-
-        .inforOrder {
-            width: 50%;
-            border: 1px solid #db4e1b;
-            padding: 30px;
-            border-radius: 10px;
-            background-color: white;
-
-            #table-carts {
-
-
-                tr {
-
-                    th {
-                        padding: 15px;
-                        background-color: cadetblue;
-                    }
-
-                    td {
-                        padding: 15px;
-                        background-color: #f6e2db;
-
-                        img {
-                            width: 100px;
-                            height: 100px;
-                        }
-
-                        .buttonDelete {
-                            background-color: coral;
-                            border: none;
-                            padding: 5px;
-                            color: white;
-                            cursor: pointer;
-                            border-radius: 5px;
-                        }
-                    }
+                .orderButtonDetail {
+                    background-color: #4bb350;
+                    border: none;
+                    padding: 5px;
+                    border-radius: 5px;
+                    color: white;
                 }
             }
-
         }
 
-        .totalMoney {
-            margin-top: 20px;
-        }
+        .orderPagination {
+            margin-top: 30px;
 
+            button {
+                padding: 5px 10px;
+                margin: 0 5px;
+            }
+        }
     }
+
+    /* css form Product detai */
+    .orderDetail {
+
+        display: none;
+        width: 100%;
+        height: 100vh;
+        position: absolute;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+
+
+        #tableOrderDetail {
+            padding: 30px;
+            text-align: center;
+            width: 70%;
+            border: 1px solid black;
+            margin: 0 auto;
+            margin-top: 10%;
+            background-color: white;
+            border-radius: 10px;
+
+            th {
+                background-color: #2196f7;
+            }
+
+            td {
+                background-color: blanchedalmond;
+
+                img {
+                    width: 100px;
+                    height: 100px;
+                }
+            }
+        }
+    }
+
 }
 
-button#order {
-    margin-top: 30px;
-    background-color: #db4e1b;
-    width: 150px;
-    height: 4vh;
-    border-radius: 5px;
-    border: none;
-    color: white;
-    font-size: 20px;
-}
 
 
 
@@ -298,20 +292,5 @@ footer {
 
     a {
         color: rgb(227, 219, 219);
-    }
-}
-
-@media (max-width : 1200px) {
-    .container {
-        display: flex;
-        flex-direction: column;
-        gap: 20px 0;
-        justify-content: center;
-        align-items: center;
-
-        div.formPay,
-        div.inforOrder {
-            width: 100%;
-        }
     }
 }

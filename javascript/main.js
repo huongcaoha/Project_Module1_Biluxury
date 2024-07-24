@@ -972,3 +972,9 @@ filterProductColor.addEventListener("change", function () {
   updateDataLocalStorage("filterProductColor", filterProductColor.value);
   window.location.href = "../html/product.html";
 });
+
+// sử lý sự kiện xem thêm
+let seeMore = document.getElementById("seeMore");
+seeMore.addEventListener("click", function () {
+  updateDataLocalStorage("filterProductCategory", "vest");
+});

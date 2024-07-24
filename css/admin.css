@@ -90,6 +90,7 @@ header {
       align-items: center;
       border-bottom: 3px solid rgb(197, 191, 191);
       padding: 0 20px;
+      z-index: 0;
 
       .navX-1 {
         i {
@@ -305,8 +306,6 @@ main {
     tr,
     th,
     td {
-      border: 1px solid black;
-      border-collapse: collapse;
       padding: 10px;
     }
 
@@ -323,6 +322,14 @@ main {
             margin-top: 5px;
           }
         }
+      }
+
+      th {
+        background-color: #ff9900;
+      }
+
+      td {
+        background-color: #2196f7;
       }
     }
 
@@ -360,7 +367,7 @@ main {
         justify-content: space-between;
         flex-wrap: wrap;
         margin: 0 auto;
-        margin-top: 50px;
+        margin-top: 20px;
 
         input {}
       }
@@ -387,22 +394,46 @@ main {
 
     #table-product {
       width: 80%;
-      margin-top: 50px;
+      margin-top: 20px;
       margin-left: 10%;
 
       tr {
+        th {
+          background-color: #ff9900;
+          padding: 10px;
+        }
+
         td {
+          background-color: #2196f7;
+          padding: 5px;
+
           img {
             width: 100px;
             height: 100px;
             margin-top: 5px;
+          }
+
+          .productButtonUpdate {
+            background-color: #4bb350;
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+          }
+
+          .productButtonDelete {
+            background-color: #f84232;
+            padding: 5px;
+            border: none;
+            border-radius: 5px;
+            color: white;
           }
         }
       }
     }
 
     .pagination {
-      margin-top: 50px;
+      margin-top: 20px;
 
       button {
         margin-right: 10px;
@@ -443,8 +474,7 @@ main {
     tr,
     th,
     td {
-      border: 1px solid black;
-      border-collapse: collapse;
+
       padding: 10px 0;
     }
 
@@ -452,6 +482,22 @@ main {
       width: 80%;
       margin: 0 auto;
       margin-top: 50px;
+
+      th {
+        background-color: #ff9900;
+      }
+
+      td {
+        background-color: #2196f7;
+      }
+
+      button {
+        background-color: #f84232;
+        padding: 5px;
+        color: white;
+        border: none;
+        border-radius: 5px;
+      }
     }
 
     .userPagination {
@@ -484,15 +530,43 @@ main {
     tr,
     th,
     td {
-      border: 1px solid black;
-      border-collapse: collapse;
+
+
       padding: 10px 0;
     }
+
 
     table {
       width: 80%;
       margin: 0 auto;
       margin-top: 50px;
+
+      th {
+        background-color: #2196f7;
+        padding: 10px;
+      }
+
+      td {
+        background-color: #ff9900;
+        padding: 10px;
+
+        .orderButtonDelete {
+          background-color: #f84232;
+          border: none;
+          padding: 5px;
+          border-radius: 5px;
+          color: white;
+          margin-bottom: 5px;
+        }
+
+        .orderButtonDetail {
+          background-color: #4bb350;
+          border: none;
+          padding: 5px;
+          border-radius: 5px;
+          color: white;
+        }
+      }
     }
 
     .orderPagination {

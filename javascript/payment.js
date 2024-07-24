@@ -155,13 +155,25 @@ function loadCarts() {
     ) {
       alert("Do not leave information boxes blank");
     } else {
+      // cập nhật lại sản phẩm tồn kho của cửa hàng
+      let listProducts = getDataLocalstorage("products") || [];
+      for (let product of listCarts) {
+        let index = listProducts.findIndex((pro) => pro.id == product.id);
+        listProducts[index].inventory -= product.quantity;
+      }
+      updateDataLocalStorage("products", listProducts);
       let listOrders = getDataLocalstorage("listOrders") || [];
       let id = 1;
       if (listOrders.length > 0) {
         id = listOrders[listOrders.length - 1].id + 1;
       }
+      let nameUser = getDataLocalstorage("nameUser") || "";
+      let listUsers = getDataLocalstorage("listUsers") || [];
+      let idUser =
+        listUsers[listUsers.findIndex((user) => user.username == nameUser)].id;
       let newOrder = {
         id: id,
+        idUser: idUser,
         products: listCarts,
         name: name.value,
         phone: phone.value,
@@ -182,8 +194,8 @@ function loadCarts() {
           "/" +
           new Date().getFullYear().toString(),
       };
-      console.log(payMethod);
       listOrders.push(newOrder);
+
       updateDataLocalStorage(nameCart, []);
       updateDataLocalStorage("listOrders", listOrders);
       alert("Đặt hàng thành công !");
@@ -243,11 +255,17 @@ function loadCarts() {
 
   for (let up of buttonUps) {
     up.addEventListener("click", function () {
+      let listProducts = getDataLocalstorage("products") || [];
       const idProduct = up.getAttribute("idproduct");
+      let indexProduct = listProducts.findIndex(
+        (product) => product.id == idProduct
+      );
       let indexCarts = listCarts.findIndex(
         (product) => product.id == idProduct
       );
-      if (listCarts[indexCarts].quantity < 1000) {
+      if (
+        listCarts[indexCarts].quantity < listProducts[indexProduct].inventory
+      ) {
         listCarts[indexCarts].quantity++;
         updateDataLocalStorage(nameCart, listCarts);
         loadCarts();

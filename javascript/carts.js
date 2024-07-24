@@ -148,10 +148,16 @@ function loadCarts() {
   for (let up of buttonUps) {
     up.addEventListener("click", function () {
       const idProduct = up.getAttribute("idproduct");
+      let listProducts = getDataLocalstorage("products") || [];
+      let indexProduct = listProducts.findIndex(
+        (product) => product.id == idProduct
+      );
       let indexCarts = listCarts.findIndex(
         (product) => product.id == idProduct
       );
-      if (listCarts[indexCarts].quantity < 1000) {
+      if (
+        listCarts[indexCarts].quantity < listProducts[indexProduct].inventory
+      ) {
         listCarts[indexCarts].quantity++;
         updateDataLocalStorage(nameCart, listCarts);
         loadCarts();
@@ -165,7 +171,7 @@ function loadCarts() {
       let indexCarts = listCarts.findIndex(
         (product) => product.id == idProduct
       );
-      if (listCarts[indexCarts].quantity >= 1) {
+      if (listCarts[indexCarts].quantity > 1) {
         listCarts[indexCarts].quantity--;
         updateDataLocalStorage(nameCart, listCarts);
         loadCarts();

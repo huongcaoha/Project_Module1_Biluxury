@@ -110,6 +110,7 @@ let listControlBlocks = [
   controlBlockSectionRevenue,
   controlBlockSectionUser,
   controlBlockSectionOrder,
+  controlBlockSectionCategory,
 ];
 for (let i = 1; i < listControlBlocks.length; i++) {
   if (i == Number.parseInt(getDataLocalstorage("currentDisplayContent"))) {
@@ -456,6 +457,14 @@ let color = getDataLocalstorage("productFilterColor")
   ? getDataLocalstorage("productFilterColor")
   : "";
 let productFilterNav = document.querySelector(".productFilterNav");
+let categories = getDataLocalstorage("category") || [];
+let currentCategoryFilter = getDataLocalstorage("productFilterCategory") || "";
+let contentCategory = `<option value="">select</option>`;
+for (let category of categories) {
+  contentCategory += ` <option value="${category}" ${
+    currentCategoryFilter == category ? "selected" : ""
+  }>${category}</option>`;
+}
 productFilterNav.innerHTML = ` <input type="text" name="productSearch" id="productSearch" placeholder="${search}"/>
             <button class="productButtonSearch">Search</button>
             <br />
@@ -481,37 +490,7 @@ productFilterNav.innerHTML = ` <input type="text" name="productSearch" id="produ
 
             <label for="filterCategory">Category</label>
             <select name="filterCategory" id="filterCategory">
-              <option value="">Select</option>
-              <option value="vest" ${
-                category == "vest" ? "selected" : ""
-              }>Vest</option>
-              <option value="threeHoles" ${
-                category == "threeHoles" ? "selected" : ""
-              }>ThreeHoles</option>
-              <option value="longSleeveShirt" ${
-                category == "longSleeveShirt" ? "selected" : ""
-              }>LongSleeveShirt</option>
-              <option value="patternedShirt" ${
-                category == "patternedShirt" ? "selected" : ""
-              }>PatternedShirt</option>
-              <option value="polo" ${
-                category == "polo" ? "selected" : ""
-              }>Polo</option>
-              <option value="longPolo" ${
-                category == "longPolo" ? "selected" : ""
-              }>LongPolo</option>
-              <option value="koreanMen" ${
-                category == "koreanMen" ? "selected" : ""
-              }>KoreanMen</option>
-              <option value="jacket" ${
-                category == "jacket" ? "selected" : ""
-              }>Jacket</option>
-              <option value="feltset" ${
-                category == "feltset" ? "selected" : ""
-              }>Feltset</option>
-              <option value="" ${
-                category == "" ? "selected" : ""
-              }>Tất cả</option>
+              ${contentCategory}
             </select>
             <br />
 
@@ -771,6 +750,10 @@ gtPagination.addEventListener("click", function (e) {
   }
 });
 
+// render category cho form tạo mới product
+let selectInputCategory = document.getElementById("productInputCategory");
+selectInputCategory.innerHTML = contentCategory;
+
 // create new product
 let productFormCreate = document.getElementById("productFormCreate");
 let productButtonCreate = document.getElementById("productButtonCreate");
@@ -886,6 +869,14 @@ for (let btnUpdate of listButtonUpdate) {
     let id = btnUpdate.getAttribute("title");
     let product =
       currentProducts[currentProducts.findIndex((element) => element.id == id)];
+    let categories = getDataLocalstorage("category") || [];
+    let contentCategory = `<option value="">Select</option>`;
+    for (let category of categories) {
+      contentCategory += ` <option value="${category}" ${
+        product.category === category ? "selected" : ""
+      }>${category}</option>`;
+    }
+
     productFormUpdate.innerHTML = ` <div class="form">
         <div>
           <h2>Update Product</h2>
@@ -942,34 +933,7 @@ for (let btnUpdate of listButtonUpdate) {
         <div>
           <label for="productInputCategory2">Category :</label>
           <select name="productInputCategory2" id="productInputCategory2">
-            <option value="">Select</option>
-            <option value="vest" ${
-              product.category === "vest" ? "selected" : ""
-            }>Vest</option>
-            <option value="threeHoles" ${
-              product.category === "threeHoles" ? "selected" : ""
-            }>ThreeHoles</option>
-            <option value="longSleeveShirt" ${
-              product.category === "longSleeveShirt" ? "selected" : ""
-            }>LongSleeveShirt</option>
-            <option value="patternedShirt" ${
-              product.category === "patternedShirt" ? "selected" : ""
-            }>PatternedShirt</option>
-            <option value="polo" ${
-              product.category === "polo" ? "selected" : ""
-            }>Polo</option>
-            <option value="longPolo" ${
-              product.category === "longPolo" ? "selected" : ""
-            }>Long Polo</option>
-            <option value="koreanMen" ${
-              product.category === "koreanMen" ? "selected" : ""
-            }>Korean Men</option>
-            <option value="jacket" ${
-              product.category === "jacket" ? "selected" : ""
-            }>Jacket</option>
-            <option value="feltset" ${
-              product.category === "feltset" ? "selected" : ""
-            }>Feltset</option>
+            ${contentCategory}
           </select>
         </div>
 
@@ -1097,11 +1061,14 @@ for (let btnUpdate of listButtonUpdate) {
 let productButtonDeletes = document.querySelectorAll(".productButtonDelete");
 for (let btnDelete of productButtonDeletes) {
   btnDelete.addEventListener("click", function () {
-    let id = btnDelete.getAttribute("title");
-    let indexProduct = totalProducts.findIndex((element) => element.id == id);
-    totalProducts.splice(indexProduct, 1);
-    updateDataLocalStorage("products", totalProducts);
-    window.location.reload();
+    let check = confirm("Bạn muốn xóa sản phẩm này chứ ?");
+    if (check) {
+      let id = btnDelete.getAttribute("title");
+      let indexProduct = totalProducts.findIndex((element) => element.id == id);
+      totalProducts.splice(indexProduct, 1);
+      updateDataLocalStorage("products", totalProducts);
+      window.location.reload();
+    }
   });
 }
 
@@ -1367,14 +1334,17 @@ for (let order of orderCurrentList) {
              <td>${order.email}</td>
              <td>${order.payMethod}</td>
              <td>${order.totalMoney}</td>
-             <td>${order.status}</td>
+             <td>${order.status == 1 ? "Đã đặt" : "Đã giao"}</td>
             ${
               order.status == 1
                 ? `<td>
-              <button class="orderButtonDelete" title="${order.id}">Delete</button>
+             
               <button class="orderButtonDetail" title="${order.id}">Detail</button>
             </td>`
-                : ` <button class="orderButtonDetail" title="${order.id}">Detail</button>`
+                : `<td> 
+                 <button class="orderButtonDelete" title="${order.id}">Delete</button>
+                <button class="orderButtonDetail" title="${order.id}">Detail</button>
+                </td>`
             }
           </tr>`;
 }
@@ -1485,9 +1455,12 @@ for (let btn of orderButtonDeletes) {
     let indexProduct = listOrders.findIndex(
       (element) => element.id == idProduct
     );
-    listOrders.splice(indexProduct, 1);
-    updateDataLocalStorage("listOrders", listOrders);
-    window.location.reload();
+    let check = confirm("Bạn có chắc muốn xóa đơn hàng này chứ ?");
+    if (check) {
+      listOrders.splice(indexProduct, 1);
+      updateDataLocalStorage("listOrders", listOrders);
+      window.location.reload();
+    }
   });
 }
 
