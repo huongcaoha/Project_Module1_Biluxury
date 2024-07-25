@@ -7,10 +7,21 @@ function updateDataLocalStorage(nameData, newData) {
 }
 
 // in ra tên user
+const nameUser1 = getDataLocalstorage("nameUser");
+let avatarUser = nameUser1 + "Avatar";
 let tagUser = document.getElementById("user");
+let image1 = "";
+if (getDataLocalstorage(avatarUser)) {
+  image1 = getDataLocalstorage(avatarUser);
+} else {
+  updateDataLocalStorage(avatarUser, image1);
+}
 if (getDataLocalstorage("nameUser")) {
-  const nameUser = getDataLocalstorage("nameUser");
-  tagUser.innerHTML = `<a href="#"><i class="fa-solid fa-user"></i>${nameUser}</a>`;
+  tagUser.innerHTML = `<a href="../html/profile.html">${
+    getDataLocalstorage(avatarUser) != ""
+      ? ` <img src="${image1}" alt="avatar" />`
+      : `<i class="fa-solid fa-user"></i>`
+  }</i>${nameUser1}</a>`;
 } else {
   tagUser.innerHTML = `<a href="../html/login.html"><button id="buttonLogin">Login</button></a>`;
 }
@@ -239,3 +250,35 @@ window.addEventListener("click", function (e) {
     e.target.style.display = "none";
   }
 });
+
+// xử lý nút chọn thay đổi ảnh
+let changeImage = document.getElementById("changeImage");
+let tagImage = document.getElementById("inputImage");
+changeImage.addEventListener("click", function () {
+  tagImage.click();
+  tagImage.addEventListener("change", function () {
+    if (tagImage.files && tagImage.files[0]) {
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        updateDataLocalStorage(avatarUser, e.target.result);
+        alert("Đổi ảnh đại diện thành công");
+      };
+      reader.readAsDataURL(tagImage.files[0]);
+
+      window.location.reload();
+    }
+  });
+});
+
+// xử lý hiển thị avatar
+let avatar = document.querySelector(".avatar");
+let image = "";
+if (getDataLocalstorage(avatarUser)) {
+  image = getDataLocalstorage(avatarUser);
+} else {
+  updateDataLocalStorage(avatarUser, image);
+}
+
+avatar.innerHTML = getDataLocalstorage(avatarUser)
+  ? ` <img src="${image}" alt="avatar" />`
+  : `<i class="fa-solid fa-user"></i>`;

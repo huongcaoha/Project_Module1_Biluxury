@@ -7,10 +7,21 @@ function updateDataLocalStorage(nameData, newData) {
 }
 
 // in ra tên user
+const nameUser = getDataLocalstorage("nameUser");
+let avatarUser = nameUser + "Avatar";
 let tagUser = document.getElementById("user");
+let image = "";
+if (getDataLocalstorage(avatarUser)) {
+  image = getDataLocalstorage(avatarUser);
+} else {
+  updateDataLocalStorage(avatarUser, image);
+}
 if (getDataLocalstorage("nameUser")) {
-  const nameUser = getDataLocalstorage("nameUser");
-  tagUser.innerHTML = `<a href="#"><i class="fa-solid fa-user"></i>${nameUser}</a>`;
+  tagUser.innerHTML = `<a href="../html/profile.html">${
+    getDataLocalstorage(avatarUser)
+      ? ` <img src="${image}" alt="avatar" />`
+      : `<i class="fa-solid fa-user"></i>`
+  }</i>${nameUser}</a>`;
 } else {
   tagUser.innerHTML = `<a href="../html/login.html"><button id="buttonLogin">Login</button></a>`;
 }
@@ -179,15 +190,19 @@ function loadCarts() {
     });
   }
 
+  // xử lý nút xóa sản phẩm
   for (let del of buttonDeletes) {
     del.addEventListener("click", function () {
-      const idProduct = del.getAttribute("idproduct");
-      let indexCarts = listCarts.findIndex(
-        (product) => product.id == idProduct
-      );
-      listCarts.splice(indexCarts, 1);
-      updateDataLocalStorage(nameCart, listCarts);
-      loadCarts();
+      let check = confirm("Bạn muốn xóa sản phẩm này chứ ?");
+      if (check) {
+        const idProduct = del.getAttribute("idproduct");
+        let indexCarts = listCarts.findIndex(
+          (product) => product.id == idProduct
+        );
+        listCarts.splice(indexCarts, 1);
+        updateDataLocalStorage(nameCart, listCarts);
+        loadCarts();
+      }
     });
   }
 }

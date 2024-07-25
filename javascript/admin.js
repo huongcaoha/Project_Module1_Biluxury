@@ -153,39 +153,7 @@ for (let i = 1; i < listControls.length; i++) {
     listControls[i].classList.add("display-none");
   }
 }
-//data demo list orders
-// class Product {
-//   constructor(idProduct, productName, price, quantity) {
-//     (this.idProduct = idProduct),
-//       (this.productName = productName),
-//       (this.price = price),
-//       (this.quantity = quantity),
-//       (this.totalMoney = this.price * this.quantity);
-//   }
-// }
-// let listOrdersDemo = [];
-// for (let i = 1; i <= 20; i++) {
-//   let order = {
-//     id: i,
-//     listProduct: [
-//       new Product(1, `Product1`, 5000, i),
-//       new Product(2, `Product2`, 6000, i),
-//       new Product(3, `Product3`, 7000, i),
-//       new Product(4, `Product4`, 8000, i),
-//       new Product(5, `Product5`, 9000, i),
-//       new Product(6, `Product6`, 10000, i),
-//       new Product(7, `Product7`, 11000, i),
-//       new Product(8, `Product8`, 12000, i),
-//     ],
-//     totalMoney: 1234567,
-//     day: new Date().getDate(),
-//     month: new Date().getMonth() + 1,
-//     year: new Date().getFullYear(),
-//     status: 3,
-//     idUser: 1,
-//   };
-//   listOrdersDemo.push(order);
-// }
+
 if (!getDataLocalstorage("listOrders")) {
   updateDataLocalStorage("listOrders", []);
 }
@@ -438,7 +406,10 @@ let arrMonths = [
   colRevenueMonth12,
 ];
 for (let month of arrMonths) {
-  let value = month.getAttribute("title") * 0.4;
+  let value =
+    month.getAttribute("title") * 0.4 <= 40
+      ? month.getAttribute("title") * 0.4
+      : 40;
   month.style.height = `${value}vh`;
 }
 // ---------------------------------------------------------------------------------section products---------------------------------------------------------------------------

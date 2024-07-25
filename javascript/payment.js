@@ -7,10 +7,21 @@ function updateDataLocalStorage(nameData, newData) {
 }
 
 // in ra tên user
+const nameUser = getDataLocalstorage("nameUser");
+let avatarUser = nameUser + "Avatar";
 let tagUser = document.getElementById("user");
+let image = "";
+if (getDataLocalstorage(avatarUser)) {
+  image = getDataLocalstorage(avatarUser);
+} else {
+  updateDataLocalStorage(avatarUser, image);
+}
 if (getDataLocalstorage("nameUser")) {
-  const nameUser = getDataLocalstorage("nameUser");
-  tagUser.innerHTML = `<a href="#"><i class="fa-solid fa-user"></i>${nameUser}</a>`;
+  tagUser.innerHTML = `<a href="../html/profile.html">${
+    getDataLocalstorage(avatarUser)
+      ? ` <img src="${image}" alt="avatar" />`
+      : `<i class="fa-solid fa-user"></i>`
+  }</i>${nameUser}</a>`;
 } else {
   tagUser.innerHTML = `<a href="../html/login.html"><button id="buttonLogin">Login</button></a>`;
 }
@@ -202,10 +213,10 @@ function loadCarts() {
       window.location.href = "../html/main.html";
     }
   });
-
+  let nameUser = getDataLocalstorage("nameUser") || "";
   // tạo mã QR thanh toán
   let qr = document.querySelector(".qr");
-  qr.innerHTML = ` <img src="https://api.vietqr.io/image/970415-113366668888-AZ9OO6e.jpg?amount=${total}&addInfo=1233456789" alt="QR">`;
+  qr.innerHTML = ` <img src="https://api.vietqr.io/image/970415-113366668888-AZ9OO6e.jpg?amount=${total}&addInfo=${nameUser} chuyển khoản" alt="QR">`;
 
   // xử lý chọn phương thức thanh toán
   let tagQr = document.querySelector(".qr");

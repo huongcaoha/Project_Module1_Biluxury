@@ -33,10 +33,21 @@ function reload() {
   let listTagCategorySlide = document.querySelectorAll(".categorySlide");
 
   // in ra tên user
+  const nameUser = getDataLocalstorage("nameUser");
+  let avatarUser = nameUser + "Avatar";
   let tagUser = document.getElementById("user");
+  let image = "";
+  if (getDataLocalstorage(avatarUser)) {
+    image = getDataLocalstorage(avatarUser);
+  } else {
+    updateDataLocalStorage(avatarUser, image);
+  }
   if (getDataLocalstorage("nameUser")) {
-    const nameUser = getDataLocalstorage("nameUser");
-    tagUser.innerHTML = `<a href="#"><i class="fa-solid fa-user"></i>${nameUser}</a>`;
+    tagUser.innerHTML = `<a href="../html/profile.html">${
+      getDataLocalstorage(avatarUser)
+        ? ` <img src="${image}" alt="avatar" />`
+        : `<i class="fa-solid fa-user"></i>`
+    }</i>${nameUser}</a>`;
   } else {
     tagUser.innerHTML = `<a href="../html/login.html"><button id="buttonLogin">Login</button></a>`;
   }

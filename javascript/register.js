@@ -57,7 +57,7 @@ let listUsers = getDataLocalstorage("listUsers")
 
 buttonRegister.addEventListener("click", function () {
   let check = 1;
-  id = listUsers.length == 0 ? 1 : listUsers[listUsers.length - 1].id + 1;
+  let id = listUsers.length == 0 ? 1 : listUsers[listUsers.length - 1].id + 1;
   for (let radio of listRadio) {
     if (radio.checked) {
       gender = radio.value;
@@ -88,20 +88,25 @@ buttonRegister.addEventListener("click", function () {
   }
 
   if (check == 1) {
-    let user = new User(
-      id,
-      username.value,
-      hashCode(password.value),
-      gender,
-      birthday.value,
-      phoneNumber.value,
-      email.value,
-      1
-    );
-    listUsers.push(user);
-    updateDataLocalStorage("listUsers", listUsers);
-    alert("Register successfully");
-    window.location.href = "../html/login.html";
+    let check = listUsers.findIndex((user) => user.username == username.value);
+    if (check != -1) {
+      alert("Account already exists");
+    } else {
+      let user = new User(
+        id,
+        username.value,
+        hashCode(password.value),
+        gender,
+        birthday.value,
+        phoneNumber.value,
+        email.value,
+        1
+      );
+      listUsers.push(user);
+      updateDataLocalStorage("listUsers", listUsers);
+      alert("Register successfully");
+      window.location.href = "../html/login.html";
+    }
   } else if (check == 2) {
     alert("Please do not leave any fields blank !");
   } else if (check == 3) {

@@ -4,10 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="../css/about.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
@@ -15,7 +18,6 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <link rel="stylesheet" href="../css/payment.css" />
   </head>
   <body>
     <div class="header">
@@ -132,85 +134,107 @@
           </div>
         </li>
         <li>
-          <a href="./about.html">Về chúng tôi</a>
+          <a href="#">Về chúng tôi</a>
           <div class="filterProduct">
             <div class="productFilter"></div>
           </div>
         </li>
         <li id="user"></li>
         <li id="buttonLogout">
-          <i class="fa-solid fa-right-from-bracket" style="cursor: pointer"></i>
+          <i
+            class="fa-solid fa-right-from-bracket"
+            id="buttonLogout"
+            style="cursor: pointer"
+          ></i>
         </li>
-
         <li id="carts"></li>
       </ul>
     </div>
 
     <main>
-      <h1>Payment</h1>
-
-      <div class="container">
-        <div class="formPay">
-          <h2>Thông tin giao hàng</h2>
-
-          <input
-            type="text"
-            name="name"
-            id="name"
-            placeholder="Họ và Tên"
-          /><br />
-          <input
-            type="number"
-            name="phone"
-            id="phone"
-            placeholder="Số điện thoại"
-          /><br />
-          <input
-            type="email"
-            name="email"
-            id="email"
-            placeholder="Email"
-          /><br />
-          <input
-            type="text"
-            name="address"
-            id="address"
-            placeholder="Địa chỉ"
-          /><br />
-          <input
-            type="text"
-            name="district"
-            id="district"
-            placeholder="Quận/Huyện"
-          /><br />
-          <input
-            type="text"
-            name="city"
-            id="city"
-            placeholder="Tỉnh/Thành phố"
-          />
-          <br />
-          <textarea name="note" id="note">Ghi chú :</textarea>
-          <br />
-
-          <label for="payMethod">Phương thức thanh toán :</label><br />
-          <input type="radio" name="payMethod" id="cash" value="cash" />
-          <label for="cash">Tiền mặt</label>
-
-          <input type="radio" name="payMethod" id="banking" value="banking" />
-          <label for="banking">Chuyển khoản</label>
-
-          <div class="qr"></div>
+      <h1>Những con số ấn tượng</h1>
+      <div class="aboutCompany1">
+        <div>
+          <i class="fa-solid fa-chart-simple" style="color: white"></i><br />
+          <b>&gt; 1 triệu</b><br />
+          <p>Sản phẩm được sản xuất/năm</p>
         </div>
 
-        <div class="inforOrder">
-          <h2>Thông tin đơn hàng</h2>
-          <table id="table-carts"></table>
-          <div class="totalMoney"></div>
+        <div>
+          <i class="fa-solid fa-rocket" style="color: white"></i><br />
+          <b>3,5 tỷ</b><br />
+          <p>Doanh thu trung bình 1 cửa hàng/năm</p>
+        </div>
+
+        <div>
+          <i class="fa-solid fa-house-chimney" style="color: white"></i><br />
+          <b>&gt; 140</b><br />
+          <p>Cửa hàng trên toàn quốc</p>
+        </div>
+
+        <div>
+          <i class="fa-solid fa-user" style="color: white"></i><br />
+          <b>1 Triệu</b><br />
+          <p>Khách hàng được phục vụ</p>
         </div>
       </div>
 
-      <button id="order">Đặt Đơn</button>
+      <div class="aboutCompany2">
+        <h1>Biluxury đã có mặt tại</h1>
+        <ul>
+          <li>
+            <i class="fa-solid fa-circle-check" style="color: #74c0fc"></i>Hơn
+            140+ Cửa hàng trên toàn quốc.
+          </li>
+          <li>
+            <i class="fa-solid fa-circle-check" style="color: #74c0fc"></i>
+            Quy mô văn phòng 950m2 với đầy đủ các phòng ban từ Phòng nhân sự,
+            thiết kế, kế hoạch, marketing, kinh doanh, đào tạo, kế toán, trưng
+            bày...
+          </li>
+          <li>
+            <i class="fa-solid fa-circle-check" style="color: #74c0fc"></i>
+            Với tầm nhìn trở thành Thương hiệu thời trang nam Made in Việt Nam
+            TOP 1 thị thường với quy mô 300 showroom trong năm 2020, 2024 vươn
+            ra thị trường Đông Nam Á.
+          </li>
+        </ul>
+      </div>
+
+      <div class="aboutCompany3">
+        <h1>Liên hệ với chúng tôi</h1>
+        <p>
+          Mọi thông tin liên hệ, đội ngũ tư vấn Biluxury sẽ phản hồi qua email
+          hoặc gọi điện trực tiếp tư vấn trong vòng 48h trừ ngày nghỉ và ngày
+          lễ.
+        </p>
+        <ul>
+          <li>
+            <h2>
+              <i class="fa-solid fa-location-dot" style="color: #ffd43b"></i>Địa
+              điểm
+            </h2>
+            <p>
+              Tầng 5, Toà nhà Skyline, Nguyễn Khuyến, Văn Quán, Hà Đông, Hà Nội
+            </p>
+          </li>
+
+          <li>
+            <h2>
+              <i class="fa-solid fa-phone-volume" style="color: #ffd43b"></i>Số
+              điện thoại
+            </h2>
+            <p>Mr.Hưởng 0988888888</p>
+          </li>
+
+          <li>
+            <h2>
+              <i class="fa-solid fa-envelope" style="color: #ffd43b"></i>Email
+            </h2>
+            <p>nhuongquyen@biluxury.vn</p>
+          </li>
+        </ul>
+      </div>
     </main>
 
     <footer>
@@ -237,7 +261,6 @@
         heroseo
       </p>
     </footer>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="../javascript/payment.js"></script>
+    <script src="../javascript/about.js"></script>
   </body>
 </html>

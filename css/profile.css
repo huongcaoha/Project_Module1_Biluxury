@@ -107,7 +107,7 @@ ul {
 
             }
 
-            .productFilter {
+            /* .productFilter {
                 display: none;
                 flex-wrap: wrap;
                 gap: 20px 10px;
@@ -121,7 +121,7 @@ ul {
                 background-color: #ece7e7;
                 border: 1px solid rgb(213, 210, 210);
                 padding: 0 10px;
-            }
+            } */
 
         }
 
@@ -129,15 +129,28 @@ ul {
 
 
         #user {
-
-
             a {
+                display: flex;
                 font-size: 18px;
+
+                img {
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    margin: 0 10px;
+                    margin-top: 1vh;
+
+                }
 
                 i {
                     margin-right: 10px;
                     margin-left: 10px;
+                    margin-top: 2.5vh;
                 }
+            }
+
+            #buttonLogin {
+                margin-top: 2vh;
             }
         }
 
@@ -181,17 +194,61 @@ main {
     align-items: center;
     gap: 0 50px; */
 
-    .inforProfile {
-        margin: 0 auto;
-        padding: 30px;
-        width: 30%;
-        border: 1px solid black;
+    .containerInfor {
+        display: flex;
+        justify-content: center;
+        gap: 0 100px;
 
-        .input {
-            margin: 10px 0;
-            width: 40%;
-            height: 3vh;
+        .inforProfile {
+            padding: 30px;
+            width: 30%;
+            border: 1px solid black;
+            border-radius: 10px;
+            background-color: #f6f6f6;
+
+            .input {
+                margin: 10px 0;
+                width: 40%;
+                height: 3vh;
+                border-radius: 5px;
+                border: none;
+            }
+
+            #buttonEdit {
+                width: 100px;
+                height: 3vh;
+                border-radius: 10px;
+                border: none;
+                background-color: #2196f7;
+            }
         }
+
+        .avatar {
+            i {
+                font-size: 250px;
+                border: 5px solid black;
+                padding: 20px;
+                border-radius: 50%;
+                overflow: hidden;
+            }
+
+            img {
+                width: 300px;
+                height: 300px;
+                padding: 20px;
+                border-radius: 50%;
+                overflow: hidden;
+            }
+        }
+
+        #changeImage {
+            margin-top: 20px;
+            padding: 5px;
+            border-radius: 10px;
+            background-color: #2196f7;
+            color: white;
+        }
+
     }
 
     .history {
