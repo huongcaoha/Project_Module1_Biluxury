@@ -201,7 +201,8 @@ ul {
     display: flex;
     justify-content: space-between;
     padding: 50px;
-
+    width: 100%;
+    flex-wrap: wrap;
 
     div {
         width: 10%;
@@ -211,6 +212,7 @@ ul {
         align-items: center;
         text-align: center;
         border-right: 1px solid rgb(187, 185, 185);
+        flex-wrap: wrap;
 
         img {
             width: 100px;
@@ -365,7 +367,7 @@ ul {
         flex-wrap: wrap;
 
         .item-product {
-            width: 22%;
+            width: 300px;
             text-align: center;
 
             .item {
@@ -458,10 +460,23 @@ footer {
 }
 
 /* Mobile styles */
-@media (max-width: 767px) {}
+@media (max-width: 768px) {
+    .category {
+        display: none;
+    }
+
+    #category {
+        top: 0;
+        left: -300px;
+    }
+}
 
 /* Tablet styles */
-@media (min-width: 768px) and (max-width: 1199px) {}
+@media (max-width: 1024px) {
+    .sub-nav {
+        display: none;
+    }
+}
 
 /* Desktop styles */
 @media (min-width: 1200px) {}

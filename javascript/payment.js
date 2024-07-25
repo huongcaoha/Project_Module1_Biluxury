@@ -166,51 +166,57 @@ function loadCarts() {
     ) {
       alert("Do not leave information boxes blank");
     } else {
-      // cập nhật lại sản phẩm tồn kho của cửa hàng
-      let listProducts = getDataLocalstorage("products") || [];
-      for (let product of listCarts) {
-        let index = listProducts.findIndex((pro) => pro.id == product.id);
-        listProducts[index].inventory -= product.quantity;
-      }
-      updateDataLocalStorage("products", listProducts);
-      let listOrders = getDataLocalstorage("listOrders") || [];
-      let id = 1;
-      if (listOrders.length > 0) {
-        id = listOrders[listOrders.length - 1].id + 1;
-      }
-      let nameUser = getDataLocalstorage("nameUser") || "";
-      let listUsers = getDataLocalstorage("listUsers") || [];
-      let idUser =
-        listUsers[listUsers.findIndex((user) => user.username == nameUser)].id;
-      let newOrder = {
-        id: id,
-        idUser: idUser,
-        products: listCarts,
-        name: name.value,
-        phone: phone.value,
-        email: email.value,
-        address: address.value,
-        district: district.value,
-        city: city.value,
-        totalMoney: total,
-        payMethod: payMethod,
-        status: 1,
-        date: new Date().getDate(),
-        month: new Date().getMonth() + 1,
-        year: new Date().getFullYear(),
-        createdTime:
-          new Date().getDate().toString() +
-          "/" +
-          (new Date().getMonth() + 1).toString() +
-          "/" +
-          new Date().getFullYear().toString(),
-      };
-      listOrders.push(newOrder);
+      if (listCarts.length <= 0) {
+        alert("Bạn phải thêm sản phẩm trước khi đặt hàng nhé !");
+        window.location.href = "../html/main.html";
+      } else {
+        // cập nhật lại sản phẩm tồn kho của cửa hàng
+        let listProducts = getDataLocalstorage("products") || [];
+        for (let product of listCarts) {
+          let index = listProducts.findIndex((pro) => pro.id == product.id);
+          listProducts[index].inventory -= product.quantity;
+        }
+        updateDataLocalStorage("products", listProducts);
+        let listOrders = getDataLocalstorage("listOrders") || [];
+        let id = 1;
+        if (listOrders.length > 0) {
+          id = listOrders[listOrders.length - 1].id + 1;
+        }
+        let nameUser = getDataLocalstorage("nameUser") || "";
+        let listUsers = getDataLocalstorage("listUsers") || [];
+        let idUser =
+          listUsers[listUsers.findIndex((user) => user.username == nameUser)]
+            .id;
+        let newOrder = {
+          id: id,
+          idUser: idUser,
+          products: listCarts,
+          name: name.value,
+          phone: phone.value,
+          email: email.value,
+          address: address.value,
+          district: district.value,
+          city: city.value,
+          totalMoney: total,
+          payMethod: payMethod,
+          status: 1,
+          date: new Date().getDate(),
+          month: new Date().getMonth() + 1,
+          year: new Date().getFullYear(),
+          createdTime:
+            new Date().getDate().toString() +
+            "/" +
+            (new Date().getMonth() + 1).toString() +
+            "/" +
+            new Date().getFullYear().toString(),
+        };
+        listOrders.push(newOrder);
 
-      updateDataLocalStorage(nameCart, []);
-      updateDataLocalStorage("listOrders", listOrders);
-      alert("Đặt hàng thành công !");
-      window.location.href = "../html/main.html";
+        updateDataLocalStorage(nameCart, []);
+        updateDataLocalStorage("listOrders", listOrders);
+        alert("Đặt hàng thành công !");
+        window.location.href = "../html/main.html";
+      }
     }
   });
   let nameUser = getDataLocalstorage("nameUser") || "";
