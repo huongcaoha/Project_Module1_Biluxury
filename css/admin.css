@@ -584,6 +584,15 @@ main {
           color: white;
           margin-bottom: 5px;
         }
+
+        .orderButtonDelivered {
+          background-color: chartreuse;
+          border: none;
+          padding: 5px;
+          border-radius: 5px;
+          color: white;
+          margin-bottom: 5px;
+        }
       }
     }
 

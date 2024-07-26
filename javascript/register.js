@@ -54,7 +54,8 @@ const buttonRegister = document.getElementById("buttonRegister");
 let listUsers = getDataLocalstorage("listUsers")
   ? getDataLocalstorage("listUsers")
   : [];
-
+let regexPhone = "/^0[35789][0-9]{8}$/";
+let regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 buttonRegister.addEventListener("click", function () {
   let check = 1;
   let id = listUsers.length == 0 ? 1 : listUsers[listUsers.length - 1].id + 1;
@@ -66,14 +67,29 @@ buttonRegister.addEventListener("click", function () {
   }
   if (
     !username.value ||
-    !password.value ||
-    !rePassword.value ||
+    password.value.length < 8 ||
+    rePassword.value.length < 8 ||
     !gender ||
     !birthday.value ||
-    !phoneNumber.value ||
-    !email.value
+    phoneNumber.value.length != 10 ||
+    email.value.length < 10
   ) {
-    check = 2;
+    console.log(check);
+    if (!username.value) {
+      alert("Username invalid !");
+    } else if (password.value.length < 8) {
+      alert("Password invalid !");
+    } else if (rePassword.value.length < 8) {
+      alert("Repassword invalid !");
+    } else if (!gender) {
+      alert("Gender invalid !");
+    } else if (!birthday.value) {
+      alert("Birthday invalid !");
+    } else if (phoneNumber.value.length != 10) {
+      alert("Phone number invalid !");
+    } else if (email.value.length < 10) {
+      alert("Email invalid !");
+    }
   } else {
     if (password.value != rePassword.value) {
       check = 3;
@@ -84,34 +100,36 @@ buttonRegister.addEventListener("click", function () {
           break;
         }
       }
-    }
-  }
 
-  if (check == 1) {
-    let check = listUsers.findIndex((user) => user.username == username.value);
-    if (check != -1) {
-      alert("Account already exists");
-    } else {
-      let user = new User(
-        id,
-        username.value,
-        hashCode(password.value),
-        gender,
-        birthday.value,
-        phoneNumber.value,
-        email.value,
-        1
-      );
-      listUsers.push(user);
-      updateDataLocalStorage("listUsers", listUsers);
-      alert("Register successfully");
-      window.location.href = "../html/login.html";
+      if (check == 1) {
+        let check = listUsers.findIndex(
+          (user) => user.username == username.value
+        );
+        if (check != -1) {
+          alert("Account already exists");
+        } else {
+          let user = new User(
+            id,
+            username.value,
+            hashCode(password.value),
+            gender,
+            birthday.value,
+            phoneNumber.value,
+            email.value,
+            1
+          );
+          listUsers.push(user);
+          updateDataLocalStorage("listUsers", listUsers);
+          alert("Register successfully");
+          window.location.href = "../html/login.html";
+        }
+      } else if (check == 2) {
+        alert("Please do not leave any fields blank !");
+      } else if (check == 3) {
+        alert("password and rePassword not match !");
+      } else {
+        alert("Account already exists");
+      }
     }
-  } else if (check == 2) {
-    alert("Please do not leave any fields blank !");
-  } else if (check == 3) {
-    alert("password and rePassword not match !");
-  } else {
-    alert("Account already exists");
   }
 });
