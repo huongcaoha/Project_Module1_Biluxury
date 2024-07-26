@@ -74,7 +74,6 @@ buttonRegister.addEventListener("click", function () {
     phoneNumber.value.length != 10 ||
     email.value.length < 10
   ) {
-    console.log(check);
     if (!username.value) {
       alert("Username invalid !");
     } else if (password.value.length < 8) {

@@ -1,3 +1,17 @@
+// function hashcode passwword
+function hashCode(str) {
+  let hash = 0,
+    i,
+    chr;
+  if (str.length === 0) return hash;
+  for (i = 0; i < str.length; i++) {
+    chr = str.charCodeAt(i);
+    hash = (hash << 5) - hash + chr;
+    hash |= 0; // Convert to 32bit integer
+  }
+  return hash;
+}
+
 // function xử lý trạng thái đơn hàng
 function handleStatus(status, order) {
   console.log(status);
@@ -24,6 +38,11 @@ function handleStatus(status, order) {
     case 4: {
       return `<td>
        <button class="orderButtonDetail" title="${order.id}">Detail</button>
+        ${
+          order.comment == 1
+            ? ` <button class="orderButtonComment" title="${order.id}">Comment</button>`
+            : ""
+        }
               </td>`;
     }
 
@@ -151,6 +170,18 @@ inforProfile.innerHTML = ` <label for="username"><i class="fa-solid fa-user"></i
               readonly
             />
             <br />
+
+             <label for="password"><i class="fa-solid fa-lock"></i></label>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="  Password"
+          required
+          class="input"
+          value="${user.password}"
+        />
+        <br />
            
             <label for="gender"><i class="fa-solid fa-venus-mars"></i></label>
     
@@ -210,6 +241,7 @@ inforProfile.innerHTML = ` <label for="username"><i class="fa-solid fa-user"></i
 let indexUser = listUsers.findIndex((user) => user.username == nameUser);
 let username = document.getElementById("username");
 let genders = document.getElementsByName("gender");
+let password = document.getElementById("password");
 let gender = "";
 for (let gen of genders) {
   if (gen.checked) {
@@ -221,15 +253,39 @@ let phoneNumber = document.getElementById("phoneNumber");
 let email = document.getElementById("email");
 let buttonEdit = document.getElementById("buttonEdit");
 buttonEdit.addEventListener("click", function () {
-  let check = confirm("Bạn muốn sửa lại thông tin chứ ?");
-  if (check) {
-    listUsers[indexUser].gender = gender;
-    listUsers[indexUser].birthday = birthday.value;
-    listUsers[indexUser].phoneNumber = phoneNumber.value;
-    listUsers[indexUser].email = email.value;
-    updateDataLocalStorage("listUsers", listUsers);
-    alert("Sửa thông tin thành công !");
-    window.location.reload();
+  if (
+    !username.value ||
+    password.value.length < 8 ||
+    !gender ||
+    !birthday.value ||
+    phoneNumber.value.length != 10 ||
+    email.value.length < 10
+  ) {
+    if (!username.value) {
+      alert("Username invalid !");
+    } else if (password.value.length < 8) {
+      alert("Password invalid !");
+    } else if (!gender) {
+      alert("Gender invalid !");
+    } else if (!birthday.value) {
+      alert("Birthday invalid !");
+    } else if (phoneNumber.value.length != 10) {
+      alert("Phone number invalid !");
+    } else if (email.value.length < 10) {
+      alert("Email invalid !");
+    }
+  } else {
+    let check = confirm("Bạn muốn sửa lại thông tin chứ ?");
+    if (check) {
+      listUsers[indexUser].gender = gender;
+      listUsers[indexUser].birthday = birthday.value;
+      listUsers[indexUser].phoneNumber = phoneNumber.value;
+      listUsers[indexUser].email = email.value;
+      listUsers[indexUser].password = hashCode(password.value);
+      updateDataLocalStorage("listUsers", listUsers);
+      alert("Sửa thông tin thành công !");
+      window.location.reload();
+    }
   }
 });
 // xử lý nút bấm xem chi tiết order
@@ -342,3 +398,47 @@ for (let btn of orderButtonCancels) {
     }
   });
 }
+
+// xử lý button comment
+let listProduct = getDataLocalstorage("products") || [];
+let comment = document.getElementById("comment");
+let buttonComment = document.getElementById("buttonComment");
+let containerComment = document.querySelector(".containerComment");
+let buttonCommentCancel = document.getElementById("buttonCommentCancel");
+let orderButtonComments = document.querySelectorAll(".orderButtonComment");
+let idOrder = 0;
+let indexOrder = -1;
+let order = {};
+for (let btn of orderButtonComments) {
+  btn.addEventListener("click", function () {
+    containerComment.style.display = "block";
+    idOrder = btn.getAttribute("title");
+    indexOrder = listOrders.findIndex((element) => element.id == idOrder);
+    order = listOrders[indexOrder];
+    console.log(idOrder);
+  });
+}
+
+buttonCommentCancel.addEventListener("click", function () {
+  containerComment.style.display = "none";
+});
+
+buttonComment.addEventListener("click", function () {
+  for (let product of order.products) {
+    let indexProduct = listProduct.findIndex((pro) => pro.id == product.id);
+    let listComment = listProduct.comment || [];
+    let objectComment = {
+      username: nameUser,
+      image: image1,
+      comment: comment.value,
+      createdDate: new Date(),
+    };
+    listComment.push(objectComment);
+    listProduct[indexProduct].comment = listComment;
+    listOrders[indexOrder].comment = 0;
+    updateDataLocalStorage("listOrders", listOrders);
+    updateDataLocalStorage("products", listProduct);
+    alert("Đánh giá thành công !");
+    window.location.reload();
+  }
+});

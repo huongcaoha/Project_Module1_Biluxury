@@ -200,6 +200,7 @@ function loadCarts() {
           totalMoney: total,
           payMethod: payMethod,
           status: 1,
+          comment: 1,
           date: new Date().getDate(),
           month: new Date().getMonth() + 1,
           year: new Date().getFullYear(),

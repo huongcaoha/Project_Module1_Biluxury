@@ -243,6 +243,17 @@ function loadProduct(css) {
       window.location.href = "../html/login.html";
     }
   });
+
+  let containerComment = document.querySelector(".containerComment");
+  containerComment.innerHTML = `<h1>Đánh giá </h1>`;
+  let listComment = product.comment || [];
+  for (let comment of listComment) {
+    containerComment.innerHTML += `<div class="comment">
+         <img src="${comment.image}" alt="avatar">
+        <h3>${comment.username} : </h3>
+        <p>${comment.comment}</p>
+      </div>`;
+  }
 }
 
 loadProduct();

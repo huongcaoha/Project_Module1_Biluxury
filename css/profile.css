@@ -301,6 +301,14 @@ main {
                     border-radius: 5px;
                     color: white;
                 }
+
+                .orderButtonComment {
+                    background-color: darkturquoise;
+                    border: none;
+                    padding: 5px;
+                    border-radius: 5px;
+                    color: white;
+                }
             }
         }
 
@@ -353,7 +361,41 @@ main {
 
 }
 
+.containerComment {
+    display: none;
+    border: 1px solid black;
+    padding: 30px;
+    text-align: center;
+    width: 500px;
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    background-color: white;
+    border-radius: 10px;
 
+    #comment {
+        width: 200px;
+        height: 6vh;
+    }
+
+    #buttonComment {
+        width: 80px;
+        height: 3vh;
+        border-radius: 5px;
+        border: none;
+        background-color: darkturquoise;
+        color: white;
+    }
+
+    #buttonCommentCancel {
+        width: 80px;
+        height: 3vh;
+        border-radius: 5px;
+        border: none;
+        background-color: #f84232;
+        color: white;
+    }
+}
 
 
 /* css footer */
