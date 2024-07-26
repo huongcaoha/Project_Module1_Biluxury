@@ -1,3 +1,41 @@
+// function xử lý trạng thái đơn hàng
+function handleStatus(status, order) {
+  console.log(status);
+  switch (Number.parseInt(status)) {
+    case 1: {
+      return `<td>
+              <button class="orderButtonCancel" title="${order.id}">Cancel</button>
+               <button class="orderButtonDetail" title="${order.id}">Detail</button>
+              </td>`;
+    }
+    case 2: {
+      return `<td>
+       <button class="orderButtonDetail" title="${order.id}">Detail</button>
+              </td>`;
+    }
+
+    case 3: {
+      return `<td>
+       <button class="orderButtonDetail" title="${order.id}">Detail</button>
+       <button class="orderButtonDelivered" title="${order.id}">Delivered</button>
+              </td>`;
+    }
+
+    case 4: {
+      return `<td>
+       <button class="orderButtonDetail" title="${order.id}">Detail</button>
+              </td>`;
+    }
+
+    case 0: {
+      return `<td>
+       <button class="orderButtonDetail" title="${order.id}">Detail</button>
+              </td>`;
+    }
+  }
+}
+
+//--------------------------
 function getDataLocalstorage(nameData) {
   return JSON.parse(localStorage.getItem(nameData));
 }
@@ -55,7 +93,7 @@ listTagCategorySlide.forEach((tag) =>
     reload();
   })
 );
-
+let listOrders = getDataLocalstorage("listOrders") || [];
 // hiển thị icon giỏ hàng và số lượng sản phẩm trong giỏ hàng
 const nameUserCart = getDataLocalstorage("nameUser") + "Carts";
 let carts = getDataLocalstorage(nameUserCart) || [];
@@ -80,7 +118,7 @@ newOders = listOrders.filter((order) => order.idUser == idUser);
 let contentTable = "";
 for (let order of newOders) {
   let listProduct = order.products.map((element) => element.name).join(",");
-  let status = ["", "ordered", "delivering", "success"];
+  let status = ["Đã hủy", "Đã đặt", "Đã xác nhận", "Đang giao", "Đã giao"];
   contentTable += ` <tr>
             <td>${order.id}</td>
             <td>${order.name}</td>
@@ -92,18 +130,8 @@ for (let order of newOders) {
              <td>${order.email}</td>
              <td>${order.payMethod}</td>
              <td>${order.totalMoney}</td>
-             <td>${order.status == 1 ? "Đã đặt" : "Đã giao"}</td>
-            ${
-              order.status == 1
-                ? `<td>
-             
-              <button class="orderButtonDetail" title="${order.id}">Detail</button>
-            </td>`
-                : `<td> 
-                 <button class="orderButtonDelete" title="${order.id}">Delete</button>
-                <button class="orderButtonDetail" title="${order.id}">Detail</button>
-                </td>`
-            }
+             <td>${status[Number.parseInt(order.status)]}</td>
+             ${handleStatus(order.status, order)}
           </tr>`;
 }
 tbodyOders.innerHTML = contentTable;
@@ -282,3 +310,35 @@ if (getDataLocalstorage(avatarUser)) {
 avatar.innerHTML = getDataLocalstorage(avatarUser)
   ? ` <img src="${image}" alt="avatar" />`
   : `<i class="fa-solid fa-user"></i>`;
+
+// chuyển trạng thái đã xác nhận sang đang giao hàng
+let orderButtonDelivereds = document.querySelectorAll(".orderButtonDelivered");
+for (let btn of orderButtonDelivereds) {
+  btn.addEventListener("click", function () {
+    let idOrder = btn.getAttribute("title");
+    let indexOrder = listOrders.findIndex((element) => element.id == idOrder);
+    let check = confirm(
+      "Bạn muốn chuyển đơn hàng này sang trạng thái đã giao hàng ?"
+    );
+    if (check) {
+      listOrders[indexOrder].status = 4;
+      updateDataLocalStorage("listOrders", listOrders);
+      window.location.reload();
+    }
+  });
+}
+
+// chuyển trạng thái đã xác nhận sang hủy đơn hàng
+let orderButtonCancels = document.querySelectorAll(".orderButtonCancel");
+for (let btn of orderButtonCancels) {
+  btn.addEventListener("click", function () {
+    let idOrder = btn.getAttribute("title");
+    let indexOrder = listOrders.findIndex((element) => element.id == idOrder);
+    let check = confirm("Bạn muốn hủy đơn hàng này chứ ?");
+    if (check) {
+      listOrders[indexOrder].status = 0;
+      updateDataLocalStorage("listOrders", listOrders);
+      window.location.reload();
+    }
+  });
+}

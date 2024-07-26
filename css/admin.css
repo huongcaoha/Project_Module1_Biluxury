@@ -566,6 +566,24 @@ main {
           border-radius: 5px;
           color: white;
         }
+
+        .orderButtonConfirm {
+          background-color: #2196f7;
+          border: none;
+          padding: 5px;
+          border-radius: 5px;
+          color: white;
+          margin-bottom: 5px;
+        }
+
+        .orderButtonDelivery {
+          background-color: blue;
+          border: none;
+          padding: 5px;
+          border-radius: 5px;
+          color: white;
+          margin-bottom: 5px;
+        }
       }
     }
 

@@ -285,6 +285,22 @@ main {
                     border-radius: 5px;
                     color: white;
                 }
+
+                .orderButtonDelivered {
+                    background-color: #2196f7;
+                    border: none;
+                    padding: 5px;
+                    border-radius: 5px;
+                    color: white;
+                }
+
+                .orderButtonCancel {
+                    background-color: #f84232;
+                    border: none;
+                    padding: 5px;
+                    border-radius: 5px;
+                    color: white;
+                }
             }
         }
 
@@ -349,5 +365,14 @@ footer {
 
     a {
         color: rgb(227, 219, 219);
+    }
+}
+
+@media (max-width : 768px) {
+    .containerInfor {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
     }
 }
