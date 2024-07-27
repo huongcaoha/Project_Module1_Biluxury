@@ -1892,3 +1892,81 @@ function renderCategory() {
   }
 }
 renderCategory();
+
+//----------------------------------------------------------------------section message-----------------------------------------------------------
+function renderMessage() {
+  let containerTotalMessage = document.querySelector(".containerTotalMessage");
+  let buttonMessage = document.getElementById("buttonMessage");
+  let dataMessage = getDataLocalstorage("dataMessage") || {};
+  let listUsers = getDataLocalstorage("listUsers") || [];
+  //xử lý đóng mở hộp tin nhắn
+  buttonMessage.addEventListener("click", function () {
+    containerTotalMessage.style.display = "block";
+  });
+
+  // xử lý in ra danh sách tin nhắn người dùng
+
+  containerTotalMessage.innerHTML = `<button id="totalMessageClose">Close</button>`;
+
+  for (let user in dataMessage) {
+    let indexUser = listUsers.findIndex((u) => u.username == user);
+    let endMessage = dataMessage[user][dataMessage[user].length - 1].message;
+    let avatar = listUsers[indexUser].avatar || "";
+    containerTotalMessage.innerHTML += `<div class="detailMessage" id="${user}">
+        ${
+          avatar
+            ? `<img src="${avatar}" alt="avatar"> <h3>${user}:</h3> <p>${endMessage}</p>`
+            : `<i class="fa-solid fa-user"></i> <h3>${user}:</h3> <p>${endMessage}</p> `
+        }
+      </div>`;
+  }
+  let totalMessageClose = document.getElementById("totalMessageClose");
+  let formMessageDetail = document.querySelector(".formMessageDetail");
+  totalMessageClose.addEventListener("click", function () {
+    containerTotalMessage.style.display = "none";
+  });
+
+  let buttonMessageClose = document.getElementById("buttonMessageClose");
+  buttonMessageClose.addEventListener("click", function () {
+    formMessageDetail.style.display = "none";
+  });
+
+  // xử lý in ra hộp tin nhắn riêng từng khách hàng
+  let detailMessages = document.querySelectorAll(".detailMessage");
+  let containerMessage = document.querySelector(".containerMessage");
+  let messageDetail = [];
+  let username = "";
+  for (let mes of detailMessages) {
+    mes.addEventListener("click", function () {
+      formMessageDetail.style.display = "block";
+      username = mes.getAttribute("id");
+      messageDetail = dataMessage[username];
+      let indexUser = listUsers.findIndex((u) => u.username == username);
+      let avatar = listUsers[indexUser].avatar;
+      containerMessage.innerHTML = "";
+      for (let mes of messageDetail) {
+        containerMessage.innerHTML += `<div><img src="${
+          mes.id == 1 ? avatar : "../image/iconAdmin.png"
+        }" alt="avatar"><p>: ${mes.message}</p></div>`;
+      }
+    });
+  }
+
+  // xử lý button nhắn tin
+  let buttonSendMessage = document.getElementById("buttonSendMessage");
+  buttonSendMessage.addEventListener("click", function () {
+    let newMessage = {
+      id: 2,
+      message: message.value,
+      createdDate: new Date(),
+    };
+    messageDetail.push(newMessage);
+    dataMessage[username] = messageDetail;
+    message.value = "";
+    updateDataLocalStorage("dataMessage", dataMessage);
+    let tagDiv = document.getElementById(username);
+    renderMessage();
+    tagDiv.click();
+  });
+}
+renderMessage();

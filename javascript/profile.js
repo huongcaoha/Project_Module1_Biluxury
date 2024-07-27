@@ -338,6 +338,7 @@ window.addEventListener("click", function (e) {
 // xử lý nút chọn thay đổi ảnh
 let changeImage = document.getElementById("changeImage");
 let tagImage = document.getElementById("inputImage");
+
 changeImage.addEventListener("click", function () {
   tagImage.click();
   tagImage.addEventListener("change", function () {
@@ -345,6 +346,8 @@ changeImage.addEventListener("click", function () {
       var reader = new FileReader();
       reader.onload = function (e) {
         updateDataLocalStorage(avatarUser, e.target.result);
+        listUsers[indexUser].avatar = e.target.result;
+        updateDataLocalStorage("listUsers", listUsers);
         alert("Đổi ảnh đại diện thành công");
       };
       reader.readAsDataURL(tagImage.files[0]);
@@ -426,12 +429,14 @@ buttonCommentCancel.addEventListener("click", function () {
 buttonComment.addEventListener("click", function () {
   for (let product of order.products) {
     let indexProduct = listProduct.findIndex((pro) => pro.id == product.id);
-    let listComment = listProduct.comment || [];
+    let listComment = listProduct[indexProduct].comment || [];
     let objectComment = {
       username: nameUser,
       image: image1,
       comment: comment.value,
-      createdDate: new Date(),
+      createdDate: `${new Date().getDate()}/${
+        new Date().getMonth() + 1
+      }/${new Date().getFullYear()} -- ${new Date().getHours()}:${new Date().getMinutes()}:${new Date().getSeconds()}`,
     };
     listComment.push(objectComment);
     listProduct[indexProduct].comment = listComment;

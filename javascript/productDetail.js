@@ -252,6 +252,7 @@ function loadProduct(css) {
          <img src="${comment.image}" alt="avatar">
         <h3>${comment.username} : </h3>
         <p>${comment.comment}</p>
+        <p><sub>${comment.createdDate}</sub></p>
       </div>`;
   }
 }

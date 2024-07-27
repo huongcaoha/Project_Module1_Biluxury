@@ -989,3 +989,58 @@ let seeMore = document.getElementById("seeMore");
 seeMore.addEventListener("click", function () {
   updateDataLocalStorage("filterProductCategory", "vest");
 });
+
+// section nhắn tin giữa khách và admin
+
+function renderMessage() {
+  let dataMessage = {};
+  if (getDataLocalstorage("dataMessage")) {
+    dataMessage = getDataLocalstorage("dataMessage");
+  } else {
+    updateDataLocalStorage("dataMessage", dataMessage);
+  }
+  let myMessage = dataMessage[nameUser] || [];
+  let buttonMessage = document.getElementById("buttonMessage");
+  let containerMessage = document.querySelector(".containerMessage");
+  let formMessage = document.querySelector(".formMessage");
+  let buttonMessageClose = document.getElementById("buttonMessageClose");
+  let buttonSendMessage = document.getElementById("buttonSendMessage");
+  let message = document.getElementById("message");
+  buttonMessage.addEventListener("click", function () {
+    if (!nameUser) {
+      alert("Cần hãy đăng nhập trước nhé !");
+      window.location.href = "../html/login.html";
+    } else {
+      formMessage.style.display = "block";
+    }
+  });
+
+  // xử lý đóng mở hộp tin nhắn
+  buttonMessageClose.addEventListener("click", function () {
+    formMessage.style.display = "none";
+  });
+
+  // xử lý in ra tin nhắn
+  let imageUser = getDataLocalstorage(avatarUser) || "";
+  containerMessage.innerHTML = "";
+  for (let mes of myMessage) {
+    containerMessage.innerHTML += `<div><img src="${
+      mes.id == 1 ? imageUser : "../image/iconAdmin.png"
+    }" alt="avatar"><p>: ${mes.message}</p></div>`;
+  }
+
+  // xử lý button nhắn tin
+  buttonSendMessage.addEventListener("click", function () {
+    let newMessage = {
+      id: 1,
+      message: message.value,
+      createdDate: new Date(),
+    };
+    myMessage.push(newMessage);
+    dataMessage[nameUser] = myMessage;
+    message.value = "";
+    updateDataLocalStorage("dataMessage", dataMessage);
+    renderMessage();
+  });
+}
+renderMessage();
