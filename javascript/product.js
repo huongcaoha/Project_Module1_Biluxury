@@ -1,14 +1,13 @@
 // function
+function getDataLocalstorage(nameData) {
+  return JSON.parse(localStorage.getItem(nameData));
+}
+
+function updateDataLocalStorage(nameData, newData) {
+  localStorage.setItem(nameData, JSON.stringify(newData));
+}
 
 function reload() {
-  function getDataLocalstorage(nameData) {
-    return JSON.parse(localStorage.getItem(nameData));
-  }
-
-  function updateDataLocalStorage(nameData, newData) {
-    localStorage.setItem(nameData, JSON.stringify(newData));
-  }
-
   // hiển thị icon giỏ hàng và số lượng sản phẩm trong giỏ hàng
   const nameUserCart = getDataLocalstorage("nameUser") + "Carts";
   let carts = getDataLocalstorage(nameUserCart) || [];
@@ -443,3 +442,68 @@ function reload() {
   }
 }
 reload();
+
+// -----------------------------------------------------------------------section nhắn tin giữa khách và admin
+
+function renderMessage() {
+  let nameUser = getDataLocalstorage("nameUser") || "";
+  let avatarUser = nameUser + "Avatar";
+  let dataMessage = {};
+  if (getDataLocalstorage("dataMessage")) {
+    dataMessage = getDataLocalstorage("dataMessage");
+  } else {
+    updateDataLocalStorage("dataMessage", dataMessage);
+  }
+  let myMessage = dataMessage[nameUser] || [];
+  let buttonMessage = document.getElementById("buttonMessage");
+  let containerMessage = document.querySelector(".containerMessage");
+  let formMessage = document.querySelector(".formMessage");
+  let buttonMessageClose = document.getElementById("buttonMessageClose");
+  let buttonSendMessage = document.getElementById("buttonSendMessage");
+  let message = document.getElementById("message");
+  buttonMessage.addEventListener("click", function () {
+    if (!nameUser) {
+      alert("Cần hãy đăng nhập trước nhé !");
+      window.location.href = "../html/login.html";
+    } else {
+      formMessage.style.display = "block";
+    }
+  });
+
+  // xử lý đóng mở hộp tin nhắn
+  buttonMessageClose.addEventListener("click", function () {
+    formMessage.style.display = "none";
+  });
+
+  // xử lý in ra tin nhắn
+  let imageUser = getDataLocalstorage(avatarUser) || "";
+  containerMessage.innerHTML = "";
+  for (let mes of myMessage) {
+    containerMessage.innerHTML += `<div><img src="${
+      mes.id == 1 ? imageUser : "../image/iconAdmin.png"
+    }" alt="avatar"><p>: ${mes.message}</p></div>`;
+  }
+
+  // xử lý button nhắn tin
+  buttonSendMessage.addEventListener("click", function () {
+    let newMessage = {
+      id: 1,
+      message: message.value,
+      createdDate: new Date(),
+      valueDate:
+        `${new Date().getFullYear()}` +
+        `${new Date().getMonth()}` +
+        `${new Date().getDate()}` +
+        `${new Date().getHours()}` +
+        `${new Date().getMinutes()}` +
+        `${new Date().getSeconds()}`,
+      readStatus: 1,
+    };
+    myMessage.push(newMessage);
+    dataMessage[nameUser] = myMessage;
+    message.value = "";
+    updateDataLocalStorage("dataMessage", dataMessage);
+    renderMessage();
+  });
+}
+renderMessage();

@@ -1895,6 +1895,7 @@ renderCategory();
 
 //----------------------------------------------------------------------section message-----------------------------------------------------------
 function renderMessage() {
+  let message = document.getElementById("message");
   let containerTotalMessage = document.querySelector(".containerTotalMessage");
   let buttonMessage = document.getElementById("buttonMessage");
   let dataMessage = getDataLocalstorage("dataMessage") || {};
@@ -1905,21 +1906,37 @@ function renderMessage() {
   });
 
   // xử lý in ra danh sách tin nhắn người dùng
-
+  let newObject = Object.keys(dataMessage).sort((a, b) => {
+    return (
+      Number(dataMessage[b][dataMessage[b].length - 1].valueDate) -
+      Number(dataMessage[a][dataMessage[a].length - 1].valueDate)
+    );
+  });
   containerTotalMessage.innerHTML = `<button id="totalMessageClose">Close</button>`;
-
-  for (let user in dataMessage) {
+  for (let user of newObject) {
     let indexUser = listUsers.findIndex((u) => u.username == user);
     let endMessage = dataMessage[user][dataMessage[user].length - 1].message;
+    let readStatus = dataMessage[user][dataMessage[user].length - 1].readStatus;
     let avatar = listUsers[indexUser].avatar || "";
-    containerTotalMessage.innerHTML += `<div class="detailMessage" id="${user}">
-        ${
-          avatar
-            ? `<img src="${avatar}" alt="avatar"> <h3>${user}:</h3> <p>${endMessage}</p>`
-            : `<i class="fa-solid fa-user"></i> <h3>${user}:</h3> <p>${endMessage}</p> `
-        }
-      </div>`;
+    containerTotalMessage.innerHTML += `${
+      readStatus == 1
+        ? `<div class="detailMessage" id="${user}"  style="color: #db4e1b;">
+      ${
+        avatar
+          ? `<img src="${avatar}" alt="avatar"> <h3>${user}:</h3> <p>${endMessage}</p>`
+          : `<i class="fa-solid fa-user"></i> <h3>${user}:</h3> <p>${endMessage}</p> `
+      }
+    </div>`
+        : `<div class="detailMessage" id="${user}">
+    ${
+      avatar
+        ? `<img src="${avatar}" alt="avatar"> <h3>${user}:</h3> <p>${endMessage}</p>`
+        : `<i class="fa-solid fa-user"></i> <h3>${user}:</h3> <p>${endMessage}</p> `
+    }
+  </div>`
+    }`;
   }
+
   let totalMessageClose = document.getElementById("totalMessageClose");
   let formMessageDetail = document.querySelector(".formMessageDetail");
   totalMessageClose.addEventListener("click", function () {
@@ -1949,23 +1966,35 @@ function renderMessage() {
           mes.id == 1 ? avatar : "../image/iconAdmin.png"
         }" alt="avatar"><p>: ${mes.message}</p></div>`;
       }
+      dataMessage[username][dataMessage[username].length - 1].readStatus = 0;
+      updateDataLocalStorage("dataMessage", dataMessage);
+      renderMessage();
     });
   }
 
   // xử lý button nhắn tin
   let buttonSendMessage = document.getElementById("buttonSendMessage");
-  buttonSendMessage.addEventListener("click", function () {
+  buttonSendMessage.addEventListener("click", function (e) {
+    messageDetail = dataMessage[username];
     let newMessage = {
       id: 2,
       message: message.value,
       createdDate: new Date(),
+      valueDate:
+        `${new Date().getFullYear()}` +
+        `${new Date().getMonth()}` +
+        `${new Date().getDate()}` +
+        `${new Date().getHours()}` +
+        `${new Date().getMinutes()}` +
+        `${new Date().getSeconds()}`,
+      readStatus: 0,
     };
     messageDetail.push(newMessage);
     dataMessage[username] = messageDetail;
-    message.value = "";
     updateDataLocalStorage("dataMessage", dataMessage);
-    let tagDiv = document.getElementById(username);
+    message.value = "";
     renderMessage();
+    let tagDiv = document.getElementById(username);
     tagDiv.click();
   });
 }

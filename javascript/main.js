@@ -990,7 +990,7 @@ seeMore.addEventListener("click", function () {
   updateDataLocalStorage("filterProductCategory", "vest");
 });
 
-// section nhắn tin giữa khách và admin
+// -----------------------------------------------------------------------section nhắn tin giữa khách và admin
 
 function renderMessage() {
   let dataMessage = {};
@@ -1035,6 +1035,14 @@ function renderMessage() {
       id: 1,
       message: message.value,
       createdDate: new Date(),
+      valueDate:
+        `${new Date().getFullYear()}` +
+        `${new Date().getMonth()}` +
+        `${new Date().getDate()}` +
+        `${new Date().getHours()}` +
+        `${new Date().getMinutes()}` +
+        `${new Date().getSeconds()}`,
+      readStatus: 1,
     };
     myMessage.push(newMessage);
     dataMessage[nameUser] = myMessage;
