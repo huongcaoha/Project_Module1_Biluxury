@@ -52,6 +52,7 @@ ul {
 
     }
 
+
     #buttonLogin {
         width: 80px;
         height: 3vh;
@@ -138,6 +139,34 @@ ul {
             background-color: #f6f6f6;
             border: 1px solid rgb(213, 210, 210);
             padding: 0 10px;
+        }
+    }
+
+    #menu {
+        font-size: 30px;
+        display: none;
+
+        #menu-ul {
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            display: none;
+
+            li {
+                a {
+                    img {
+                        width: 50px;
+                        height: 50px;
+                    }
+                }
+            }
+        }
+    }
+
+    #menu:hover {
+        #menu-ul {
+            display: block;
         }
     }
 
@@ -239,8 +268,9 @@ main {
         div {
             display: flex;
             flex-direction: column;
+            flex-wrap: wrap;
             text-align: center;
-            width: 22%;
+            width: 300px;
             gap: 10px;
             position: relative;
             overflow: hidden;
@@ -419,10 +449,20 @@ footer {
     }
 }
 
-@media (max-width:1023px) {
+@media (max-width:1024px) {
     main {
         .resultProduct {
             padding: 20px;
+        }
+    }
+
+    .navbar {
+        .sub-nav {
+            display: none;
+        }
+
+        #menu {
+            display: block;
         }
     }
 }

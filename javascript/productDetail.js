@@ -301,6 +301,11 @@ function renderMessage() {
   }
 
   // xử lý button nhắn tin
+  message.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      buttonSendMessage.click();
+    }
+  });
   buttonSendMessage.addEventListener("click", function () {
     let newMessage = {
       id: 1,

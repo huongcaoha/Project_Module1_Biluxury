@@ -130,6 +130,35 @@ ul {
 
         }
 
+        #menu {
+            font-size: 30px;
+            display: none;
+
+            #menu-ul {
+                background-color: white;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+                display: none;
+
+                li {
+                    a {
+                        img {
+                            width: 50px;
+                            height: 50px;
+                        }
+                    }
+                }
+            }
+        }
+
+        #menu:hover {
+            #menu-ul {
+                display: block;
+            }
+        }
+
+
         /* css number carts */
 
 
@@ -416,11 +445,22 @@ footer {
     }
 }
 
-@media (max-width : 1200px) {
-    #user {
+@media (max-width : 1024px) {
+    .sub-nav {
         display: none;
     }
+
+    .header {
+        & .navbar {
+            #menu {
+                font-size: 30px;
+                display: block;
+            }
+        }
+    }
 }
+
+@media (max-width : 1200px) {}
 
 @keyframes scaleImageSmall {
     from {

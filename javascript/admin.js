@@ -1913,6 +1913,7 @@ function renderMessage() {
     );
   });
   containerTotalMessage.innerHTML = `<button id="totalMessageClose">Close</button>`;
+  console.log(newObject);
   for (let user of newObject) {
     let indexUser = listUsers.findIndex((u) => u.username == user);
     let endMessage = dataMessage[user][dataMessage[user].length - 1].message;
@@ -1974,6 +1975,11 @@ function renderMessage() {
 
   // xử lý button nhắn tin
   let buttonSendMessage = document.getElementById("buttonSendMessage");
+  message.addEventListener("keydown", function (event) {
+    if (event.key === "Enter") {
+      buttonSendMessage.click();
+    }
+  });
   buttonSendMessage.addEventListener("click", function (e) {
     messageDetail = dataMessage[username];
     let newMessage = {

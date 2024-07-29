@@ -1005,6 +1005,7 @@ main {
   right: 20px;
   bottom: 200px;
   border-radius: 10px;
+  display: none;
 
   #totalMessageClose {
     background: #f84232;
