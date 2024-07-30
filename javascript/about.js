@@ -42,6 +42,7 @@ if (document.getElementById("buttonLogout")) {
   buttonLogout.addEventListener("click", function () {
     updateDataLocalStorage("nameUser", "");
     updateDataLocalStorage("statusLogin", 0);
+    updateDataLocalStorage("history", "../html/main.html");
     window.location.href = "../html/login.html";
   });
 }

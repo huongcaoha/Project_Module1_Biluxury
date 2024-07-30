@@ -31,6 +31,7 @@ if (document.getElementById("buttonLogout")) {
   let buttonLogout = document.getElementById("buttonLogout");
   buttonLogout.addEventListener("click", function () {
     updateDataLocalStorage("nameUser", "");
+    updateDataLocalStorage("history", "../html/main.html");
     window.location.href = "../html/login.html";
   });
 }
@@ -73,7 +74,8 @@ function loadCarts() {
   let nameCart = getDataLocalstorage("nameUser") + "Carts" || "";
   let listCarts = getDataLocalstorage(nameCart) || [];
   let totalMoney = document.getElementById("totalMoney");
-  tableCarts.innerHTML = `<tr>
+  tableCarts.innerHTML = `<button id="deleteAll">Xóa tất cả</button>`;
+  tableCarts.innerHTML += `<tr>
           <th>STT</th>
           <th>Image</th>
           <th>Product Name</th>
@@ -104,6 +106,16 @@ function loadCarts() {
         </tr>`;
     count++;
   }
+
+  // xử lý nút xóa tất cả sản phẩm
+  let buttonDeleteAll = document.getElementById("deleteAll");
+  buttonDeleteAll.addEventListener("click", function () {
+    let check = confirm("Bạn muốn xóa tất cả chứ ? ");
+    if (check) {
+      updateDataLocalStorage(nameCart, []);
+      loadCarts();
+    }
+  });
 
   // in ra tổng giá trị đơn hàng và button đặt hàng
   let total = listCarts.reduce(

@@ -31,6 +31,7 @@ if (document.getElementById("buttonLogout")) {
   let buttonLogout = document.getElementById("buttonLogout");
   buttonLogout.addEventListener("click", function () {
     updateDataLocalStorage("nameUser", "");
+    updateDataLocalStorage("history", "../html/main.html");
     window.location.href = "../html/login.html";
   });
 }

@@ -57,6 +57,7 @@ function reload() {
     buttonLogout.addEventListener("click", function () {
       updateDataLocalStorage("nameUser", "");
       updateDataLocalStorage("statusLogin", 0);
+      updateDataLocalStorage("history", "../html/main.html");
     });
   }
   //------------------

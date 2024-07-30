@@ -44,6 +44,7 @@ function loadProduct(css) {
     buttonLogout.addEventListener("click", function () {
       updateDataLocalStorage("nameUser", "");
       updateDataLocalStorage("statusLogin", 0);
+      updateDataLocalStorage("history", "../html/main.html");
       window.location.href = "../html/login.html";
     });
   }
@@ -213,8 +214,6 @@ function loadProduct(css) {
           carts[indexCart].quantity = carts[indexCart].quantity =
             Number.parseInt(carts[indexCart].quantity) +
             Number.parseInt(buttonQuantity.value);
-          // listProducts[indexProduct].inventory -= buttonQuantity.value;
-          // updateDataLocalStorage("products", listProducts);
           updateDataLocalStorage(nameUserCart, carts);
           alert("Đã thêm sản phẩm vào giỏ hàng !");
           loadProduct("addToCarts");
@@ -230,8 +229,6 @@ function loadProduct(css) {
             size: productSize,
           };
           carts.push(newProduct);
-          // listProducts[indexProduct].inventory -= buttonQuantity.value;
-          // updateDataLocalStorage("products", listProducts);
           updateDataLocalStorage(nameUserCart, carts);
           alert("Đã thêm sản phẩm vào giỏ hàng !");
           loadProduct("addToCarts");

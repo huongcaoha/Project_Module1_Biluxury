@@ -197,11 +197,23 @@ main {
     text-align: center;
 
     #table-carts {
+
         margin: 0 auto;
         margin: 50px auto;
         text-align: center;
         width: 100%;
         padding: 0 10%;
+
+        #deleteAll {
+            padding: 10px;
+            background-color: crimson;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            font-size: 22px;
+            cursor: pointer;
+        }
 
         tr {
 
