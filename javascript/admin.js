@@ -1250,7 +1250,7 @@ for (let i = 1; i <= 31; i++) {
     optionsDate += `<option value="${i}">${i}</option>`;
   }
 }
-console.log(orderFilterDate);
+
 optionsDate += `<option value="" ${
   orderFilterDate == "" ? "selected" : ""
 }>Tất cả</option>`;
@@ -1560,7 +1560,7 @@ for (let btn of orderButtonDelivereds) {
   });
 }
 
-//-------------------------------------------------------------------------- Section User
+//-------------------------------------------------------------------------- section user ---------------------------------------------------
 // filter user
 let userContentSearch = "";
 if (getDataLocalstorage("userContentSearch")) {
@@ -1598,7 +1598,7 @@ if (getDataLocalstorage("listUsers")) {
   updateDataLocalStorage("listUsers", listUsers);
 }
 
-if (getDataLocalstorage("userContentSearch") != null) {
+if (userContentSearch) {
   listUsers = listUsers.filter(
     (user) =>
       new RegExp(userContentSearch, "i").test(user.username.toLowerCase()) ||
@@ -1618,6 +1618,8 @@ let userTotalPage = Math.ceil(listUsers.length / userItemPerPage);
 if (userCurrentPage > userTotalPage) {
   userCurrentPage = 1;
   updateDataLocalStorage("userCurrentPage", 1);
+  updateDataLocalStorage("userContentSearch", "");
+  alert("Không tìm thấy user nào !");
   window.location.reload();
 }
 let userEnd = userCurrentPage * userItemPerPage;
@@ -1655,10 +1657,6 @@ if (getDataLocalstorage("listUsers")) {
   listUsers = getDataLocalstorage("listUsers");
 }
 
-if (listUsers.length <= 0) {
-  alert("Không tìm thấy user nào !");
-  updateDataLocalStorage("userContentSearch", "");
-}
 // User pagination
 userCurrentPage = getDataLocalstorage("userCurrentPage");
 let userPagination = document.querySelector(".userPagination");
@@ -1748,6 +1746,10 @@ function renderCategory() {
                 </td>
               </tr>`;
     count++;
+  }
+  if (currentPageCategory > totalPage) {
+    updateDataLocalStorage("currentPageCategory", 1);
+    window.location.reload();
   }
   // tạo phân trang cho category
   let categoryPagination = document.querySelector(".categoryPagination");
@@ -1913,7 +1915,7 @@ function renderMessage() {
     );
   });
   containerTotalMessage.innerHTML = `<button id="totalMessageClose">Close</button>`;
-  console.log(newObject);
+
   for (let user of newObject) {
     let indexUser = listUsers.findIndex((u) => u.username == user);
     let endMessage = dataMessage[user][dataMessage[user].length - 1].message;

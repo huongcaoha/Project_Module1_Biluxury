@@ -176,7 +176,7 @@ function loadProduct(css) {
     }
   });
   buttonDown.addEventListener("click", function () {
-    if (buttonQuantity.value >= 1) {
+    if (buttonQuantity.value > 1) {
       buttonQuantity.value = Number.parseInt(buttonQuantity.value - 1);
     }
   });
@@ -196,48 +196,55 @@ function loadProduct(css) {
   const statusLogin = getDataLocalstorage("statusLogin") || 0;
   // let carts = getDataLocalstorage(nameUserCart) || [];
   buttonAdd.addEventListener("click", function () {
-    let id = buttonAdd.getAttribute("idProduct");
-    const listProducts = getDataLocalstorage("products") || [];
-    let indexProduct = listProducts.findIndex((product) => product.id == id);
-    let inventory = listProducts[index].inventory || 0;
-    let indexCart = carts.findIndex((product) => product.id == id);
-    if (statusLogin == 1) {
-      if (indexCart >= 0) {
-        carts[indexCart].quantity = Number.parseInt(carts[indexCart].quantity);
-        if (
-          Number.parseInt(carts[indexCart].quantity) +
-            Number.parseInt(buttonQuantity.value) >
-          inventory
-        ) {
-          alert("Số sản phẩm bạn mua vượt quá giới hạn !");
-        } else {
-          carts[indexCart].quantity = carts[indexCart].quantity =
+    let quantity = document.getElementById("quantity");
+    if (quantity.value < 1) {
+      alert("Sản phẩm thêm phải lớn hơn 0 !");
+    } else {
+      let id = buttonAdd.getAttribute("idProduct");
+      const listProducts = getDataLocalstorage("products") || [];
+      let indexProduct = listProducts.findIndex((product) => product.id == id);
+      let inventory = listProducts[index].inventory || 0;
+      let indexCart = carts.findIndex((product) => product.id == id);
+      if (statusLogin == 1) {
+        if (indexCart >= 0) {
+          carts[indexCart].quantity = Number.parseInt(
+            carts[indexCart].quantity
+          );
+          if (
             Number.parseInt(carts[indexCart].quantity) +
-            Number.parseInt(buttonQuantity.value);
-          updateDataLocalStorage(nameUserCart, carts);
-          alert("Đã thêm sản phẩm vào giỏ hàng !");
-          loadProduct("addToCarts");
+              Number.parseInt(buttonQuantity.value) >
+            inventory
+          ) {
+            alert("Số sản phẩm bạn mua vượt quá giới hạn !");
+          } else {
+            carts[indexCart].quantity = carts[indexCart].quantity =
+              Number.parseInt(carts[indexCart].quantity) +
+              Number.parseInt(buttonQuantity.value);
+            updateDataLocalStorage(nameUserCart, carts);
+            alert("Đã thêm sản phẩm vào giỏ hàng !");
+            loadProduct("addToCarts");
+          }
+        } else {
+          if (buttonQuantity.value > inventory) {
+            alert("Số sản phẩm bạn mua vượt quá giới hạn !");
+          } else {
+            let productSize = getDataLocalstorage("productSize") || 41;
+            let newProduct = {
+              ...listProducts[indexProduct],
+              quantity: Number.parseInt(buttonQuantity.value),
+              size: productSize,
+            };
+            carts.push(newProduct);
+            updateDataLocalStorage(nameUserCart, carts);
+            alert("Đã thêm sản phẩm vào giỏ hàng !");
+            loadProduct("addToCarts");
+          }
         }
       } else {
-        if (buttonQuantity.value > inventory) {
-          alert("Số sản phẩm bạn mua vượt quá giới hạn !");
-        } else {
-          let productSize = getDataLocalstorage("productSize") || 41;
-          let newProduct = {
-            ...listProducts[indexProduct],
-            quantity: Number.parseInt(buttonQuantity.value),
-            size: productSize,
-          };
-          carts.push(newProduct);
-          updateDataLocalStorage(nameUserCart, carts);
-          alert("Đã thêm sản phẩm vào giỏ hàng !");
-          loadProduct("addToCarts");
-        }
+        alert("Bạn hãy đăng nhập trước nhé !");
+        updateDataLocalStorage("history", "../html/productDetail.html");
+        window.location.href = "../html/login.html";
       }
-    } else {
-      alert("Bạn hãy đăng nhập trước nhé !");
-      updateDataLocalStorage("history", "../html/productDetail.html");
-      window.location.href = "../html/login.html";
     }
   });
 

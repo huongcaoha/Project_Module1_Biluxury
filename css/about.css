@@ -144,6 +144,34 @@ ul {
         }
     }
 
+    #menu {
+        font-size: 30px;
+        display: none;
+
+        #menu-ul {
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            display: none;
+
+            li {
+                a {
+                    img {
+                        width: 50px;
+                        height: 50px;
+                    }
+                }
+            }
+        }
+    }
+
+    #menu:hover {
+        #menu-ul {
+            display: block;
+        }
+    }
+
     #user {
         a {
             display: flex;
@@ -264,3 +292,31 @@ footer {
         color: rgb(227, 219, 219);
     }
 }
+
+/* Mobile styles */
+@media (max-width: 768px) {
+    .category {
+        display: none;
+    }
+
+    #category {
+        top: 0;
+        left: -300px;
+    }
+}
+
+/* Tablet styles */
+@media (max-width: 1024px) {
+    .sub-nav {
+        display: none;
+    }
+
+    .navbar {
+        #menu {
+            display: block;
+        }
+    }
+}
+
+/* Desktop styles */
+@media (min-width: 1200px) {}

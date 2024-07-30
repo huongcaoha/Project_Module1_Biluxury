@@ -70,8 +70,6 @@ let totalProductCarts = carts.reduce(
 let iconCart = document.getElementById("carts");
 iconCart.innerHTML = ` <a href="../html/carts.html"><i class="fa-solid fa-cart-shopping" style="color : black"></i><span id="numberCarts">${totalProductCarts}</span></a>`;
 
-// in ra list product in carts
-
 // get data and print out client
 
 function loadCarts() {
@@ -154,8 +152,9 @@ function loadCarts() {
     });
   }
 
+  let namevalue = "";
   order.addEventListener("click", function () {
-    console.log("paymethod", payMethod);
+    namevalue = name.value;
     if (
       !name.value ||
       !phone.value ||

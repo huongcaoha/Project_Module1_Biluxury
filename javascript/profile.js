@@ -14,7 +14,6 @@ function hashCode(str) {
 
 // function xử lý trạng thái đơn hàng
 function handleStatus(status, order) {
-  console.log(status);
   switch (Number.parseInt(status)) {
     case 1: {
       return `<td>

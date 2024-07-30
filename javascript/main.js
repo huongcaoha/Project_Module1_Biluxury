@@ -631,6 +631,12 @@ let listProduct = [
   },
 ];
 
+// reset lại tất cả các filter chọn lọc, tìm kiếm
+updateDataLocalStorage("filterProductPrice", "");
+updateDataLocalStorage("filterProductColor", "");
+updateDataLocalStorage("filterProductCategory", "");
+updateDataLocalStorage("filterProductSearch", "");
+
 // hiển thị icon giỏ hàng và số lượng sản phẩm trong giỏ hàng
 const nameUserCart = getDataLocalstorage("nameUser") + "Carts";
 let carts = getDataLocalstorage(nameUserCart) || [];
